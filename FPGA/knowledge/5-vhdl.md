@@ -247,3 +247,34 @@ begin
 end rtl;
 ```
 
+### 回路
+論理式1行で記述できる組み合わせ回路  
+
+```
+2入力 NAND : na <= not (in1 and in2);
+セレクタ : with sel select out <= '0' when '0', '1' when others;
+ケタ上がり信号 : carry <= '1' when cnt10 = "1001" else '0';
+加算回路 : sum <= a + b;
+```
+
+![alt text](image/5/5.png)
+
+2入力 NAND の記述例で、論理演算子（and や not ）を使用しています。
+優先順位を付ける場合には、このように括弧を付けて指定します。
+in1 と in2 の and をとり、not を付けて na に代入していますので、出力側に not が付きます。
+
+### 演算子
+
+論理演算子は、and や or などの論理をそのまま記述することができます。
+算術演算子は、加算や減算、乗算を記述することができます。
+
+![alt text](image/5/6.png)
+
+演算子を使用してゲート回路を記述することができます。
+オペランド1つに対し使用して、not を使用して反転、and を使用して各オペランドのand を左辺に代入します。
+
+![alt text](image/5/7.png)
+
+
+
+![alt text](image/5/8.png)
