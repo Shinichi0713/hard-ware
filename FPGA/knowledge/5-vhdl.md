@@ -275,6 +275,24 @@ in1 と in2 の and をとり、not を付けて na に代入していますの�
 
 ![alt text](image/5/7.png)
 
+論理演算子と算術演算子はVHDL標準パッケージで以下のように定義される。
+
+- 論理演算子はbitでのみ使用可
+- 算術演算子はintegerでのみ使用可
+
+**演算の許可を定義しているパッケージを宣言**
+1. std_logic_arith: 演算ファンクション
+2. std_logic_signed: 符号つき演算ファンクション
+3. std_logic_unsigned: 符号なし演算ファンクション
 
 
 ![alt text](image/5/8.png)
+
+## 演習
+インストールした後、アプリケーションより選択できるようになる。  
+![alt text](image.png)  
+
+
+
+
+
