@@ -292,7 +292,18 @@ in1 と in2 の and をとり、not を付けて na に代入していますの�
 インストールした後、アプリケーションより選択できるようになる。  
 ![alt text](image.png)  
 
+コンパイルまで進めると以下の画面になる。  
+
+![alt text](image-1.png)
+
+__シミュレーション__  
+Simulator メニュー ⇒ Start Simulation を選択し、Start Simulation ダイアログ・ボックスを起動  
+![alt text](image-2.png)
 
 
+![alt text](image-3.png)
+
+
+![alt text](image-4.png)
 
 
