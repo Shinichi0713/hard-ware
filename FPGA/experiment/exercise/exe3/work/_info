@@ -10,71 +10,90 @@ z2
 cModel Technology
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe2
 Emult4x4
-w1749209402
-DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
-Z0 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z2 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 7
-Z3 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3
-8C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe3\mult4x4.vhd
-FC:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe3\mult4x4.vhd
+Z0 w1749209864
+Z1 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 12
+Z4 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3
+Z5 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4.vhd
+Z6 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4.vhd
 l0
-L8 1
-VH^ZI`M@Gb0M4nL^^P?KSB1
-!s100 H8^@RmWQoDNSa>5Dh0e@O3
-Z4 OV;C;2020.1;71
+L5 1
+V`<<KIU_?L]2QYS2@H1OJS1
+!s100 Wn[SJRX=4HPKka<Oj>jL=1
+Z7 OV;C;2020.1;71
 32
-!s110 1749209421
+Z8 !s110 1749209881
 !i10b 1
-!s108 1749209421.000000
-!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe3\mult4x4.vhd|
-!s107 C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe3\mult4x4.vhd|
+Z9 !s108 1749209881.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4.vhd|
+Z11 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4.vhd|
 !i113 1
-Z5 o-work work -2002 -explicit
-Z6 tExplicit 1 CvgOpt 0
-Emult4x4_sim
-Z7 w1749208022
-R0
-Z8 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
 R1
 R2
-!i122 8
 R3
-Z9 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd
-Z10 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd
+DEx4 work 7 mult4x4 0 22 `<<KIU_?L]2QYS2@H1OJS1
+!i122 12
+l12
+L11 7
+VgU:`KY]@cda>8@Cmb:1PF0
+!s100 U6ZeKnX?j0MHZSzcW?@ld0
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Emult4x4_sim
+Z14 w1749208022
+Z15 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z16 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+R2
+R3
+!i122 13
+R4
+Z17 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd
+Z18 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd
 l0
 L5 1
 Vke5?QYdYFl4l9Odb>PnnP2
 !s100 ?eRgNk`O^9TH7Gn6]42N>1
-R4
+R7
 32
-Z11 !s110 1749209422
-!i10b 1
-Z12 !s108 1749209422.000000
-Z13 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd|
-Z14 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd|
-!i113 1
-R5
-R6
-Amult4x4
-R0
 R8
-R1
-R2
-Z15 DEx4 work 11 mult4x4_sim 0 22 ke5?QYdYFl4l9Odb>PnnP2
-!i122 8
-l22
-Z16 L8 42
-Z17 Vl7ZN`eNH_7Y`hLSB=^:JZ1
-Z18 !s100 dcEWoS3SoO9i7No8;`R^K0
-R4
-32
-R11
 !i10b 1
+R9
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd|
+Z20 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim.vhd|
+!i113 1
 R12
 R13
-R14
+Amult4x4
+R15
+R16
+R2
+R3
+Z21 DEx4 work 11 mult4x4_sim 0 22 ke5?QYdYFl4l9Odb>PnnP2
+!i122 13
+l22
+Z22 L8 42
+Z23 Vl7ZN`eNH_7Y`hLSB=^:JZ1
+Z24 !s100 dcEWoS3SoO9i7No8;`R^K0
+R7
+32
+R8
+!i10b 1
+R9
+R19
+R20
 !i113 1
-R5
-R6
+R12
+R13

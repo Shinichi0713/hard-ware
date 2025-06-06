@@ -362,3 +362,12 @@ __お題__
 __信号の出力__  
 ![alt text](image-8.png)
 
+
+## 演習3
+コンパイル通りました！
+
+![alt text](image-9.png)
+
+
+
+![alt text](image-10.png)
