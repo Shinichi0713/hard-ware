@@ -1,0 +1,38 @@
+-- library
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+-- entity
+entity compare_if is
+    Port ( da : in std_logic_vector (7 downto 0);
+	   db : in std_logic_vector (7 downto 0);
+           epu : out std_logic;
+           agb : out std_logic;
+           alb : out std_logic);
+end compare_if;
+
+-- architecture
+architecture Behabioral of compare_if is
+begin
+    process(da, db)
+    begin
+        if da = db then
+            equ <= '1';
+        else
+            equ <= '0';
+        end if;
+        if da > db then
+            agb <= '1';
+        else
+            agb <= '0';
+        end if;
+        if da < db then
+            alb <= '1';
+        else
+            alb <= '0';
+        end if;
+    end process;
+end Behabioral;
+
