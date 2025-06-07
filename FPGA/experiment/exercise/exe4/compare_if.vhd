@@ -8,7 +8,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity compare_if is
     Port ( da : in std_logic_vector (7 downto 0);
 	   db : in std_logic_vector (7 downto 0);
-           epu : out std_logic;
+           equ : out std_logic;
            agb : out std_logic;
            alb : out std_logic);
 end compare_if;
