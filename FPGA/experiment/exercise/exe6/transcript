@@ -22,3 +22,5 @@ vsim -gui work.ff_sim(ff)
 # Loading work.ff(behavioral)
 add wave sim:/ff_sim/u1/*
 run 1us
+# End time: 18:55:02 on Jun 08,2025, Elapsed time: 0:57:17
+# Errors: 0, Warnings: 9
