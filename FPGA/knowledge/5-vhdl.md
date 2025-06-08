@@ -387,3 +387,26 @@ VHDLは加算器つくったりばっかりかしらねー。
 ![alt text](image-12.png)
 
 
+#### マルチプレクサ
+複数の入力信号の中から1つを選んで出力する回路。
+多重器と呼ばれる。
+
+例. A, B, C, Dの入力があった場合に、一つを選択して出力する回路。
+
+selが0の場合は、aと同じ信号となる。
+
+## 演習6
+
+- クリア信号(aclr) が Low のとき、フリップフロップは Low を出力します。
+- クリア信号(aclr) が High のとき、且つクロックイネーブル信号(clken) が High のとき、d 信号の値が q に出力されます。
+
+コンパイル成功。
+
+![alt text](image-13.png)
+
+
+## まとめ
+1. VHDLの文法は３部構成：library → entity → architecture
+2. entity 名前 is→ end 名前;
+3. architecture Behavioral of 名前 is → end Behavioral;
+
