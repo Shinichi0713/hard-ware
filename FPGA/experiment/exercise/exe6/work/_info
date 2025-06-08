@@ -1,0 +1,97 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe5
+Eff
+Z0 w1749373033
+Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z2 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 6
+Z3 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6
+Z4 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff.vhd
+Z5 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff.vhd
+l0
+L6 1
+VL0_R=ULQUGfnCYk;BIXKW0
+!s100 ;9TAc5ngC]@3Y65g_G^nP3
+Z6 OV;C;2020.1;71
+32
+Z7 !s110 1749373038
+!i10b 1
+Z8 !s108 1749373038.000000
+Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff.vhd|
+Z10 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff.vhd|
+!i113 1
+Z11 o-work work -2002 -explicit
+Z12 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+DEx4 work 2 ff 0 22 L0_R=ULQUGfnCYk;BIXKW0
+!i122 6
+l18
+L17 13
+VOJoSU??WfF;i6P10To6QY3
+!s100 1K0d`HCe1lA4Lcmh@Cj_G2
+R6
+32
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 1
+R11
+R12
+Eff_sim
+Z13 w1303889282
+Z14 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z15 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+R1
+R2
+!i122 7
+R3
+Z16 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff_sim.vhd
+Z17 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff_sim.vhd
+l0
+L5 1
+VJ_P`OeB_iAekEM@cPL]=B2
+!s100 ]b=1CLY2ER?^O;]K@<DSC0
+R6
+32
+R7
+!i10b 1
+R8
+Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff_sim.vhd|
+Z19 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6/ff_sim.vhd|
+!i113 1
+R11
+R12
+Aff
+R14
+R15
+R1
+R2
+Z20 DEx4 work 6 ff_sim 0 22 J_P`OeB_iAekEM@cPL]=B2
+!i122 7
+l21
+Z21 L8 54
+Z22 VRc`ZVhM`ZJ_gIZHXZ3aYm0
+Z23 !s100 CAAm<mDG]D;lC`5GSoA1F0
+R6
+32
+R7
+!i10b 1
+R8
+R18
+R19
+!i113 1
+R11
+R12
