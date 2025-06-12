@@ -87,3 +87,111 @@ ASIC（Application Specific Integrated Circuit）とは、特定のアプリケ�
 
 
 処理能力が高く、開発スピードを速くすることが出来る
+
+
+## モータ制御
+https://uuktuv.hateblo.jp/entry/2020/05/21/132741
+
+![alt text](image-19.png)
+
+__モータドライバ__  
+連続最大1.2 Aのモーターを2個接続できるモータードライバモジュールです。ピンヘッダ実装済み。
+チャンネルあたり、連続最大1.2 A、ピーク時3.2 Aです。A、Bの各チャンネル毎に、入力が3本あります。うち2本のデジタル入力（IN1とIN2）で、正転、逆転、ブレーキ、空転を選びます。
+
+https://www.switch-science.com/catalog/3586/
+
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity MOTOR is
+port( CLK :         in  std_logic;
+      IN1, IN2, PWMA:     out std_logic  );
+end MOTOR;
+
+
+architecture RTL of MOTOR is
+
+ -- 5000カウントで0.1ms(10kHz), 50000カウントで1ms(1kHz)
+signal CNT_PWMA:  integer range 0 to 4999999;  
+signal PWMA_TR : std_logic; 
+
+begin
+    
+    process( CLK )
+    begin
+       if( CLK'event and CLK = '1') then
+           if( CNT_PWMA < 50000 ) then
+               PWMA_TR <= '1';
+                CNT_PWMA <= CNT_PWMA + 1;
+            elsif (  50000 <= CNT_PWMA and CNT_PWMA < 50000*2  ) then
+               PWMA_TR <= '0';
+                CNT_PWMA <= 0;
+                CNT_PWMA <= CNT_PWMA + 1;
+            else
+                CNT_PWMA <= 0;
+            end if;
+        end if;
+    end process;
+    
+    
+    process(PWMA_TR)
+    begin
+        if(PWMA_TR = '1') then
+            IN1 <= '1';
+            IN2 <= '0';
+            PWMA <= '1';
+        else
+            IN1 <= '0';
+            IN2 <= '0';
+            PWMA <= '0';
+        end if;
+    end process;
+    
+end RTL;
+```
+
+![alt text](image-20.png)
+
+---
+「多ゲート制御（たげーとせいぎょ、Multi-Gate Control）」という言葉は、文脈によって意味が異なることがありますが、一般的には**複数の「ゲート（gate）」を用いてシステムや情報の流れ、制御信号などを柔軟にコントロールする方式**を指します。
+
+以下、代表的な分野ごとに解説します。
+
+
+
+## 1. デジタル回路における多ゲート制御
+
+- **ゲート**とは、AND、OR、NOTなどの論理回路素子のことです。
+- **多ゲート制御**は、複数の論理ゲートを組み合わせて、複雑な制御や条件分岐を実現する設計手法です。
+- 例：複数の入力条件をANDやORで組み合わせて、特定の出力制御を行う。
+
+
+## 2. 機械や工場の自動化における多ゲート制御
+
+- **物理的なゲート（門やバルブ）**を複数持つシステムで、それぞれのゲートを個別または連動して開閉・制御する方式。
+- 例：工場の搬送ラインで複数のゲートを制御し、製品の流れや分岐を管理する。
+
+
+## 3. 機械学習・深層学習での「ゲート」
+
+近年、**ニューラルネットワーク（特にRNNやAttentionモデル）**でも「ゲート」という用語がよく使われます。
+
+- **LSTMやGRU**などのRNNでは、「入力ゲート」「出力ゲート」「忘却ゲート」など複数のゲート機構を持ち、情報の流れを制御します。これを「多ゲート制御」と呼ぶこともあります。
+- **Multi-gate Mixture-of-Experts（MMoE）**のようなモデルでは、複数のゲートを使って異なるタスクやエキスパートを動的に選択する仕組みを導入しています。
+
+
+## 4. 通信やネットワーク制御
+
+- 通信ネットワークで複数のゲートウェイ（gate）やスイッチを制御して、トラフィックの流れやアクセス制御を行う場合も「多ゲート制御」と呼ばれることがあります。
+
+
+## まとめ
+
+**多ゲート制御**とは、「複数のゲート（論理的・物理的・情報的）を用いて、システムの状態や情報の流れを柔軟かつ複雑に制御する手法や概念」です。  
+具体的な意味は分野によって異なるため、文脈に注意が必要です。
+
+もし特定の分野や文脈（例：深層学習、回路設計など）があれば、より詳細に解説できますので教えてください。
+---
+
