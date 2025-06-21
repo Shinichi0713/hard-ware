@@ -209,3 +209,62 @@ MAX10には内蔵のADCやNios IIプロセッサが搭載されているモデ�
 * **センサー** : エンコーダや電流センサーでモータの状態を監視。
 * **電源** : FPGAとモータ用の適切な電源。
 * **ソフトウェア** : Quartus Primeなどを使用してFPGAに回路を書く。
+
+## FPGA ダウンロード・ケーブル
+インテル FPGA ダウンロード・ケーブルは、FPGA（フィールド・プログラマブル・ゲート・アレイ）デバイスに設計データを転送するためのツールです。具体的には、PCとFPGA評価ボードを接続し、設計した論理回路をFPGAに書き込むために使用されます 1 2。
+
+このケーブルを使うことで、FPGAのプログラムを簡単にダウンロードし、デバッグやテストを行うことができます 2。例えば、インテルのQuartus® Prime開発ソフトウェアと連携して使用されることが多いです 1
+
+FPGAダウンロード・ケーブルとは、「FPGA（Field Programmable Gate Array）」というプログラマブルICに**設計データ（ビットストリーム）を書き込むための専用ケーブル**です。
+
+## 主な役割
+
+- **FPGAに設計を書き込む（ダウンロードする）**
+  - 開発用PCとFPGAボードを接続し、PCからFPGAへ設計データ（論理回路情報）を転送します。
+- **JTAGやUSBなどの通信インターフェースを利用**
+  - 多くの場合、JTAG（Joint Test Action Group）という標準インターフェースが使われます。最近はUSB接続タイプも多いです。
+- **一時的な書き込み（動作確認）や、フラッシュROMへの書き込み**
+  - FPGA本体への一時的な書き込みだけでなく、FPGA起動時に読み出す外部フラッシュメモリへの書き込みにも使われます。
+
+## 具体例
+
+- Intel（旧Altera）社の「USB-Blaster」
+- Xilinx社の「Platform Cable USB」や「JTAG HS3」
+
+## 流用性
+FPGAダウンロード・ケーブルが他のFPGAにも使えるかどうかは、**主に以下の2つの条件**によって決まります。
+
+
+### 1. メーカーが同じかどうか
+
+FPGAのダウンロード・ケーブルは**FPGAメーカーごとに専用設計**されていることが一般的です。
+
+- たとえば、Intel（旧Altera）の「USB-Blaster」ケーブルは、Intel/Altera製FPGA（MAX10、Cyclone、Arriaなど）で広く使えます。
+- Xilinxの「Platform Cable USB」や「JTAG HS3」は、Xilinx製FPGA（Spartan、Artix、Kintex、Virtexなど）専用です。
+
+**→ メーカーが同じであれば、多くの場合、異なるシリーズのFPGAでも使えます。**
+
+---
+
+### 2. インターフェース（JTAGなど）が同じかどうか
+
+- ほとんどのFPGAは**JTAGインターフェース**を使って書き込みを行うため、同じメーカー・同じJTAG仕様であれば、シリーズが違っても共通のケーブルが使えることが多いです。
+- ただし、一部のFPGAやCPLDでは異なる書き込み方式（例えば、Active SerialやPassive Serialなど）を使う場合もあり、その場合は対応ケーブルが限定されます。
+
+---
+
+### まとめ
+
+- **MAX10用のUSB-Blasterケーブルは、他のIntel/Altera製FPGA（Cyclone、Arriaなど）にも基本的に使えます。**
+- **Xilinx用ケーブルはXilinx製FPGAでのみ利用可能です。**
+- **異なるメーカー間（例：Intel用ケーブルでXilinx FPGA）は使えません。**
+
+#### 注意
+- まれに、ボード側のコネクタ形状やピンアサインが異なる場合があるため、利用前にボードのマニュアルも確認してください。
+
+
+amazonでコンパチめっけ。
+\2500くらいで購入できそう。
+
+https://www.amazon.co.jp/%E3%83%8E%E3%83%BC%E3%83%96%E3%83%A9%E3%83%B3%E3%83%89-NB-USB-BLASTER-REVC-ALTERA-Blaster%E4%BA%92%E6%8F%9BJTag%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB-%E4%B8%A6%E8%A1%8C%E8%BC%B8%E5%85%A5%E5%93%81/dp/B00VUWNN74/ref=sr_1_3?dib=eyJ2IjoiMSJ9.4zDLXZhSDbBG9XtEcaX79ntGgYxhy4gECluu64BZcwZGwsxkDGWfSep4UVfUlTBqkOZR9LT31xkW6haz8U0CizoCtoDce64D526OOHs7f2oPY9Ej1npDLF_B3DcoIAMOUsQ66v_TEC3w6Ehq-VoCgXimG-RvYmZqGXsnJvA36Mvh4KXA3te7TwzWHpAAnXiouzaR_z761KTP-UJrf6kCzL9NlMOm--S3CTRRKXGDUuODYKMsNqEhEDCh0M6ooQeOqPHhE3GWgCQaXLFqpqBJ1kTI4WM2D184daQbzvYSaPI.A8S-cisk1b95yJuXq2Penu4TJL6qAywICg4k2CEmVWI&dib_tag=se&keywords=usb+blaster&qid=1750040404&sr=8-3
+
