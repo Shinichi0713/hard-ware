@@ -18,3 +18,5 @@ https://miyo.github.io/learning_fpga/docs/book01/basics/#vio%E4%BD%BF%E3%81%A3%E
 >IPコア
 >LSIを構成するための部分的な回路情報で機能単位でまとめられたもの
 
+https://www.esato.net/ex/jikken4/ex4_fpga2.pdf
+
