@@ -100,3 +100,40 @@ https://zenn.dev/nekoallergy/articles/fpga-basic-02
 >レジスタ転送レベル　（抽象度：中）　: HDL で書くのはコレ
 >ゲートレベル　　　　（抽象度：低）　: 実際に FPGA に書き込むのはコレ
 
+## Quartusのプロジェクト作成時
+**Quartus Prime**を使って、FPGAアルテラ（現Intel）の**MAX10**シリーズの**DEV KIT EK10M08E144**をコーディング（設計・開発）することは可能です。
+ 
+### 理由と補足説明
+ 
+1. **Quartus PrimeはMAX 10に対応**
+   - Quartus Primeは、Intel（旧Altera）のFPGA開発用統合ツールで、MAX 10シリーズも正式にサポートしています。
+   - MAX 10ファミリ用の開発キットやデバイスも、Quartus Primeのデバイスリストに含まれています。
+ 
+2. **DEV KIT EK10M08E144について**
+   - 型番から、「EK10M08E144」はMAX 10シリーズのM08（8Kロジックエレメント）・E144パッケージのデバイスを搭載した開発キットであることが分かります。
+   - Quartus Primeでこのデバイスをターゲットとしてプロジェクトを作成できます。
+ 
+3. **開発の流れ**
+   - Quartus Primeで新規プロジェクトを作成し、ターゲットデバイスとして「10M08SAE144C8G」など、開発キット搭載のMAX 10デバイスを選択します。
+   - VerilogやVHDLで回路設計し、論理合成・配置配線・書き込みまで一連の開発作業が可能です。
+ 
+4. **無償版でも利用可能**
+   - MAX 10シリーズは、無償の「Quartus Prime Lite Edition」でもサポートされています。
+ 
+
+## ファイル作成時
+
+注釈にエラーあった
+--
+ではなく
+//
+が真。
+
+修正したところ、コンパイル成功。
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+
+
