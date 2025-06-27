@@ -76,3 +76,76 @@ FPGA（MAX10）を使って「センサー→UART→FPGA→PC」へデータを�
 
 ---
 
+![alt text](image.png)
+
+ここでかいてある温度はどこの？
+内部温度らしいで。
+
+```vhdl
+-------------------------------------------------------------------------------
+-- Project   : MAX10 Evaluation Kit (TSD温度読み出し)
+-- File      : top.vhd
+-- Title     : Top
+--------------------------------------------------------------------------------
+--+-----+-----------+-----------------------------------------------------------
+-- Ver   Date        Description
+--+-----+-----------+-----------------------------------------------------------
+-- 00.00 2020/12/07  Created
+--+-----+-----------+-----------------------------------------------------------
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity top is
+  PORT
+  (
+    clk_i       : in  std_logic;      -- 50MHz
+    rst_ni      : in  std_logic       -- リセット(負論理)
+  );
+end top;
+
+architecture rtl of top is
+-- コンポーネント宣言
+component max10_adc is
+  port (
+    clk_clk       : in std_logic := 'X'; -- clk
+    reset_reset_n : in std_logic := 'X'  -- reset_n
+  );
+end component max10_adc;
+
+begin
+-- モジュール接続
+u_max10_adc : component max10_adc
+  port map (
+    clk_clk       => clk_i,       --   clk.clk
+    reset_reset_n => rst_ni       -- reset.reset_n
+  );
+
+end rtl;
+```
+
+__ADCピン__  
+AD変換を行うことが出来るピン
+
+
+__JTAG__  
+JTAG(ジェイタグ)とは、シリアル通信でICの内部回路と通信する仕組み
+最初にJTAGが登場したとき(1990年ごろ)は、「基板検査」のための標準規格
+その手軽さゆえに、いまでは各メーカーがオプション機能やプライベート命令を使って勝手に拡張し、もはや「総合デバッグインタフェース」として使われています。
+
+JTAGの信号線
+JTAGは4本の信号で、いろいろな信号をやりとりします。
+
+TCK（クロック）
+TDI（データ入力）
+TDO（データ出力）
+TMS（状態制御）
+このほかに、TRSTというリセット信号が含まれる場合があります。
+
+JTAG信号の電気的特性
+これらの信号の電気的特性は、規格では定められていません。
+各デバイスごとに、CMOSだったり、LVTTLだったり、LVCMOS18だったり、まちまちです。
+
+JTAGは何ができるの？
+FPGAの書き込みや、CPUのデバッグ、基板検査、ICの内部回路とパソコン間での通信などができます。
