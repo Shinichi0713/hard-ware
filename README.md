@@ -8,3 +8,11 @@
 1. FPGA
 2. 汎用プロセッサ
 3. マイコン
+
+
+## FPGA実験の優良サイト
+
+https://tetsufuku-blog.com/adc-max10-fpga/
+
+
+
