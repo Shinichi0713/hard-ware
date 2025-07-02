@@ -90,6 +90,45 @@ ASICの標準フォーマットとなっているSDCを使ってタイミング�
 
 ![alt text](image-27.png)
 
-1. SDCファイルの作成
+### SDCファイルの作成
+
+デザイン作成＝回路設計がおわったら、タイミング制約用のSDCファイルを作成する。
+
+1. Analysis & Synthesis（論理合成）の実行
+QuartusのPrimeのProcessing→Start→Start Analysis & SYnthesisより実行する。
+
+論理合成がタイミング制約の窓口になるんやな。。。
+
+![alt text](image-28.png)
+
+2. TimeQuest Timing AnalyzerよりSDCを作成
+
+2-1. Toolメニュー→Time Analyzerを起動
+
+2-2. タイミング用ネットリストを作成
+
+Create Timing Netlistを実行してタイミング用ネットリストを作成。
+
+Netlist メニュー ⇒ Create Timing Netlist を実行後、Input netlist で Post-map を選択して OK
+
+![alt text](image-29.png)
+
+2-3. SDC エディタを起動
+
+TimeQuest の File メニュー ⇒ New SDC File で SDC エディタを起動。
+
+環境によってSDCエディタを別ウィンドウで起動。
+
+2-4. SDCエディタに記述
+クロック、
+I/O、
+フォルス・パスなどのタイミング制約コマンドをSDCエディタ上に記述。
+→Save Asで保存する。
+
+ファイル名はプロジェクトのトップ階層と同じ名前にしておくことをお勧めします。
+
+
+
+
 
 
