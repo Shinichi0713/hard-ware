@@ -59,6 +59,7 @@ FPGA開発ツールでは、ピンアサインメント情報（ピン配置制�
 https://www.macnica.co.jp/business/semiconductor/articles/pdf/ELS1411_Q1510_10__1.pdf
 
 ## タイミング制約
+https://www.macnica.co.jp/business/semiconductor/articles/pdf/quartus-hg_timing-constraint_v1710_r2__1.pdf
 
 チップ内外でクロック周波数や入出力のタイミングがマッチしないとチップやシステムレベルで不具合を引き起こした入り、十分な演算性能がえられなかったりする可能性がある。
 チップ内部の入出力回路が複雑になるほど、タイミング制約の設定も複雑になる。
@@ -75,5 +76,20 @@ https://www.macnica.co.jp/business/semiconductor/articles/pdf/ELS1411_Q1510_10__
 Quartus II に搭載されているタイミング検証ツール「TimeQuest」を使って、FPGA内部の周波数や I/Oタイミングなど、設計者が期待するタイミング値を設定することができる。Quartus II に標準搭載されたTimeQuestは、ASIC業界では標準の制約手法となっている「Synopsys Design Constraints (SDC)」 を採用したハイエンドな解析エンジンである。
 
 TimeQuest では、Quartus II のテキスト・エディタを使用しSDCの作成/編集を行う。一般的にSDCの作成/編集を行う場合は、設計者が直接コマンドを入力して制約を設定するが、TimeQuest のエディタはGUIを使用して制約のコマンドを入力することもできるため、設計者がコマンドを覚えていなくても済むなど、簡単操作が特徴である（図3）。このため、コマンド入力によるSDC作成に対して「経験や知識がまったくない」、あるいは「経験や知識は少しあるが十分ではない」といった不安を抱える技術者でも容易にSDCを作成することが可能である。既存のSDCファイルの内容を取り込むことも可能だ。
+
+### タイミング制約
+どれだけのタイミング制約をすればいいか
+
+→「少なくとも回路内のすべてのパスに対して」です。制約されていないパスが回路内にあれば、設計が完了したとはいえません。
+
+ASIC 業界の標準フォーマットになっている Synopsys Design Constraints (SDC) ファイルを FPGA/CPLD のタイミング制約に使用することで、Quartus® Prime の Fitter（配置配線）で目標（ガイド）として参照するだけでなく、TimeQuest Timing Analyzer による高性能なタイミング解析にも使用されます。
+
+ASICの標準フォーマットとなっているSDCを使ってタイミング制約している
+
+ユーザ・ロジック部分のタイミング制約は、設計者であるユーザが自分で制約する必要があります。IP(Intellectual Property) をデザイン内に使用している場合は、IP 部分に限って IP ベンダーが提供してくれるケースが多いので、ベンダーに確認してください。
+
+![alt text](image-27.png)
+
+1. SDCファイルの作成
 
 
