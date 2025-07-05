@@ -128,7 +128,18 @@ I/O、
 ファイル名はプロジェクトのトップ階層と同じ名前にしておくことをお勧めします。
 
 
+### クロックの制約
 
+クロックの制約には FPGA/CPLD 外部から供給される基本クロック（Base Clock）と FPGA/CPLD 内部で生成した生成クロック（Generated Clock）があり、それぞれ決まったコマンドで制約します。PLL で生成したクロックも生成クロックに含まれます。
 
+#### 基本クロック（Base Clock） ＜コマンド：create_clock＞
+FPGA/CPLD 外部から供給されるクロックは、基本クロック（Base Clock）用のコマンドを使用します。
+SDC エディタでコマンドを挿入したい行にカーソルを合せた状態で Edit メニュー ⇒ Insert Constraint ⇒ Create Clock を選択すると、Create Clock 用の設定ウィンドウが表示されます。
 
+![alt text](image-30.png)
+
+Clock name  
+TimeQuest や SDC 上で表記させたい名称を指定します。デザイン上の信号名と異なる名称にしたい場合に入力します。
+
+これはオプションなので空白でも良いですが、空白にした時はデザインで使用している信号名が TimeQuest や Quartus® Prime で使用されます。
 
