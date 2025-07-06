@@ -173,5 +173,10 @@ Targets
 ターゲットとなるクロックのポートやピンを指定。
 TimeQuastの検索機能で指定することをお勧め。
 
+Name Finder は、ターゲットとなるポートやピン、クロックなどを検索する機能です。
+
+![alt text](image-33.png)
+
+![alt text](image-3.png)
 
 
