@@ -1,6 +1,8 @@
 ## 目的
 MAX10を用いたLチカを行います
 
+ターゲットデバイスは、MAX 10 ファミリーの 10M50DAF484C6GES を選択します。
+
 ## 参考
 [参考](https://www.macnica.co.jp/business/semiconductor/articles/intel/113049/)
 
