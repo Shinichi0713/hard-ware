@@ -45,3 +45,15 @@ Live I/O Check 機能の操作は、以下のとおりです。
 ⑤ Live I/O Check ですべてのエラーを回避したら、I/O Assignment Analysis を実行し、さらに I/O ルールの検証を行います。
 
 　 (I/O Assignment Analysis による検証後は、コンパイルを必ず実行してください。)
+
+### ピンの性質
+
+https://www.macnica.co.jp/business/semiconductor/articles/intel/218/
+
+![alt text](image-8.png)
+
+nCONFIG とは、LOW → HIGH と遷移させることによってコンフィギュレーションが開始される機能のピンで、コンフィギュレーション関連ピンの一つです。
+
+nSTATUS や DCLK 、 DATA0 などコンフィギュレーションに必要なピンがどこにあるのか確認できます。
+
+
