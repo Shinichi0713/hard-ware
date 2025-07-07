@@ -23,3 +23,21 @@ LEDが5個あるので2個はハード制御、残り3個はソフト制御
 ここみてsdcファイル追加した
 
 http://star.a.la9.jp/Quartus/Quartus17_1/HLS/tutorial7.html
+
+やっぱり動作せず。。。
+
+https://community.intel.com/t5/Programmable-Devices/Quartus-programmer-start-failed/m-p/1645217
+
+一度動作してるのでこれではないはず
+
+https://community.intel.com/t5/Programmable-Devices/Quartus-programmer-start-failed/m-p/1645217
+
+
+いった！
+答えはデバイスの選択を間違えてたから。。。。
+![alt text](image-6.png)
+
+選ぶべきデバイスはこれでした
+
+10M08SAE144C8G
+ 
