@@ -102,6 +102,8 @@ https://zenn.dev/nekoallergy/articles/fpga-basic-02
 >レジスタ転送レベル　（抽象度：中）　: HDL で書くのはコレ
 >ゲートレベル　　　　（抽象度：低）　: 実際に FPGA に書き込むのはコレ
 
+
+=======
 ## Quartusのプロジェクト作成時
 **Quartus Prime**を使って、FPGAアルテラ（現Intel）の**MAX10**シリーズの**DEV KIT EK10M08E144**をコーディング（設計・開発）することは可能です。
  
@@ -253,6 +255,8 @@ JTAGピン
 1. 電気的な仕様が重要
 2. VHDLの動作を再現するためコードは正確に記載していることが必要
 
+
 ![alt text](image-7.png)
 
 ![alt text](image-8.png)
+
