@@ -1,7 +1,8 @@
 
 https://www.macnica.co.jp/business/semiconductor/articles/intel/95585/
 
-資料
+__資料__
+
 [ELS1411_Q1510_10__1.pdf](https://www.macnica.co.jp/business/semiconductor/articles/pdf/ELS1411_Q1510_10__1.pdf)
 
 「Quartus Prime はじめてガイド - ピン・アサインの方法 ver.15.1」（ツール・バージョン：Ver.15.1 用ドキュメント）
@@ -261,4 +262,8 @@ LEDのLチカ（LED点滅）をFPGAで行う場合、**一般的なユーザーI
 - 電流制限抵抗を必ず入れる
 - ピンの電流定格を守る
 
+## 分かった
+1. ピンアサインメントを考える場合、機器の要件を理解する
+2. 要件に合うピンを、回路図より見つける
+3. 2で見つけたピンをアサインする
 
