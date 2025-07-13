@@ -1,0 +1,11 @@
+* 2-input AND gate using behavioral voltage source
+V1 in1 0 PULSE(0 5 0 1n 1n 1u 2u)
+V2 in2 0 PULSE(0 5 0 1n 1n 2u 4u)
+* AND gate: output is 5V only when both inputs are 5V
+B1 out 0 V = V(in1)>2.5 && V(in2)>2.5 ? 5 : 0
+.tran 0 10u 0 10n
+.control
+run
+plot V(in1) V(in2) V(out)
+.endc
+.end

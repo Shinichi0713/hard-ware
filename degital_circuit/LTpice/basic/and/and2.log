@@ -1,0 +1,21 @@
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(5): Expected expression here.
+B1 out 0 V = V(in1)>2.5 && V(in2)>2.5 ? 5 : 0
+                         ^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(5): Unknown parameter
+B1 out 0 V = V(in1)>2.5 && V(in2)>2.5 ? 5 : 0
+                       ^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(7): Expected device instantiation or directive here.
+.control
+^^^^^^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(8): Expected node name here.
+run
+   ^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(8): Expected device instantiation or directive here.
+run
+^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(9): Expected nodes here.
+plot V(in1) V(in2) V(out)
+    ^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\and\and2.cir(10): Expected device instantiation or directive here.
+.endc
+^^^^^

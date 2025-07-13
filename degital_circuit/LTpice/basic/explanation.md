@@ -47,4 +47,13 @@
 
 ---
 
-ご参考になれば幸いです。
+
+
+インストールリンク先
+
+https://www.macnica.co.jp/business/semiconductor/articles/analog_devices/125077/
+
+analog deviceサイト
+
+https://www.analog.com/jp/resources/design-tools-and-calculators/ltspice-simulator.html
+
