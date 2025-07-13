@@ -45,4 +45,5 @@ https://cba.sakura.ne.jp/kit01/kit_926.htm
 
 https://amanokatsutoshi.github.io/public_html/handicrafts/oscillator_kit/oscillator_kit.html
 
-https://amanokatsutoshi.github.io/public_html/handicrafts/oscillator_kit/oscillator_kit.html
+![alt text](image-2.png)
+
