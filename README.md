@@ -19,3 +19,11 @@ https://tetsufuku-blog.com/adc-max10-fpga/
 
 https://cdrdv2-public.intel.com/666923/ug-max10m50-fpga-dev-kit-j-683460-666923.pdf
 
+
+## 参考サイト
+電子の性質から、電気が流れることについて理解するならば、このサイトは非常に良い。
+
+[トランジスタ入門](http://www.maroon.dti.ne.jp/koten-kairo/works/transistor/Section1/intro7.html)
+
+
+
