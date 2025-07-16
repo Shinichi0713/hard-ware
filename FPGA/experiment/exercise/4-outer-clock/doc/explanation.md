@@ -556,3 +556,89 @@ FPGAがクロックで動作していれば、**UARTやI2C/SPIなどの通信で
 - **周波数カウンタ**：数値で正確に測定
 - **デジタルIC利用**：カウンタICなどで間接的に確認
 - **FPGA内部カウンタ＋LED/通信**：自己診断で出力
+
+
+# FPGA内部クロックを使いたい件
+
+FPGAボードには多くの場合、**オンボードクロック（発振器や水晶発振子）**が搭載されており、そのクロック信号をFPGAのクロック入力ピンに接続することで、FPGA内の動作クロックとして利用できます。
+ 
+---
+ 
+## 1. どんな仕組み？
+ 
+- ボード上のクロックICや水晶発振器が「クロック信号（例：50MHz）」を生成
+- その信号がFPGAの「クロック入力ピン（例：`CLKIN`）」に配線されている
+- FPGAの設計でこのピンを`clk`（や`clk_in`など）として使う
+ 
+---
+ 
+## 2. 例：VHDLエンティティ
+ 
+例えば、FPGAボードの「50MHzクロック」が`CLKIN`というピンに接続されている場合：
+ 
+```vhdl
+entity top is
+    Port (
+        CLKIN : in  STD_LOGIC;  -- ボード上のクロック入力
+        rst_n : in  STD_LOGIC;
+        leds  : out STD_LOGIC_VECTOR(4 downto 0)
+    );
+end top;
+```
+ 
+この`CLKIN`を内部で`clk`として使えばOKです。
+ 
+---
+ 
+## 3. ピンアサイン
+ 
+- 開発環境（Quartus, Vivado, etc.）で「どのFPGAピンが`CLKIN`か」を調べ、ピンアサインファイル（.qsf, .xdc等）で指定します。
+ 
+例（Quartusの.qsf）：
+```
+set_location_assignment PIN_A8 -to CLKIN
+```
+ 
+例（Vivadoの.xdc）：
+```
+set_property PACKAGE_PIN W5 [get_ports {CLKIN}]
+set_property IOSTANDARD LVCMOS33 [get_ports {CLKIN}]
+```
+ 
+---
+ 
+## 4. 使い方例（VHDL）
+ 
+```vhdl
+architecture Behavioral of top is
+    -- 必要な信号宣言
+begin
+ 
+    -- クロックやリセットを使ってLEDチェイサーなどを記述
+    process(CLKIN, rst_n)
+    begin
+        if rst_n = '0' then
+            -- 初期化
+        elsif rising_edge(CLKIN) then
+            -- クロックに同期した処理
+        end if;
+    end process;
+ 
+end Behavioral;
+```
+ 
+---
+ 
+## 5. 注意点
+ 
+- **クロック入力ピンは専用のクロック入力（グローバルクロック）ピンを使う**ことが推奨されます（ボードの回路図やマニュアル参照）。
+- **ピンアサインミスに注意**してください。
+- クロックの周波数に応じて、設計時のタイミング制約（タイミングアナライザ）も設定しましょう。
+ 
+---
+ 
+## まとめ
+ 
+- ボード上のクロック信号は、FPGAのクロック入力ピンに接続されていれば、そのままFPGA設計のクロックとして利用できます。
+- VHDLの`clk`や`CLKIN`などのポートに割り当て、設計内で使えばOKです。
+- ピンアサインとI/O規格の設定も忘れずに！
