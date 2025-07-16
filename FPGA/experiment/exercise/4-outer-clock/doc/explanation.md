@@ -642,3 +642,129 @@ end Behavioral;
 - ボード上のクロック信号は、FPGAのクロック入力ピンに接続されていれば、そのままFPGA設計のクロックとして利用できます。
 - VHDLの`clk`や`CLKIN`などのポートに割り当て、設計内で使えばOKです。
 - ピンアサインとI/O規格の設定も忘れずに！
+
+---
+
+# FPGA内部のPLLを使う
+
+FPGA内部のPLL（Phase Locked Loop）から生成したクロック（`PLL_L_CLKOUTP`）を使ってLEDチェイサーを動作させ、  
+さらにそのPLLクロックを外部ピン（例：`DIFFIO_L20P/CLK1P`）へ出力する構成は、FPGA設計でよく使われる方法です。
+ 
+---
+ 
+## 【構成イメージ】
+ 
+1. **PLLに外部クロック（例：`CLKIN`）を入力**
+2. **PLLから所望のクロック（例：`PLL_L_CLKOUTP`）を得る**
+3. **このPLLクロックをLEDチェイサーのクロックとして使う**
+4. **同じPLLクロックを外部ピン（`DIFFIO_L20P/CLK1P`）に出力する**
+ 
+---
+ 
+## 【VHDL設計例（イメージ）】
+ 
+### 1. PLLインスタンス（※ツールで自動生成するのが一般的）
+ 
+ここでは簡略化のため、PLLを`pll_inst`という名前でインスタンス化します。  
+（実際はQuartusなら「ALTPLL」、Vivadoなら「Clocking Wizard」等で自動生成します）
+ 
+```vhdl
+-- PLLのエンティティ例（自動生成したものを使う）
+component pll_inst
+    port (
+        refclk   : in  std_logic;   -- 入力クロック
+        rst      : in  std_logic;   -- リセット
+        outclk_0 : out std_logic    -- 出力クロック
+    );
+end component;
+```
+ 
+### 2. トップレベル設計例
+ 
+```vhdl
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+ 
+entity top is
+    port (
+        CLKIN   : in  std_logic;                     -- 外部クロック入力
+        rst_n   : in  std_logic;
+        leds    : out std_logic_vector(4 downto 0);  -- LED出力
+        CLK1P   : out std_logic                      -- PLLクロック出力
+    );
+end top;
+ 
+architecture Behavioral of top is
+    signal pll_clk   : std_logic;        -- PLL出力クロック
+    signal pll_rst   : std_logic;
+ 
+    -- LEDチェイサー用信号
+    signal counter   : unsigned(23 downto 0) := (others => '0');
+    signal led_index : unsigned(2 downto 0) := (others => '0');
+begin
+ 
+    -- PLLリセットはアクティブハイなので反転
+    pll_rst <= not rst_n;
+ 
+    -- PLLインスタンス
+    u_pll : pll_inst
+        port map (
+            refclk   => CLKIN,
+            rst      => pll_rst,
+            outclk_0 => pll_clk
+        );
+ 
+    -- LEDチェイサー（PLLクロックで動作）
+    process(pll_clk, rst_n)
+    begin
+        if rst_n = '0' then
+            counter   <= (others => '0');
+            led_index <= (others => '0');
+        elsif rising_edge(pll_clk) then
+            if counter = 5000000 then
+                counter   <= (others => '0');
+                if led_index = 4 then
+                    led_index <= (others => '0');
+                else
+                    led_index <= led_index + 1;
+                end if;
+            else
+                counter <= counter + 1;
+            end if;
+        end if;
+    end process;
+ 
+    -- LED出力
+    leds <= std_logic_vector(shift_left(to_unsigned(1,5), to_integer(led_index)));
+ 
+    -- PLLクロックを外部ピンへ出力
+    CLK1P <= pll_clk;
+ 
+end Behavioral;
+```
+ 
+---
+ 
+## 【ピンアサイン例】
+ 
+- `CLKIN` : ボードの外部クロック入力ピン
+- `leds`  : LEDピン
+- `CLK1P` : `DIFFIO_L20P/CLK1P`（差動クロック出力の片側）
+ 
+**差動出力（LVDS等）として使う場合は、ピンアサインやI/O規格の設定も必要です。**
+ 
+---
+ 
+## 【注意点】
+ 
+- PLLのインスタンスは、**開発ツール（Quartus, Vivado等）で自動生成したものを使ってください**。
+- 差動出力（LVDS等）としてクロックを出す場合は、**I/O規格設定（LVDS, DIFF_SSTL, etc.）**をピンアサインで指定してください。
+- クロックの周波数や位相、ジッタなどの要件も、PLLの設定時に調整してください。
+ 
+---
+ 
+## 【まとめ】
+ 
+- **PLLから生成したクロックをLEDチェイサーや外部ピン出力に利用することは十分可能です。**
+- 実際のPLLインスタンスやピンアサインは、使用するFPGAと開発環境に合わせて調整してください。
