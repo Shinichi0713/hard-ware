@@ -1,0 +1,12 @@
+
+![alt text]({F2C56E9B-B76F-42AB-9988-3C6765CEB856}.png)
+
+
+![alt text]({D84697D2-9DED-4743-B673-4F9749F3CBF8}.png)
+
+
+![alt text]({AFE7ED9C-DC9C-42E4-9C4A-BB7F028AB91D}.png)
+
+ひずみはあるけど確かにOR回路です
+
+![alt text]({F38011ED-D89F-4F6B-86ED-44B8E81F24B2}.png)
