@@ -5,8 +5,10 @@ R1 N001 Vtrig 10k
 R2 rst N001 10k
 V1 rst 0 5.4
 C1 Vtrig 0 0.001µ
-V2 N002 0 1
+R3 rst N002 {Rx}
+R4 N002 0 30
 .tran 100u
+.step param Rx 1 301 2
 .lib NE555.sub
 .backanno
 .end
