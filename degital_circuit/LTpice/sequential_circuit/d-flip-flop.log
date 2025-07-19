@@ -1,0 +1,14 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\d-flip-flop.net
+Start Time: Sat Jul 19 17:06:52 2025
+solver = Normal
+Maximum thread count: 16
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration for .op point succeeded.
+Total elapsed time: 0.115 seconds.
+
+Files loaded:
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\d-flip-flop.net
+
