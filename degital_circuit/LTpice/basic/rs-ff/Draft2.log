@@ -1,0 +1,9 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\rs-ff\Draft2.net
+Start Time: Sat Jul 19 16:59:11 2025
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\rs-ff\Draft2.net(4): No such parameter defined.
+V1 in 0 PULSE(0 5 {1/2/f} 10n 10n {1/2/f} {1/f})
+                       ^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\basic\rs-ff\Draft2.net(5): No such parameter defined.
+.tran {5/f}
+         ^
