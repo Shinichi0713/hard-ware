@@ -1,0 +1,72 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\master-slave\ms-d-flip-flop.net
+Start Time: Mon Jul 21 13:22:47 2025
+solver = Normal
+Maximum thread count: 16
+tnom = 27
+temp = 27
+method = trap
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\master-slave\ms-d-flip-flop.net(5): Limiting rise time to 2e-09.
+
+V1 N001 0 PULSE(0 5 20n 0 0 20n 60n)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\master-slave\ms-d-flip-flop.net(5): Limiting fall time to 2e-09.
+
+V1 N001 0 PULSE(0 5 20n 0 0 20n 60n)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\master-slave\ms-d-flip-flop.net(6): Limiting rise time to 2e-10.
+
+V2 N011 0 PULSE(0 5 1n 0 0 2n 4n)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\master-slave\ms-d-flip-flop.net(6): Limiting fall time to 2e-10.
+
+V2 N011 0 PULSE(0 5 1n 0 0 2n 4n)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+Gmin = 0.995033
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+Gmin = 0.999816
+vernier = 0.00195312
+vernier = 0.000976562
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Could not converge to DC with sources off!
+Starting source stepping with srcstepmethod=1
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 0 s.
+Trouble finding operating point....skipping operating point for Transient analysis.
+Changing Tseed to 1.95313e-13
+Changing Tseed to 1.95312e-15
+Changing Tseed to 1.95312e-12
+Changing Tseed to 1.95312e-16
+Changing Tseed to 1.95312e-11
+Changing Tseed to 1.95312e-17
+Changing Tseed to 1.95313e-10
+Changing Tseed to 1.95313e-18
+Changing Tseed to 1.95312e-09
+Changing Tseed to 1.95313e-19
+Changing Tseed to 1.95312e-08
+Changing Tseed to 1.95312e-20
+
+Convergence Failure:  Time step too small; initial timepoint: trouble with instance "A11"
+
+Simulation Failed: Iteration limit reached
+
+Total elapsed time: 0.197 seconds.
+
+Files loaded:
+C:\Users\yoshinsh.AP\PycharmProjects\forWork\hard-ware\degital_circuit\LTpice\sequential_circuit\master-slave\ms-d-flip-flop.net
+
