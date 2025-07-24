@@ -1,0 +1,12 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity mul4x4 is
+	Port ( a : in std_logic_vector (3 downto 0);
+	       b : in std_logic_vector (3 downto 0);
+	       product : out std_logic_vector (7 downto 0));
+end mul4x4;
+
+architecture Behavioral of 
