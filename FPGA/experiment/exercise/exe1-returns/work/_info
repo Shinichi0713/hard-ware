@@ -1,0 +1,101 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe6
+Eadder
+Z0 w1753354098
+Z1 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 2
+Z5 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns
+Z6 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder.vhd
+Z7 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder.vhd
+l0
+L6 1
+V=K<DIfkNO][o]ZI`inWGF1
+!s100 e4RWg<f3CJ8z4`HC`6Ac02
+Z8 OV;C;2020.1;71
+32
+Z9 !s110 1753354108
+!i10b 1
+Z10 !s108 1753354108.000000
+Z11 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder.vhd|
+!s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+R3
+R4
+DEx4 work 5 adder 0 22 =K<DIfkNO][o]ZI`inWGF1
+!i122 2
+l13
+L12 4
+V>TGU_7oA?5Y8MkP2HZ0VD3
+!s100 eWMS5PJK_kA6GOgaNJH[<2
+R8
+32
+R9
+!i10b 1
+R10
+R11
+Z14 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder.vhd|
+!i113 1
+R12
+R13
+Eadder_sim
+Z15 w1753354066
+R2
+R1
+R3
+R4
+!i122 1
+R5
+Z16 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder_sim.vhd
+Z17 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder_sim.vhd
+l0
+L5 1
+VdjFmQQR_m^9z@5MmdfJko1
+!s100 efK=c=JYAenfVz[OBE[a[2
+R8
+32
+R9
+!i10b 1
+R10
+Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder_sim.vhd|
+Z19 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns/adder_sim.vhd|
+!i113 1
+R12
+R13
+Aadder
+R2
+R1
+R3
+R4
+DEx4 work 9 adder_sim 0 22 djFmQQR_m^9z@5MmdfJko1
+!i122 1
+l22
+L8 42
+VNSHb:>e>NYlfLcziR22UO0
+!s100 oaIbVGekM;mJ>;Lo5dTaS3
+R8
+32
+R9
+!i10b 1
+R10
+R18
+R19
+!i113 1
+R12
+R13
