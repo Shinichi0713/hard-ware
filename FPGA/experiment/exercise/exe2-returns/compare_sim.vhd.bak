@@ -1,3 +1,21 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
+
+entity compare_sim is
+end compare_sim;
+
+architecture compare of compare_sim is
+component compare is
+port (da, db	:	in	std_logic_vector (7 downto 0);
+		equ, agb, alb	:	out	std_logic	);
+end component;
+
+signal da, db           : std_logic_vector(7 downto 0):=(others => '0');
+signal equ, agb, alb  : std_logic := '0';
+signal inveca, invecb: std_logic_vector(7 downto 0):=(others => '0');
+
+
+
+
+end compare;

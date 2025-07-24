@@ -410,3 +410,102 @@ selが0の場合は、aと同じ信号となる。
 2. entity 名前 is→ end 名前;
 3. architecture Behavioral of 名前 is → end Behavioral;
 
+# returns
+## architture
+VHDLにおける`architecture`は、**回路の具体的な動作や構造を記述する部分**を意味します。
+
+### 詳細
+
+- VHDLでは、回路設計を「**entity（エンティティ）**」と「**architecture（アーキテクチャ）」で表現します。
+- `entity`は**入出力ポートなどのインターフェース**（外部仕様）を定義します。
+- `architecture`は**そのentityの具体的な動作や回路構成**（内部実装）を記述します。
+
+### 例
+
+```vhdl
+entity AND_GATE is
+  port (
+    A : in  std_logic;
+    B : in  std_logic;
+    Y : out std_logic
+  );
+end AND_GATE;
+
+architecture RTL of AND_GATE is
+begin
+  Y <= A and B;
+end RTL;
+```
+
+この例では、
+- `AND_GATE`がentity（外部仕様）
+- `RTL`がarchitecture（内部仕様）
+
+となります。
+
+### 補足
+
+- 1つのentityに対して、複数のarchitectureを記述することも可能です（例：動作記述と構造記述で分けるなど）。
+- architectureの中でプロセスや信号宣言、回路の振る舞い（順序記述/組み合わせ回路記述）などを記述します。
+
+**まとめ：**  
+VHDLにおける`architecture`は、「回路の具体的な動作や構造（内部仕様）」を記述するためのブロックです。
+
+
+## component
+
+ご質問の
+
+```vhdl
+component compare is
+port (da, db	:	in	std_logic_vector (7 downto 0);
+		equ, agb, alb	:	out	std_logic	);
+end component;
+```
+
+は、**VHDLの「コンポーネント宣言」**です。
+
+
+### 何を行っているか
+
+この部分は、**compareという名前の回路部品（コンポーネント）の入出力インターフェースを宣言**しています。
+
+- **component宣言**は、他のVHDL設計（この場合はcompare）を、現在のarchitecture内で「部品」として使うための「雛形」を定義します。
+- ここで宣言された`compare`コンポーネントは、後でarchitecture内で**インスタンス化**（実際に使う）ことができます。
+
+
+### 内容の解説
+
+- `component compare is ... end component;`  
+  → `compare`という名前のコンポーネント（部品）を宣言しています。
+- `port (da, db : in std_logic_vector (7 downto 0); equ, agb, alb : out std_logic );`  
+  → この部品の入出力ポート（インターフェース）を指定しています。
+    - 入力: `da`, `db`（8ビットのベクトル）
+    - 出力: `equ`, `agb`, `alb`（1ビット信号）
+
+
+### まとめ
+
+- **component宣言**は、外部の回路部品（別で定義されたentity/architecture）を、現在の設計内で使えるようにするための「型宣言」です。
+- この宣言の後、architecture内で「compareコンポーネントのインスタンス」を生成し、信号と接続することで、実際にその機能を利用できます。
+
+
+#### 具体的な使い方例
+
+```vhdl
+U1: compare port map (
+  da => da,
+  db => db,
+  equ => equ,
+  agb => agb,
+  alb => alb
+);
+```
+このようにして、compareコンポーネントを回路内で使うことができます。
+
+
+**まとめ：**  
+この`component compare is ... end component;`は、「compare」という部品の入出力インターフェースを宣言し、後でこの部品を使えるようにしている部分です。
+
+---
+
