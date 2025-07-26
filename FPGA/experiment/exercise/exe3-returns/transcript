@@ -18,3 +18,5 @@ vsim -gui work.mult4x4_sim(mult4x4)
 run 1us
 add wave sim:/mult4x4_sim/u1/*
 run 1us
+# End time: 17:48:32 on Jul 26,2025, Elapsed time: 33:15:49
+# Errors: 0, Warnings: 7
