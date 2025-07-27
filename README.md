@@ -22,6 +22,19 @@ https://tetsufuku-blog.com/adc-max10-fpga/
 
 https://cdrdv2-public.intel.com/666923/ug-max10m50-fpga-dev-kit-j-683460-666923.pdf
 
+### FPGAのデバッグを行う
+
+https://www.macnica.co.jp/business/semiconductor/articles/intel/134097/
+
+Quartusの場合、System Consoleを使用することで実現可能。
+System Console (システム・コンソール)は、FPGA でデザインを実動作させながら JTAG 経由のデバッグが行える Quartus® Prime に搭載されているデバッグツール。
+
+>JTAG
+>シリアル通信によりIC内部と通信できる仕組み。
+>基板検査の標準規格だったが、拡張されて回路の内部を知りたい場合の標準規格のようになった。
+>とは言え、統合されずメーカー別にバラバラの使い方しているため、一つのメーカの手法が他でも使えることは基本、ない。
+
+
 
 ## 参考サイト
 電子の性質から、電気が流れることについて理解するならば、このサイトは非常に良い。
