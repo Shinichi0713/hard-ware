@@ -160,5 +160,4 @@ end architecture;
 
 ---
 
-ご参考になれば幸いです。
 
