@@ -160,4 +160,18 @@ end architecture;
 
 ---
 
+## In-System Sources and Probes
+In-System Sources and Probes allow you to read and write to a design by accessing JTAG resources.
+
+You instantiate an Intel® FPGA IP into your HDL code. This Intel® FPGA IP core contains source ports and probe ports that you connect to signals in your design, and abstracts the JTAG interface's transaction details.
+
+In addition, In-System Sources and Probes provide a GUI that displays source and probe ports by instance, and allows you to read from probe ports and drive to source ports. These features make this tool ideal for toggling a set of control signals during the debugging process.
+
+
+https://www.intel.com/content/www/us/en/docs/programmable/683552/18-1/in-system-sources-and-probes-66964.html
+
+
+https://cdrdv2-public.intel.com/666789/ug-qpp-debug-j-683819-666789.pdf
+
+![alt text](image-9.png)
 
