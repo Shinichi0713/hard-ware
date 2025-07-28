@@ -509,3 +509,72 @@ U1: compare port map (
 
 ---
 
+## コンポーネント宣言子
+コンポーネント宣言子（component宣言、component declaration）とは、**VHDLで他の回路（エンティティ）を自分の設計内で使うための“部品の型宣言”**です。
+
+### ほかの回路とは？
+「他の回路」とは、他のVHDLファイルや同じファイル内に記述されたentity/architecture、またはIPコアやライブラリのことを指します。
+それらを自分の設計に「部品」として取り込むために、コンポーネント宣言子や直接のエンティティ参照を使います。
+1. ほかのVHDLファイルに記述したentity / architecture
+
+例：adder.vhd というファイルで定義した adder 回路を、top.vhd という別のファイルで使う場合
+2. 同じVHDLファイル内の別のentity/architecture
+
+1つのVHDLファイルに複数のentity/architectureを記述している場合、同じファイル内の他の回路も「他の回路」に含まれます。
+3. IPコアやライブラリ回路
+
+FPGAベンダーが提供するIPコア（例：FIFO、RAM、乗算器など）や、他人が作ったライブラリ回路も「他の回路」として使えます。
+4. サードパーティやオープンソースのVHDLモジュール
+
+ネット上で配布されている汎用VHDLモジュール（例：UART、SPIコントローラなど）も「他の回路」です。
+
+### 役割
+- ほかの回路を再利用するための部品の設計図
+- アーキテクチャ記述内で、部品をインスタンス化するために必要
+
+### 必要なのはなぜ？
+VHDLでは、回路を階層的に設計できます。
+上位の設計（親回路）から下位の設計（子回路）を呼び出すとき、
+親回路の中で「このような端子・ポートを持つ部品を使います」と宣言する必要があり、
+それが「コンポーネント宣言子」です。
+
+### 使い方
+以下のようなエンティティがある場合。
+
+```vhd
+ENTITY adder IS
+    PORT (
+        a : IN  std_logic_vector(3 downto 0);
+        b : IN  std_logic_vector(3 downto 0);
+        sum : OUT std_logic_vector(4 downto 0)
+    );
+END adder;
+```
+
+この「adder」を別の設計で使いたい場合、
+親回路のアーキテクチャ宣言部で次のようにコンポーネント宣言をします。
+
+```vhd
+ARCHITECTURE structure OF top IS
+    COMPONENT adder
+        PORT (
+            a : IN  std_logic_vector(3 downto 0);
+            b : IN  std_logic_vector(3 downto 0);
+            sum : OUT std_logic_vector(4 downto 0)
+        );
+    END COMPONENT;
+
+    -- 他の信号宣言など
+BEGIN
+    -- ここでインスタンス化して使う
+END structure;
+```
+
+### ポイント
+- コンポーネント宣言子は、部品の「型」
+→ これを使って、アーキテクチャ内で実際の「インスタンス（実体）」を作る（インスタンス化）。
+- 宣言部に書くことで、VHDLはその部品を使えることを認識する
+- ポートリストは、元のエンティティと一致させる必要がある
+
+
+
