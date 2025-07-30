@@ -1,6 +1,7 @@
 m255
 K4
 z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
 13
 !s112 1.1
 !i10d 8192
@@ -8,3 +9,93 @@ z2
 !i10f 100
 cModel Technology
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3-returns-2nd
+Ecompare_if
+Z0 w1753835928
+Z1 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 0
+Z5 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4-returns-2nd
+Z6 8C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if.vhd
+Z7 FC:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if.vhd
+l0
+L6 1
+VkMz8KdEALZER`VS?ZB8@M2
+!s100 f@F[KjM67U<;Wfl6mkj103
+Z8 OV;C;2020.1;71
+32
+Z9 !s110 1753835934
+!i10b 1
+Z10 !s108 1753835934.000000
+Z11 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if.vhd|
+Z12 !s107 C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if.vhd|
+!i113 1
+Z13 o-work work -2002 -explicit
+Z14 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+R3
+R4
+DEx4 work 10 compare_if 0 22 kMz8KdEALZER`VS?ZB8@M2
+!i122 0
+l15
+L14 21
+VF;4_;PzK=5F4HKEkE`<Qa1
+!s100 7X9Sm[i1ETm2lnmb@f@XY2
+R8
+32
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+R13
+R14
+Ecompare_if_sim
+Z15 w1753835715
+R2
+R1
+R3
+R4
+!i122 1
+R5
+Z16 8C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if_sim.vhd
+Z17 FC:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if_sim.vhd
+l0
+L6 1
+VH7ani?f5?g_<MS7Tf:dZe0
+!s100 lKGz>b0_A@@;zFem0k<h]2
+R8
+32
+R9
+!i10b 1
+R10
+Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if_sim.vhd|
+!s107 C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if_sim.vhd|
+!i113 1
+R13
+R14
+Acompare_if
+R2
+R1
+R3
+R4
+DEx4 work 14 compare_if_sim 0 22 H7ani?f5?g_<MS7Tf:dZe0
+!i122 1
+l21
+L9 42
+VhkGV];JOI2:e:>NN_XD`P1
+!s100 BOi2[>Ji:TFc@KIl<VeO32
+R8
+32
+R9
+!i10b 1
+R10
+R18
+Z19 !s107 C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe4-returns-2nd\compare_if_sim.vhd|
+!i113 1
+R13
+R14
