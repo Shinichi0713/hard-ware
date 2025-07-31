@@ -6,7 +6,6 @@ entity adder_sim is
 end adder_sim;
 
 architecture adder of adder_sim is
-
 component adder
 port (	a, b : in std_logic_vector(15 downto 0);
 		sum	  :  out std_logic_vector(15 downto 0));
@@ -25,6 +24,7 @@ begin
  port map(   a => adder_a,
              b => adder_b,
              sum => sum );
+
 process
    begin
 	   inveca <= "0000000000000001";
@@ -42,8 +42,8 @@ process
 		invecb <= invecb + '1';
 	end loop;
 end process;
-
-adder_a <= inveca;
-adder_b <= invecb;	
 	
-end adder;
+	adder_a <= inveca;
+	adder_b <= invecb;	
+	
+end adder;	
