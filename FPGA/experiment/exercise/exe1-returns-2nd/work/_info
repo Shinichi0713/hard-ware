@@ -10,71 +10,88 @@ z2
 cModel Technology
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe5-returns
 Eadder
-w1753823447
-Z0 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
-Z1 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 3
-Z4 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd
-8C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder.vhd
-FC:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder.vhd
+Z0 w1753947868
+Z1 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z5 dC:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd
+Z6 8C:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder.vhd
+Z7 FC:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder.vhd
 l0
-L6 1
-Vkf6?ZAKaQ@9W9AFzcSffZ1
-!s100 <><?kS`mX2W0h;6NW4ifb1
-Z5 OV;C;2020.1;71
+L6
+VIMY`<fUVhfz2lCmm08@cf1
+!s100 Q5IUz@TPW^W_GY1[_3ZGn1
+Z8 OV;C;10.5b;63
 32
-Z6 !s110 1753823513
+Z9 !s110 1753947872
 !i10b 1
-Z7 !s108 1753823513.000000
-!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder.vhd|
-!s107 C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder.vhd|
+Z10 !s108 1753947872.000000
+Z11 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder.vhd|
+Z12 !s107 C:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder.vhd|
 !i113 1
-Z8 o-work work -2002 -explicit
-Z9 tExplicit 1 CvgOpt 0
-Eadder_sim
-Z10 w1753823215
+Z13 o-work work -2002 -explicit
+Z14 tExplicit 1 CvgOpt 0
+Abehavioral
 R1
-R0
 R2
 R3
-!i122 4
 R4
-Z11 8C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder_sim.vhd
-Z12 FC:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder_sim.vhd
-l0
-L5 1
-VdjFmQQR_m^9z@5MmdfJko1
-!s100 efK=c=JYAenfVz[OBE[a[2
-R5
-32
-R6
-!i10b 1
-R7
-Z13 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder_sim.vhd|
-Z14 !s107 C:\Users\yoshinsh.AP\Documents\python_scripts\the_other\hard-ware\FPGA\experiment\exercise\exe1-returns-2nd\adder_sim.vhd|
-!i113 1
+DEx4 work 5 adder 0 22 IMY`<fUVhfz2lCmm08@cf1
+l13
+L12
+V2>^e4]kSAUb<R]e=CQ0Nj1
+!s100 9ZaUE@PQnZf7JY:SMO6S^3
 R8
-R9
-Aadder
-R1
-R0
-R2
-R3
-Z15 DEx4 work 9 adder_sim 0 22 djFmQQR_m^9z@5MmdfJko1
-!i122 4
-l22
-Z16 L8 42
-Z17 VNSHb:>e>NYlfLcziR22UO0
-Z18 !s100 oaIbVGekM;mJ>;Lo5dTaS3
-R5
 32
-R6
+R9
 !i10b 1
-R7
+R10
+R11
+R12
+!i113 1
 R13
 R14
-!i113 1
+Eadder_sim
+Z15 w1753947729
+R2
+R1
+R3
+R4
+R5
+Z16 8C:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder_sim.vhd
+Z17 FC:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder_sim.vhd
+l0
+L5
+VdjFmQQR_m^9z@5MmdfJko1
+!s100 efK=c=JYAenfVz[OBE[a[2
 R8
+32
 R9
+!i10b 1
+Z18 !s108 1753947871.000000
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder_sim.vhd|
+Z20 !s107 C:/Users/yoshinaga/Documents/Python Scripts/ForTrial/hard-ware/FPGA/experiment/exercise/exe1-returns-2nd/adder_sim.vhd|
+!i113 1
+R13
+R14
+Aadder
+R2
+R1
+R3
+R4
+DEx4 work 9 adder_sim 0 22 djFmQQR_m^9z@5MmdfJko1
+l23
+L8
+VYXdPQ[h0dC=NE^HbVo=U31
+!s100 6<H6bezY_Q0MgieheG]703
+R8
+32
+R9
+!i10b 1
+R18
+R19
+R20
+!i113 1
+R13
+R14
