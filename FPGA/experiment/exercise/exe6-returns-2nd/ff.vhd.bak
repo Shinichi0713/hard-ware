@@ -22,4 +22,5 @@ architecture Behavioral of ff is
 				end if;
 			end if;
 		end process;
+	end process;
 end Behavioral;
