@@ -19,9 +19,9 @@ architecture Behavioral of led_chaser_max10 is
     -- PLL component declaration
     component pll_led_chaser
         port (
-            inclk0   : in  std_logic;
-            areset   : in  std_logic;
-            c0       : out std_logic;  -- 1MHz output clock
+            refclk   : in  std_logic;
+            rst      : in  std_logic;
+            outclk_0 : out std_logic;  -- 1MHz output clock
             locked   : out std_logic
         );
     end component;
@@ -49,9 +49,9 @@ begin
     -- PLL instantiation
     pll_inst : pll_led_chaser
         port map (
-            inclk0   => clk_50mhz,
-            areset   => reset,
-            c0       => clk_1mhz,
+            refclk   => clk_50mhz,
+            rst      => reset,
+            outclk_0 => clk_1mhz,
             locked   => pll_locked
         );
 
