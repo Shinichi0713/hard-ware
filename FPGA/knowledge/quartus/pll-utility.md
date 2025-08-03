@@ -246,6 +246,8 @@ set_input_delay -clock clk_50mhz 2.0 [get_ports reset_n]
 set_output_delay -clock [get_clocks {pll_led_chaser|altpll_component|auto_generated|pll1|clk[0]}] 2.0 [get_ports led_out[*]]
 ```
 
+![1754182323250](image/pll-utility/1754182323250.png)
+
 ## **Step 5: コンパイル**
 
 ### **5-1. 解析とシンセシス**
@@ -346,3 +348,6 @@ led_chaser_project/
 └── output_files/
     └── led_chaser_max10.sof      # Programming file
 ```
+
+
+![1754182873662](image/pll-utility/1754182873662.png)
