@@ -35,7 +35,6 @@ altpll pll_inst (
 );
 ```
 
-
 ## **利用上の注意点**
 
 ### **1. PLL数の制限**
@@ -71,7 +70,6 @@ pll_100mhz pll_inst (
 );
 ```
 
-
 ### **2. 複数クロックドメイン**
 
 ```vhd
@@ -81,7 +79,6 @@ wire clk_memory;   // 133MHz
 wire clk_peripheral; // 50MHz
 ```
 
-
 ## **設計時の推奨事項**
 
 1. **リセット設計** : PLL安定後にシステムリセット解除
@@ -89,9 +86,7 @@ wire clk_peripheral; // 50MHz
 3. **電源ノイズ対策** : アナログ電源の安定化
 4. **熱設計** : PLL動作による発熱考慮
 
-
 ## led-chaiser
-
 
 MAX10の内部PLLを使用したLED chaserのVHDLコードを生成しました。以下の3つのファイルを作成しています：
 
@@ -137,7 +132,6 @@ MAX10の内部PLLを使用したLED chaserのVHDLコードを生成しました�
 実際に使用する際は、Quartus PrimeでPLL IPコアを生成し、ボードに合わせてピン配置を調整してください。
 
 ## 実装手順
-
 
 ## **Step 1: Quartus Primeプロジェクトの作成**
 
@@ -223,7 +217,6 @@ MAX10の内部PLLを使用したLED chaserのVHDLコードを生成しました�
 
  **DE10-Liteボードの例** :
 
-
 | Signal Name | Location | I/O Standard |
 | ----------- | -------- | ------------ |
 | clk_50mhz   | PIN_P11  | 3.3-V LVTTL  |
@@ -236,7 +229,6 @@ MAX10の内部PLLを使用したLED chaserのVHDLコードを生成しました�
 | led_out[5]  | PIN_C13  | 3.3-V LVTTL  |
 | led_out[6]  | PIN_E14  | 3.3-V LVTTL  |
 | led_out[7]  | PIN_D14  | 3.3-V LVTTL  |
-
 
 ### **4-3. 制約ファイル作成**
 
@@ -253,7 +245,6 @@ derive_pll_clocks -create_base_clocks
 set_input_delay -clock clk_50mhz 2.0 [get_ports reset_n]
 set_output_delay -clock [get_clocks {pll_led_chaser|altpll_component|auto_generated|pll1|clk[0]}] 2.0 [get_ports led_out[*]]
 ```
-
 
 ## **Step 5: コンパイル**
 
@@ -341,7 +332,6 @@ set_output_delay -clock [get_clocks {pll_led_chaser|altpll_component|auto_genera
 ### **8-2. カスタマイズ**
 
 速度変更や異なるパターンの実装が可能
-
 
 ## **ファイル構成（最終）**
 
