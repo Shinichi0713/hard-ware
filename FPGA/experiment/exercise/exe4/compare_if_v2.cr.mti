@@ -1,4 +1,14 @@
-{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_v2.vhd} {0 {vcom -work work -2002 -explicit -stats=none {C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd}
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_sim_v2.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity compare_sim
+-- Compiling architecture compare of compare_sim
+
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_v2.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -7,16 +17,5 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity compare_if
 -- Compiling architecture Behavioral of compare_if
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(18): near ";": syntax error
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(21): Cannot drive signal 'equ' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(22): Cannot drive signal 'agb' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(23): Cannot drive signal 'alb' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(25): Cannot drive signal 'equ' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(26): Cannot drive signal 'agb' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(27): Cannot drive signal 'alb' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(29): Cannot drive signal 'equ' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(30): Cannot drive signal 'agb' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(31): Cannot drive signal 'alb' of mode IN.
-** Error: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd(34): VHDL Compiler exiting
 
-} {10.0 21.0} {}}
+} {} {}}
