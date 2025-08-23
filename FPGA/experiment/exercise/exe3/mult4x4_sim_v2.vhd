@@ -1,0 +1,16 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity mult4x4_sim is
+end mult4x4_sim;
+
+architecture mult4x4 of mult4x4_sim is
+component mult4x4
+port(
+	a, b : in std_logic_vector(3 downto 0);
+	product : out std_logic_vector(7 downto 0));
+end component;
+
+
+ 
