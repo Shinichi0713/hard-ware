@@ -2,17 +2,18 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-enetity mult4x4 is
+entity mult4x4 is
 	Port(
-		a: in std_logic_vector(4 downnto 0);
-		b: in std_logic_vector(4 downnto 0);
-		product: out std_logic_vector(8 downnto 0)
+		a: in std_logic_vector(3 downto 0);
+		b: in std_logic_vector(3 downto 0);
+		product: out std_logic_vector(7 downto 0)
 	);
 end entity;
 
 archtecture Behavioral of mult4x4 is
 	begin
-		product <= a * b;
-
-
+		process(a, b)
+		begin
+		product <= std_logic_vector(unsigned(a) * unsigned(b));
+		end process;
 end Behavioral;
