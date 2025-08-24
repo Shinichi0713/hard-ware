@@ -4,9 +4,6 @@ wokwiを使ってArduino simulatorを使ったデモを行う。
 
 [Wokwi - Online ESP32, STM32, Arduino Simulator](https://wokwi.com/projects/440121954176851969)
 
-
-
-
 Arduinoを使ってLEDを点滅（点灯・消灯の繰り返し）させるのは「Arduino入門」の王道です。
 
 ---
@@ -70,9 +67,7 @@ void loop() {
 
 「ボタンを押したらLEDを点滅させる」バージョンも見てみますか？
 
-
 ![1755992191925](image/2-led-illuminate/1755992191925.png)
-
 
 ## setup関数
 
