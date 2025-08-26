@@ -10,86 +10,90 @@ z2
 cModel Technology
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe2
 Emult4x4
-Z0 w1755941129
+Z0 w1756156326
 Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
-Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
-Z4 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3
-Z5 8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe3\mult4x4_v2.vhd
-Z6 FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe3\mult4x4_v2.vhd
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z6 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3
+Z7 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4.vhd
+Z8 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4.vhd
 l0
-L5
-V@I8Zb9YEaQ540GQ^SC1a=3
-!s100 =:o`[c<WCUnCF9mejO_e:3
-Z7 OV;C;10.5b;63
+L6
+VhziOm0gRMjI5l:]HZXbfY0
+!s100 jAlT7V1??4PnOe8?l8]mV2
+Z9 OV;C;10.5b;63
 32
-Z8 !s110 1755941134
+Z10 !s110 1756156329
 !i10b 1
-Z9 !s108 1755941134.000000
-Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe3\mult4x4_v2.vhd|
-Z11 !s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe3\mult4x4_v2.vhd|
+Z11 !s108 1756156329.000000
+Z12 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4.vhd|
+Z13 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4.vhd|
 !i113 1
-Z12 o-work work -2002 -explicit
-Z13 tExplicit 1 CvgOpt 0
+Z14 o-work work -2002 -explicit
+Z15 tExplicit 1 CvgOpt 0
 Abehavioral
 R1
 R2
 R3
-DEx4 work 7 mult4x4 0 22 @I8Zb9YEaQ540GQ^SC1a=3
-l14
-L13
-VY@6<dNZQj9C`aMn^jGg@32
-!s100 6mAN<=BT>Kb6hVVGK9^Jd3
-R7
-32
-R8
-!i10b 1
+R4
+R5
+DEx4 work 7 mult4x4 0 22 hziOm0gRMjI5l:]HZXbfY0
+l15
+L14
+V>fS]R=>;1>[ne85OAQb=m0
+!s100 NLl9cFRmdVl;?4cVVl4k82
 R9
+32
 R10
+!i10b 1
 R11
-!i113 1
 R12
 R13
+!i113 1
+R14
+R15
 Emult4x4_sim
-Z14 w1755941034
-Z15 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z16 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z16 w1756156214
 R2
 R3
 R4
-Z17 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim_v2.vhd
-Z18 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim_v2.vhd
+R5
+R6
+Z17 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4_sim.vhd
+Z18 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4_sim.vhd
 l0
 L5
 Vke5?QYdYFl4l9Odb>PnnP2
 !s100 ?eRgNk`O^9TH7Gn6]42N>1
-R7
+R9
 32
-R8
+R10
 !i10b 1
-Z19 !s108 1755941133.000000
-Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim_v2.vhd|
-Z21 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_sim_v2.vhd|
+R11
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4_sim.vhd|
+Z20 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe3/mult4x4_v4_sim.vhd|
 !i113 1
-R12
-R13
-Amult4x4
+R14
 R15
-R16
+Amult4x4
 R2
 R3
+R4
+R5
 DEx4 work 11 mult4x4_sim 0 22 ke5?QYdYFl4l9Odb>PnnP2
-l23
+l24
 L8
-VBogan=J14=dWgfl]ZfR2J1
-!s100 U;EgEIUBilS=;fP1mn14[0
-R7
+V[XB81i68indXoTX33:Jzm2
+!s100 nklWd>eGWgQgOohB;^Q8_0
+R9
 32
-R8
+R10
 !i10b 1
+R11
 R19
 R20
-R21
 !i113 1
-R12
-R13
+R14
+R15
