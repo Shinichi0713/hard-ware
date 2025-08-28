@@ -10,7 +10,7 @@ equ:out std_logic;
 agb:out std_logic;
 alb:out std_logic
 );
-end compare_if
+end compare_if;
 
 architecture Bahavioral of compare_if is
 begin
