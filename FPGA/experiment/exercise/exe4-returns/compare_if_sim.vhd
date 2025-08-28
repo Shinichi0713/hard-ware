@@ -1,13 +1,12 @@
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
- 
-entity compare_if_sim is
-end compare_if_sim;
 
-architecture compare_if of compare_if_sim is
-component compare_if is
+entity compare_sim is
+end compare_sim;
+
+architecture compare of compare_sim is
+component compare is
 port (da, db	:	in	std_logic_vector (7 downto 0);
 		equ, agb, alb	:	out	std_logic	);
 end component;
@@ -19,7 +18,7 @@ signal inveca, invecb: std_logic_vector(7 downto 0):=(others => '0');
 constant period : time := 50 ns;
 
 begin
- u1:compare_if
+ u1:compare
  port map(  da => da,
                 db => db,
                 equ	 => equ,
@@ -45,6 +44,5 @@ process
 end process;
 	
 	da <= inveca;
-	db <= invecb;	
-	
-end compare_if;				
+	db <= invecb;
+end compare;
