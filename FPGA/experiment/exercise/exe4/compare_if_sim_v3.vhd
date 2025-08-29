@@ -6,7 +6,7 @@ entity compare_if_sim is
 end compare_if_sim;
 
 architecture compare_if of compare_if_sim is
-component compare_if_sim is
+component compare_if is
 port(
 da, db:in std_logic_vector (7 downto 0);
 equ,agb,alb:out std_logic
