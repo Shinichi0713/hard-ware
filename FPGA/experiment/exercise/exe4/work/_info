@@ -10,55 +10,75 @@ z2
 cModel Technology
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe3
 Ecompare_if
-w1756329308
-Z0 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z1 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
-Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
-Z4 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4
-8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_v3.vhd
-FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_v3.vhd
+Z0 w1756414329
+Z1 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z2 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z5 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4
+Z6 8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v3.vhd
+Z7 FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v3.vhd
 l0
 L5
 VfKO0zMookb:C0Q>;5Cgm`1
 !s100 H@G:[ohO`<^aX=>o_`n??0
-Z5 OV;C;10.5b;63
+Z8 OV;C;10.5b;63
 32
-Z6 !s110 1756329318
+Z9 !s110 1756414337
 !i10b 1
-!s108 1756329318.000000
-!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_v3.vhd|
-!s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_v3.vhd|
+Z10 !s108 1756414337.000000
+Z11 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v3.vhd|
+Z12 !s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v3.vhd|
 !i113 1
-Z7 o-work work -2002 -explicit
-Z8 tExplicit 1 CvgOpt 0
-Abehavioral
-R0
+Z13 o-work work -2002 -explicit
+Z14 tExplicit 1 CvgOpt 0
+Abahavioral
 R1
 R2
 R3
+R4
+DEx4 work 10 compare_if 0 22 fKO0zMookb:C0Q>;5Cgm`1
+l16
+L15
+VfbcB0=fWQ89F0KhmA_Taz0
+!s100 onAa@alGDL9ci4R=S@nfz2
+R8
+32
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 1
+R13
+R14
+Abehavioral
+R1
+R2
+R3
+R4
 DEx4 work 10 compare_if 0 22 MCkbJC3^2jF1gC>BGF39:1
 l17
 L16
 VPCRZEXa5WTK7AfbLDKZd02
 !s100 20mQE`RdL7<HzC@XmU_b[2
-R5
+R8
 32
-Z9 !s110 1755945663
+Z15 !s110 1755945663
 !i10b 1
-Z10 !s108 1755945663.000000
+Z16 !s108 1755945663.000000
 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd|
 !s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd|
 !i113 1
-R7
-R8
+R13
+R14
 FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd
 w1755945656
 8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_v2.vhd
 Abehabioral
-R1
-R0
 R2
+R1
+R3
 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
 DEx4 work 10 compare_if 0 22 o@n^Z<C1[N=Og@o]e6Ak=0
 !i122 2
@@ -74,97 +94,95 @@ OV;C;2020.1;71
 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4/compare_if.vhd|
 !s107 C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4/compare_if.vhd|
 !i113 1
-R7
-R8
+R13
+R14
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4
 FC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4/compare_if.vhd
 w1749303047
 8C:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4/compare_if.vhd
 Ecompare_if_sim
-Z11 w1756329158
-R0
+Z17 w1756414244
 R1
 R2
 R3
 R4
-8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_sim_v3.vhd
-FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_sim_v3.vhd
+R5
+Z18 8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v3.vhd
+Z19 FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v3.vhd
 l0
 L5
 V`O7heGCiUlLgM;];ScFc]1
 !s100 PjPg;^ch9Mn?4zglcQX>f2
-R5
-32
-R6
-!i10b 1
-!s108 1756329317.000000
-!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_sim_v3.vhd|
-!s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe4/compare_if_sim_v3.vhd|
-!i113 1
-R7
 R8
-Acompare_if
-R0
-R1
-R2
-R3
-DEx4 work 14 compare_if_sim 0 22 H7ani?f5?g_<MS7Tf:dZe0
-l21
-L9
-VhkGV];JOI2:e:>NN_XD`P1
-!s100 BOi2[>Ji:TFc@KIl<VeO32
-R5
-32
-!s110 1755945424
-!i10b 1
-!s108 1755945424.000000
-Z12 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd|
-Z13 !s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd|
-!i113 1
-R7
-R8
-Z14 FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd
-Z15 8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd
-Ecompare_sim
-Z16 w1755945479
-R0
-R1
-R2
-R3
-R4
-R15
-R14
-l0
-L5
-VM@2g7k;:KIkiazoPAjT@n0
-!s100 >U0JEbI^n8[@Szfd4DE1>3
-R5
 32
 R9
 !i10b 1
 R10
-R12
-R13
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v3.vhd|
+Z21 !s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v3.vhd|
 !i113 1
-R7
-R8
-Acompare
-R0
+R13
+R14
+Acompare_if
 R1
 R2
 R3
+R4
+DEx4 work 14 compare_if_sim 0 22 `O7heGCiUlLgM;];ScFc]1
+l22
+L8
+VfKY6T;Hb^hfYV:^:[JUBc0
+!s100 X8[4EaYOi^c>h0j=G_5<Z0
+R8
+32
+R9
+!i10b 1
+R10
+R20
+R21
+!i113 1
+R13
+R14
+Ecompare_sim
+Z22 w1755945479
+R1
+R2
+R3
+R4
+R5
+Z23 8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd
+Z24 FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd
+l0
+L5
+VM@2g7k;:KIkiazoPAjT@n0
+!s100 >U0JEbI^n8[@Szfd4DE1>3
+R8
+32
+R15
+!i10b 1
+R16
+Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd|
+Z26 !s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\experiment\exercise\exe4\compare_if_sim_v2.vhd|
+!i113 1
+R13
+R14
+Acompare
+R1
+R2
+R3
+R4
 DEx4 work 11 compare_sim 0 22 M@2g7k;:KIkiazoPAjT@n0
 l20
 L8
 VFCO4KnPJ8^M21z??jgjNK1
 !s100 egZhSaaMOF4DNAXZSWWGM3
-R5
-32
-R9
-!i10b 1
-R10
-R12
-R13
-!i113 1
-R7
 R8
+32
+R15
+!i10b 1
+R16
+R25
+R26
+!i113 1
+R13
+R14

@@ -20,16 +20,16 @@ begin
 		equ<='1';
 		else
 		equ<='0';
-		end if
+		end if;
 		if da > db then
 		agb<='1';
 		else
 		agb<='0';
-		end if
+		end if;
 		if da < db then
 		alb<='1';
 		else
 		alb<='0';
-		end if
+		end if;
 	end process;
 end Bahavioral;
