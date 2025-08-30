@@ -11,10 +11,12 @@ q:out std_logic);
 end ff;
 
 architecture Behavioral of ff is
-begin process(aclr, clk)
+begin 
+process(aclr, clk)
+begin
 if aclr = '0' then
-	q<='0'
-elsif rising_edge(aclr) and clken='1' then
+	q<='0';
+elsif (rising_edge(aclr) and clken='1') then
 	q<=d;
 end if;
 end process;
