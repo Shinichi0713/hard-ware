@@ -1,0 +1,22 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity ff is
+port(
+clk:in std_logic;
+aclr:in std_logic;
+clken:in std_logic;
+d:in std_logic;
+q:out std_logic);
+end ff;
+
+architecture Behavioral of ff is
+begin process(aclr, clk)
+if aclr = '0' then
+	q<='0'
+elsif rising_edge(aclr) and clken='1' then
+	q<=d;
+end if;
+end process;
+end Behavioral;
+
