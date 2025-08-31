@@ -1,0 +1,55 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity compare_sim is
+end compare_sim;
+
+architecture compare of compare_sim is
+component compare is
+port(
+da, db:in std_logic_vector(7 downto 0);
+equ,agb,alb:out std_logic);
+end component;
+
+signal da,db:std_logic_vector(7 downto 0):=(others=>'0');
+signal equ, agb, alb  : std_logic := '0';
+signal inveca, invecb: std_logic_vector(7 downto 0):=(others => '0');
+
+constant period_a:time:=50ns;
+constant period_b:time:=100ns;
+
+begin
+u1:compare
+port map(
+da=>da,
+db=>db,
+equ=>equ,
+alb=>alb,
+agb=>agb);
+
+process
+begin
+inveca<="00000001";
+loop
+wait for period_a;
+inveca<=inveca+'1';
+end loop;
+end process;
+
+process
+begin
+invecb<="00001001";
+loop
+wait for period_b;
+invecb<=invecb+'1';
+end loop;
+end process;
+
+da<=inveca;
+db<=invecb;
+
+end compare;
+
+
