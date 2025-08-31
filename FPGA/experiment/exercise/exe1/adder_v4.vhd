@@ -1,0 +1,16 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity adder is
+port(
+a:in std_logic_vector(15 downto 0);
+b:in std_logic_vector(15 downto 0);
+sum: out std_logic_vector(15 downto 0));
+end adder;
+
+architecture Behavioral of adder is
+begin
+sum <= a+b;
+end Behavioral;

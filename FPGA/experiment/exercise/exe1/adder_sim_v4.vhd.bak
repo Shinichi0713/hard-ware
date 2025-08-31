@@ -1,0 +1,51 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity adder_sim is
+end adder_sim;
+
+architecture adder of adder_sim is
+component adder
+port(
+a,b:in std_logic_vector(15 downto 0);
+sum: out std_logic_vector(15 downto 0));
+end component;
+
+signal adder_a,adder_b: std_logic_vector(15 downto 0):=(others=>'0');
+signal sum: std_logic_vector(15 downto 0):=(others=>'0');
+signal invec_a:std_logic_vector(15 downto 0):=(others => '0');
+signal invec_b:std_logic_vector(15 downto 0):=(others => '0');
+
+constant period_a:time:=50ns;
+constant period_b:time:=100ns;
+
+begin
+u1:adder
+port map(
+a=>adder_a,
+b=>adder_b,
+sum=>sum);
+
+process
+begin
+invec_a <= "0000000000000001";
+loop
+wait for period_a;
+invec_a<=invec_a+'1';
+end loop;
+end process;
+
+process
+begin
+invec_b <= "0000000000000101";
+loop
+wait for period_b;
+invec_b<=invec_b+'1';
+end loop;
+end process;
+
+adder_a<=invec_a;
+adder_b<=invec_b;
+architecture
