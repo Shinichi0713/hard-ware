@@ -119,9 +119,7 @@ void displayNumber(int values[4]) {
 
 [Arduino - TM1637 4-Digit 7-Segment Display | Arduino Tutorial](https://arduinogetstarted.com/tutorials/arduino-tm1637-4-digit-7-segment-display)
 
-
 ![1756017790327](image/4-dht22-read/1756017790327.png)
-
 
 ## 抵抗が必要な理由
 
@@ -171,8 +169,6 @@ R=5−20.015=200 ΩR = \frac{5 - 2}{0.015} = 200\ \Omega
 👉 ここで確認ですが、あなたの7セグは **共通カソード** と **共通アノード** のどちらでしょうか？
 
 それによって抵抗の入れる位置（電源側かGND側）が変わってきます。
-
-
 
 なるほど！TM1637 4-wireタイプですね 😄
 
@@ -258,6 +254,5 @@ void loop() {
 # ライブラリインストール
 
 ![1756019150352](image/4-dht22-read/1756019150352.png)
-
 
 ![1756019130312](image/4-dht22-read/1756019130312.png)
