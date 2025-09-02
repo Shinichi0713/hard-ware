@@ -5,10 +5,14 @@ arduinoのサイト
 [Arduino on Wokwi - Online ESP32, STM32, Arduino Simulator](https://wokwi.com/arduino)
 
 
+機器の一覧
+
+[Supported Hardware | Wokwi Docs](https://docs.wokwi.com/getting-started/supported-hardware#motors)
+
+
 here is the site
 
 ![1756618960095](image/process/1756618960095.png)
-
 
 ## 流れ
 
