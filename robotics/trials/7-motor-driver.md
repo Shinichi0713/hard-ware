@@ -305,3 +305,21 @@ void loop() {
 ---
 
 👉 ご希望なら、この例を「動作を検知している間ずっとモータを回す」バージョンにもできますが、それも作りますか？
+
+
+## PIRセンサーリファレンス
+
+[Supported Hardware | Wokwi Docs](https://docs.wokwi.com/getting-started/supported-hardware#sensors)
+
+
+| Family                                             | Microcontrollers                                                                                                                                                                                         |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AVR                                                | ATmega328P ([Arduino Uno](https://docs.wokwi.com/parts/wokwi-arduino-uno)), ATmega2560 ([Arduino Mega](https://docs.wokwi.com/parts/wokwi-arduino-mega)), [ATtiny85](https://docs.wokwi.com/parts/wokwi-attiny85) |
+| [ESP32](https://docs.wokwi.com/guides/esp32)          | **Xtensa** : ESP32, ESP32-S2, ESP32-S3`` **RISC-V** : ESP32-C3, ESP32-C6, ESP32-H2, ESP32-P4*``                                                                                |
+| STM32                                              | [STM32C031](https://docs.wokwi.com/parts/board-st-nucleo-c031c6), [STM32L031](https://docs.wokwi.com/parts/board-st-nucleo-l031k6)                                                                             |
+| [Pi Pico](https://docs.wokwi.com/parts/wokwi-pi-pico) | RP2040 (Raspberry Pi Pico), an dual-core ARM Cortex-M0+ microcontroller                                                                                                                                  |
+
+* ESP32-H2 support is in beta, ESP32-P4 support is in alpha.
+
+
+![1757223411336](image/7-motor-driver/1757223411336.png)
