@@ -89,4 +89,104 @@ void loop() {
 * 安価・簡単に光センサーを作れるが、応答速度は遅め
 * Arduinoなどと組み合わせると「明るさセンサー」として活躍
 
+
+
+
+了解しました 👍
+
+ここでは **Arduino（AVR系マイコン）** を使って、**ステッピングモータの回転数を制御する基本コード** を紹介します。
+
 ---
+
+# ✅ 前提条件
+
+* ドライバIC（例：A4988, DRV8825 など）を使ってステッピングモータを駆動する
+* ドライバには通常
+  * `STEP` ピン（パルス入力で1ステップ進む）
+  * `DIR` ピン（回転方向指定）
+
+    を接続する
+
+---
+
+# ✅ Arduinoコード例：回転数制御
+
+```cpp
+#define STEP_PIN 3   // STEP 信号を出すピン
+#define DIR_PIN  4   // 回転方向を指定するピン
+
+// 設定
+int stepsPerRev = 200;    // モータ1回転のステップ数（例: 1.8°/step → 200）
+int rpm = 60;             // 回転数（1分間の回転数）
+
+void setup() {
+  pinMode(STEP_PIN, OUTPUT);
+  pinMode(DIR_PIN, OUTPUT);
+
+  digitalWrite(DIR_PIN, HIGH); // 回転方向（HIGH: 正転, LOW: 逆転）
+}
+
+void loop() {
+  // 1回転あたりのステップ周期計算
+  // → 60秒 / (rpm × stepsPerRev) = 1ステップあたりの秒数
+  float stepDelay = (60.0 * 1000000.0) / (rpm * stepsPerRev); // μs単位
+
+  // 1回転分だけ回す
+  for (int i = 0; i < stepsPerRev; i++) {
+    digitalWrite(STEP_PIN, HIGH);
+    delayMicroseconds(500);  // パルス幅 (HIGH時間)
+    digitalWrite(STEP_PIN, LOW);
+    delayMicroseconds(stepDelay - 500); // 残り時間をLOWで保持
+  }
+
+  delay(1000); // 1秒待機してまた回転
+}
+```
+
+---
+
+# ✅ ポイント
+
+1. **回転数の計算**
+   * RPM（回転数/分）からステップ周期を計算しています。
+   * `stepDelay` を短くすると高速回転、長くすると低速回転。
+2. **DIRピン**
+   * `HIGH` / `LOW` で回転方向を制御できます。
+3. **加速・減速制御**
+   * 実際には「急に高速にすると脱調」するので、ランプ（加速・減速制御）が必要です。
+   * 簡易コードでは固定速度にしています。
+
+---
+
+# ✅ 改良（加速・減速制御）
+
+もし実用的にしたいなら、`AccelStepper` ライブラリを使うと便利です：
+
+```cpp
+#include <AccelStepper.h>
+
+#define STEP_PIN 3
+#define DIR_PIN 4
+
+AccelStepper stepper(AccelStepper::DRIVER, STEP_PIN, DIR_PIN);
+
+void setup() {
+  stepper.setMaxSpeed(1000);   // 最大速度 (steps/sec)
+  stepper.setAcceleration(200); // 加速度 (steps/sec^2)
+}
+
+void loop() {
+  stepper.setSpeed(400);  // 回転速度 (steps/sec)
+  stepper.runSpeed();     // 常にこの速度で回す
+}
+```
+
+👉 このライブラリを使うと「滑らかな加減速」や「非ブロッキング制御」が簡単にできます。
+
+---
+
+# 🧠 まとめ
+
+* ステッピングモータは **STEPパルスの周期** で回転数を制御できる
+* `delayMicroseconds()` でパルス間隔を調整すれば RPM を設定可能
+* 実用的には **AccelStepperライブラリ** を使うのがおすすめ
