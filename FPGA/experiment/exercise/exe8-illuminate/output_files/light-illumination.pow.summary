@@ -1,12 +1,12 @@
-Power Analyzer Status : Successful - Mon Sep 15 14:22:06 2025
+Power Analyzer Status : Successful - Mon Sep 15 15:01:20 2025
 Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 Revision Name : light-illumination
 Top-level Entity Name : light_illumination
 Family : MAX 10
 Device : 10M50DAF484C6GES
 Power Models : Final
-Total Thermal Power Dissipation : 98.57 mW
+Total Thermal Power Dissipation : 104.68 mW
 Core Dynamic Thermal Power Dissipation : 0.00 mW
-Core Static Thermal Power Dissipation : 89.94 mW
-I/O Thermal Power Dissipation : 8.62 mW
+Core Static Thermal Power Dissipation : 96.18 mW
+I/O Thermal Power Dissipation : 8.50 mW
 Power Estimation Confidence : Low: user provided insufficient toggle rate data
