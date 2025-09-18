@@ -8,11 +8,39 @@
 
 ![1758056661899](image/experiment/1758056661899.png)
 
-
 ```spice
 .step param freq 1m 10m 1m
 
 ```
 
+一番振幅が大きい波形と、そうでないものが分かれます。3dB以上という定義ですが、結構差がついているように見えます。
 
 ![1758056837312](image/experiment/1758056837312.png)
+
+## 並列LC回路
+
+ちょっと詳しすぎるけど、原理はここが分かりやすい
+
+[交流回路の電圧と電流の計算とベクトル図（LC並列回路）](https://eleking.net/study/s-accircuit/sac-vi-lcp.html)
+
+
+下記は**1uHのコイル**と**1uFの[コンデンサ](https://d.hatena.ne.jp/keyword/%A5%B3%A5%F3%A5%C7%A5%F3%A5%B5)**を**並列**で回路に接続した例になります。
+
+**横軸が周波数** 、**縦軸が[インピーダンス](https://d.hatena.ne.jp/keyword/%A5%A4%A5%F3%A5%D4%A1%BC%A5%C0%A5%F3%A5%B9)**になりますが、**159kHzで[インピーダンス](https://d.hatena.ne.jp/keyword/%A5%A4%A5%F3%A5%D4%A1%BC%A5%C0%A5%F3%A5%B9)が最大**となっていることがわかります！
+
+![1758142379363](image/experiment/1758142379363.png)
+
+LC共振した場合のインピーダンスは最大値となる。
+
+
+![1758142516134](image/experiment/1758142516134.png)
+
+
+回路の共振周波数の計算自体は以下です。
+
+![1758143048761](image/experiment/1758143048761.png)
+
+
+AC周波数解析の結果はこの通り。
+
+![1758143003786](image/experiment/1758143003786.png)
