@@ -1,0 +1,35 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\lc-circuit\condensor\Draft3.net
+Start Time: Sat Sep 20 11:26:53 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+.OP point found by inspection.
+.step fx=1
+.step fx=50.95
+.step fx=100.9
+.step fx=150.85
+.step fx=200.8
+.step fx=250.75
+.step fx=300.7
+.step fx=350.65
+.step fx=400.6
+.step fx=450.55
+.step fx=500.5
+.step fx=550.45
+.step fx=600.4
+.step fx=650.35
+.step fx=700.3
+.step fx=750.25
+.step fx=800.2
+.step fx=850.15
+.step fx=900.1
+.step fx=950.05
+.step fx=1000
+Total elapsed time: 0.273 seconds.
+
+Files loaded:
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\lc-circuit\condensor\Draft3.net
+
