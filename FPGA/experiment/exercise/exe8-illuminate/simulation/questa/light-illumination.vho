@@ -17,10 +17,10 @@
 -- PROGRAM "Quartus Prime"
 -- VERSION "Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition"
 
--- DATE "09/15/2025 15:01:25"
+-- DATE "09/21/2025 13:40:31"
 
 -- 
--- Device: Altera 10M50DAF484C6GES Package FBGA484
+-- Device: Altera 10M08SAE144C8G Package EQFP144
 -- 
 
 -- 
@@ -45,13 +45,13 @@ ENTITY 	light_illumination IS
 END light_illumination;
 
 -- Design Ports Information
--- led[0]	=>  Location: PIN_AA2,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- led[1]	=>  Location: PIN_Y5,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- led[2]	=>  Location: PIN_W4,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- led[3]	=>  Location: PIN_W3,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- button	=>  Location: PIN_V8,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- reset	=>  Location: PIN_T6,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- osc_clk	=>  Location: PIN_R11,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- led[0]	=>  Location: PIN_132,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- led[1]	=>  Location: PIN_134,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- led[2]	=>  Location: PIN_135,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- led[3]	=>  Location: PIN_140,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- button	=>  Location: PIN_120,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- reset	=>  Location: PIN_121,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- osc_clk	=>  Location: PIN_27,	 I/O Standard: 2.5 V,	 Current Strength: Default
 
 
 ARCHITECTURE structure OF light_illumination IS
@@ -71,7 +71,6 @@ SIGNAL ww_led : std_logic_vector(3 DOWNTO 0);
 SIGNAL \pll_inst|altpll_component|auto_generated|pll1_INCLK_bus\ : std_logic_vector(1 DOWNTO 0);
 SIGNAL \pll_inst|altpll_component|auto_generated|pll1_CLK_bus\ : std_logic_vector(4 DOWNTO 0);
 SIGNAL \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ : std_logic_vector(4 DOWNTO 0);
-SIGNAL \~QUARTUS_CREATED_ADC2~_CHSEL_bus\ : std_logic_vector(4 DOWNTO 0);
 SIGNAL \pll_inst|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_INCLK_bus\ : std_logic_vector(3 DOWNTO 0);
 SIGNAL \~QUARTUS_CREATED_GND~I_combout\ : std_logic;
 SIGNAL \~QUARTUS_CREATED_UNVM~~busy\ : std_logic;
@@ -91,7 +90,6 @@ SIGNAL \~ALTERA_nSTATUS~~padout\ : std_logic;
 SIGNAL \~ALTERA_CONF_DONE~~ibuf_o\ : std_logic;
 SIGNAL \~ALTERA_CONF_DONE~~padout\ : std_logic;
 SIGNAL \~QUARTUS_CREATED_ADC1~~eoc\ : std_logic;
-SIGNAL \~QUARTUS_CREATED_ADC2~~eoc\ : std_logic;
 SIGNAL \~ALTERA_TDO~~obuf_o\ : std_logic;
 SIGNAL \reset~input_o\ : std_logic;
 SIGNAL \osc_clk~input_o\ : std_logic;
@@ -156,11 +154,11 @@ SIGNAL \counter_inst|cnt[26]~76_combout\ : std_logic;
 SIGNAL \counter_bus_mux_inst|result[3]~3_combout\ : std_logic;
 SIGNAL \counter_inst|cnt\ : std_logic_vector(31 DOWNTO 0);
 SIGNAL \pll_inst|altpll_component|auto_generated|wire_pll1_clk\ : std_logic_vector(4 DOWNTO 0);
-SIGNAL \counter_bus_mux_inst|ALT_INV_result[0]~0_combout\ : std_logic;
-SIGNAL \counter_bus_mux_inst|ALT_INV_result[1]~1_combout\ : std_logic;
-SIGNAL \ALT_INV_reset~input_o\ : std_logic;
-SIGNAL \counter_bus_mux_inst|ALT_INV_result[2]~2_combout\ : std_logic;
 SIGNAL \counter_bus_mux_inst|ALT_INV_result[3]~3_combout\ : std_logic;
+SIGNAL \ALT_INV_reset~input_o\ : std_logic;
+SIGNAL \counter_bus_mux_inst|ALT_INV_result[1]~1_combout\ : std_logic;
+SIGNAL \counter_bus_mux_inst|ALT_INV_result[2]~2_combout\ : std_logic;
+SIGNAL \counter_bus_mux_inst|ALT_INV_result[0]~0_combout\ : std_logic;
 
 BEGIN
 
@@ -182,16 +180,14 @@ ww_devpor <= devpor;
 
 \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ <= (\~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\);
 
-\~QUARTUS_CREATED_ADC2~_CHSEL_bus\ <= (\~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\);
-
 \pll_inst|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_INCLK_bus\ <= (vcc & vcc & vcc & \pll_inst|altpll_component|auto_generated|wire_pll1_clk\(0));
-\counter_bus_mux_inst|ALT_INV_result[0]~0_combout\ <= NOT \counter_bus_mux_inst|result[0]~0_combout\;
-\counter_bus_mux_inst|ALT_INV_result[1]~1_combout\ <= NOT \counter_bus_mux_inst|result[1]~1_combout\;
-\ALT_INV_reset~input_o\ <= NOT \reset~input_o\;
-\counter_bus_mux_inst|ALT_INV_result[2]~2_combout\ <= NOT \counter_bus_mux_inst|result[2]~2_combout\;
 \counter_bus_mux_inst|ALT_INV_result[3]~3_combout\ <= NOT \counter_bus_mux_inst|result[3]~3_combout\;
+\ALT_INV_reset~input_o\ <= NOT \reset~input_o\;
+\counter_bus_mux_inst|ALT_INV_result[1]~1_combout\ <= NOT \counter_bus_mux_inst|result[1]~1_combout\;
+\counter_bus_mux_inst|ALT_INV_result[2]~2_combout\ <= NOT \counter_bus_mux_inst|result[2]~2_combout\;
+\counter_bus_mux_inst|ALT_INV_result[0]~0_combout\ <= NOT \counter_bus_mux_inst|result[0]~0_combout\;
 
--- Location: LCCOMB_X44_Y51_N8
+-- Location: LCCOMB_X11_Y12_N16
 \~QUARTUS_CREATED_GND~I\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \~QUARTUS_CREATED_GND~I_combout\ = GND
@@ -204,7 +200,7 @@ GENERIC MAP (
 PORT MAP (
 	combout => \~QUARTUS_CREATED_GND~I_combout\);
 
--- Location: IOOBUF_X18_Y0_N23
+-- Location: IOOBUF_X6_Y10_N23
 \led[0]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -216,7 +212,7 @@ PORT MAP (
 	devoe => ww_devoe,
 	o => ww_led(0));
 
--- Location: IOOBUF_X18_Y0_N2
+-- Location: IOOBUF_X6_Y10_N30
 \led[1]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -228,7 +224,7 @@ PORT MAP (
 	devoe => ww_devoe,
 	o => ww_led(1));
 
--- Location: IOOBUF_X18_Y0_N16
+-- Location: IOOBUF_X3_Y10_N9
 \led[2]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -240,7 +236,7 @@ PORT MAP (
 	devoe => ww_devoe,
 	o => ww_led(2));
 
--- Location: IOOBUF_X18_Y0_N9
+-- Location: IOOBUF_X1_Y10_N9
 \led[3]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -252,7 +248,7 @@ PORT MAP (
 	devoe => ww_devoe,
 	o => ww_led(3));
 
--- Location: IOIBUF_X0_Y3_N22
+-- Location: IOIBUF_X15_Y25_N22
 \reset~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -264,7 +260,7 @@ PORT MAP (
 	i => ww_reset,
 	o => \reset~input_o\);
 
--- Location: IOIBUF_X31_Y0_N1
+-- Location: IOIBUF_X0_Y7_N22
 \osc_clk~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -368,7 +364,7 @@ PORT MAP (
 	fbout => \pll_inst|altpll_component|auto_generated|wire_pll1_fbout\,
 	clk => \pll_inst|altpll_component|auto_generated|pll1_CLK_bus\);
 
--- Location: CLKCTRL_G18
+-- Location: CLKCTRL_G3
 \pll_inst|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl\ : fiftyfivenm_clkctrl
 -- pragma translate_off
 GENERIC MAP (
@@ -381,7 +377,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	outclk => \pll_inst|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_outclk\);
 
--- Location: LCCOMB_X19_Y4_N0
+-- Location: LCCOMB_X11_Y10_N14
 \counter_inst|cnt[0]~78\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[0]~78_combout\ = \counter_inst|cnt\(0) $ (\reset~input_o\)
@@ -396,7 +392,7 @@ PORT MAP (
 	datad => \reset~input_o\,
 	combout => \counter_inst|cnt[0]~78_combout\);
 
--- Location: FF_X19_Y4_N1
+-- Location: FF_X11_Y10_N15
 \counter_inst|cnt[0]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -410,7 +406,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(0));
 
--- Location: LCCOMB_X19_Y4_N6
+-- Location: LCCOMB_X11_Y9_N6
 \counter_inst|cnt[1]~26\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[1]~26_combout\ = (\counter_inst|cnt\(1) & (\counter_inst|cnt\(0) $ (VCC))) # (!\counter_inst|cnt\(1) & (\counter_inst|cnt\(0) & VCC))
@@ -428,7 +424,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[1]~26_combout\,
 	cout => \counter_inst|cnt[1]~27\);
 
--- Location: FF_X19_Y4_N7
+-- Location: FF_X11_Y9_N7
 \counter_inst|cnt[1]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -443,7 +439,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(1));
 
--- Location: LCCOMB_X19_Y4_N8
+-- Location: LCCOMB_X11_Y9_N8
 \counter_inst|cnt[2]~28\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[2]~28_combout\ = (\counter_inst|cnt\(2) & (!\counter_inst|cnt[1]~27\)) # (!\counter_inst|cnt\(2) & ((\counter_inst|cnt[1]~27\) # (GND)))
@@ -461,7 +457,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[2]~28_combout\,
 	cout => \counter_inst|cnt[2]~29\);
 
--- Location: FF_X19_Y4_N9
+-- Location: FF_X11_Y9_N9
 \counter_inst|cnt[2]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -476,7 +472,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(2));
 
--- Location: LCCOMB_X19_Y4_N10
+-- Location: LCCOMB_X11_Y9_N10
 \counter_inst|cnt[3]~30\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[3]~30_combout\ = (\counter_inst|cnt\(3) & (\counter_inst|cnt[2]~29\ $ (GND))) # (!\counter_inst|cnt\(3) & (!\counter_inst|cnt[2]~29\ & VCC))
@@ -494,7 +490,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[3]~30_combout\,
 	cout => \counter_inst|cnt[3]~31\);
 
--- Location: FF_X19_Y4_N11
+-- Location: FF_X11_Y9_N11
 \counter_inst|cnt[3]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -509,7 +505,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(3));
 
--- Location: LCCOMB_X19_Y4_N12
+-- Location: LCCOMB_X11_Y9_N12
 \counter_inst|cnt[4]~32\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[4]~32_combout\ = (\counter_inst|cnt\(4) & (!\counter_inst|cnt[3]~31\)) # (!\counter_inst|cnt\(4) & ((\counter_inst|cnt[3]~31\) # (GND)))
@@ -527,7 +523,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[4]~32_combout\,
 	cout => \counter_inst|cnt[4]~33\);
 
--- Location: FF_X19_Y4_N13
+-- Location: FF_X11_Y9_N13
 \counter_inst|cnt[4]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -542,7 +538,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(4));
 
--- Location: LCCOMB_X19_Y4_N14
+-- Location: LCCOMB_X11_Y9_N14
 \counter_inst|cnt[5]~34\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[5]~34_combout\ = (\counter_inst|cnt\(5) & (\counter_inst|cnt[4]~33\ $ (GND))) # (!\counter_inst|cnt\(5) & (!\counter_inst|cnt[4]~33\ & VCC))
@@ -560,7 +556,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[5]~34_combout\,
 	cout => \counter_inst|cnt[5]~35\);
 
--- Location: FF_X19_Y4_N15
+-- Location: FF_X11_Y9_N15
 \counter_inst|cnt[5]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -575,7 +571,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(5));
 
--- Location: LCCOMB_X19_Y4_N16
+-- Location: LCCOMB_X11_Y9_N16
 \counter_inst|cnt[6]~36\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[6]~36_combout\ = (\counter_inst|cnt\(6) & (!\counter_inst|cnt[5]~35\)) # (!\counter_inst|cnt\(6) & ((\counter_inst|cnt[5]~35\) # (GND)))
@@ -593,7 +589,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[6]~36_combout\,
 	cout => \counter_inst|cnt[6]~37\);
 
--- Location: FF_X19_Y4_N17
+-- Location: FF_X11_Y9_N17
 \counter_inst|cnt[6]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -608,7 +604,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(6));
 
--- Location: LCCOMB_X19_Y4_N18
+-- Location: LCCOMB_X11_Y9_N18
 \counter_inst|cnt[7]~38\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[7]~38_combout\ = (\counter_inst|cnt\(7) & (\counter_inst|cnt[6]~37\ $ (GND))) # (!\counter_inst|cnt\(7) & (!\counter_inst|cnt[6]~37\ & VCC))
@@ -626,7 +622,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[7]~38_combout\,
 	cout => \counter_inst|cnt[7]~39\);
 
--- Location: FF_X19_Y4_N19
+-- Location: FF_X11_Y9_N19
 \counter_inst|cnt[7]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -641,7 +637,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(7));
 
--- Location: LCCOMB_X19_Y4_N20
+-- Location: LCCOMB_X11_Y9_N20
 \counter_inst|cnt[8]~40\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[8]~40_combout\ = (\counter_inst|cnt\(8) & (!\counter_inst|cnt[7]~39\)) # (!\counter_inst|cnt\(8) & ((\counter_inst|cnt[7]~39\) # (GND)))
@@ -659,7 +655,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[8]~40_combout\,
 	cout => \counter_inst|cnt[8]~41\);
 
--- Location: FF_X19_Y4_N21
+-- Location: FF_X11_Y9_N21
 \counter_inst|cnt[8]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -674,7 +670,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(8));
 
--- Location: LCCOMB_X19_Y4_N22
+-- Location: LCCOMB_X11_Y9_N22
 \counter_inst|cnt[9]~42\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[9]~42_combout\ = (\counter_inst|cnt\(9) & (\counter_inst|cnt[8]~41\ $ (GND))) # (!\counter_inst|cnt\(9) & (!\counter_inst|cnt[8]~41\ & VCC))
@@ -692,7 +688,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[9]~42_combout\,
 	cout => \counter_inst|cnt[9]~43\);
 
--- Location: FF_X19_Y4_N23
+-- Location: FF_X11_Y9_N23
 \counter_inst|cnt[9]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -707,7 +703,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(9));
 
--- Location: LCCOMB_X19_Y4_N24
+-- Location: LCCOMB_X11_Y9_N24
 \counter_inst|cnt[10]~44\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[10]~44_combout\ = (\counter_inst|cnt\(10) & (!\counter_inst|cnt[9]~43\)) # (!\counter_inst|cnt\(10) & ((\counter_inst|cnt[9]~43\) # (GND)))
@@ -725,7 +721,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[10]~44_combout\,
 	cout => \counter_inst|cnt[10]~45\);
 
--- Location: FF_X19_Y4_N25
+-- Location: FF_X11_Y9_N25
 \counter_inst|cnt[10]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -740,7 +736,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(10));
 
--- Location: LCCOMB_X19_Y4_N26
+-- Location: LCCOMB_X11_Y9_N26
 \counter_inst|cnt[11]~46\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[11]~46_combout\ = (\counter_inst|cnt\(11) & (\counter_inst|cnt[10]~45\ $ (GND))) # (!\counter_inst|cnt\(11) & (!\counter_inst|cnt[10]~45\ & VCC))
@@ -758,7 +754,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[11]~46_combout\,
 	cout => \counter_inst|cnt[11]~47\);
 
--- Location: FF_X19_Y4_N27
+-- Location: FF_X11_Y9_N27
 \counter_inst|cnt[11]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -773,7 +769,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(11));
 
--- Location: LCCOMB_X19_Y4_N28
+-- Location: LCCOMB_X11_Y9_N28
 \counter_inst|cnt[12]~48\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[12]~48_combout\ = (\counter_inst|cnt\(12) & (!\counter_inst|cnt[11]~47\)) # (!\counter_inst|cnt\(12) & ((\counter_inst|cnt[11]~47\) # (GND)))
@@ -791,7 +787,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[12]~48_combout\,
 	cout => \counter_inst|cnt[12]~49\);
 
--- Location: FF_X19_Y4_N29
+-- Location: FF_X11_Y9_N29
 \counter_inst|cnt[12]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -806,7 +802,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(12));
 
--- Location: LCCOMB_X19_Y4_N30
+-- Location: LCCOMB_X11_Y9_N30
 \counter_inst|cnt[13]~50\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[13]~50_combout\ = (\counter_inst|cnt\(13) & (\counter_inst|cnt[12]~49\ $ (GND))) # (!\counter_inst|cnt\(13) & (!\counter_inst|cnt[12]~49\ & VCC))
@@ -824,7 +820,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[13]~50_combout\,
 	cout => \counter_inst|cnt[13]~51\);
 
--- Location: FF_X19_Y4_N31
+-- Location: FF_X11_Y9_N31
 \counter_inst|cnt[13]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -839,7 +835,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(13));
 
--- Location: LCCOMB_X19_Y3_N0
+-- Location: LCCOMB_X11_Y8_N0
 \counter_inst|cnt[14]~52\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[14]~52_combout\ = (\counter_inst|cnt\(14) & (!\counter_inst|cnt[13]~51\)) # (!\counter_inst|cnt\(14) & ((\counter_inst|cnt[13]~51\) # (GND)))
@@ -857,7 +853,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[14]~52_combout\,
 	cout => \counter_inst|cnt[14]~53\);
 
--- Location: FF_X19_Y3_N1
+-- Location: FF_X11_Y8_N1
 \counter_inst|cnt[14]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -872,7 +868,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(14));
 
--- Location: LCCOMB_X19_Y3_N2
+-- Location: LCCOMB_X11_Y8_N2
 \counter_inst|cnt[15]~54\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[15]~54_combout\ = (\counter_inst|cnt\(15) & (\counter_inst|cnt[14]~53\ $ (GND))) # (!\counter_inst|cnt\(15) & (!\counter_inst|cnt[14]~53\ & VCC))
@@ -890,7 +886,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[15]~54_combout\,
 	cout => \counter_inst|cnt[15]~55\);
 
--- Location: FF_X19_Y3_N3
+-- Location: FF_X11_Y8_N3
 \counter_inst|cnt[15]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -905,7 +901,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(15));
 
--- Location: LCCOMB_X19_Y3_N4
+-- Location: LCCOMB_X11_Y8_N4
 \counter_inst|cnt[16]~56\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[16]~56_combout\ = (\counter_inst|cnt\(16) & (!\counter_inst|cnt[15]~55\)) # (!\counter_inst|cnt\(16) & ((\counter_inst|cnt[15]~55\) # (GND)))
@@ -923,7 +919,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[16]~56_combout\,
 	cout => \counter_inst|cnt[16]~57\);
 
--- Location: FF_X19_Y3_N5
+-- Location: FF_X11_Y8_N5
 \counter_inst|cnt[16]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -938,7 +934,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(16));
 
--- Location: LCCOMB_X19_Y3_N6
+-- Location: LCCOMB_X11_Y8_N6
 \counter_inst|cnt[17]~58\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[17]~58_combout\ = (\counter_inst|cnt\(17) & (\counter_inst|cnt[16]~57\ $ (GND))) # (!\counter_inst|cnt\(17) & (!\counter_inst|cnt[16]~57\ & VCC))
@@ -956,7 +952,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[17]~58_combout\,
 	cout => \counter_inst|cnt[17]~59\);
 
--- Location: FF_X19_Y3_N7
+-- Location: FF_X11_Y8_N7
 \counter_inst|cnt[17]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -971,7 +967,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(17));
 
--- Location: LCCOMB_X19_Y3_N8
+-- Location: LCCOMB_X11_Y8_N8
 \counter_inst|cnt[18]~60\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[18]~60_combout\ = (\counter_inst|cnt\(18) & (!\counter_inst|cnt[17]~59\)) # (!\counter_inst|cnt\(18) & ((\counter_inst|cnt[17]~59\) # (GND)))
@@ -989,7 +985,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[18]~60_combout\,
 	cout => \counter_inst|cnt[18]~61\);
 
--- Location: FF_X19_Y3_N9
+-- Location: FF_X11_Y8_N9
 \counter_inst|cnt[18]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1004,7 +1000,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(18));
 
--- Location: LCCOMB_X19_Y3_N10
+-- Location: LCCOMB_X11_Y8_N10
 \counter_inst|cnt[19]~62\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[19]~62_combout\ = (\counter_inst|cnt\(19) & (\counter_inst|cnt[18]~61\ $ (GND))) # (!\counter_inst|cnt\(19) & (!\counter_inst|cnt[18]~61\ & VCC))
@@ -1022,7 +1018,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[19]~62_combout\,
 	cout => \counter_inst|cnt[19]~63\);
 
--- Location: FF_X19_Y3_N11
+-- Location: FF_X11_Y8_N11
 \counter_inst|cnt[19]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1037,7 +1033,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(19));
 
--- Location: LCCOMB_X19_Y3_N12
+-- Location: LCCOMB_X11_Y8_N12
 \counter_inst|cnt[20]~64\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[20]~64_combout\ = (\counter_inst|cnt\(20) & (!\counter_inst|cnt[19]~63\)) # (!\counter_inst|cnt\(20) & ((\counter_inst|cnt[19]~63\) # (GND)))
@@ -1055,7 +1051,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[20]~64_combout\,
 	cout => \counter_inst|cnt[20]~65\);
 
--- Location: FF_X19_Y3_N13
+-- Location: FF_X11_Y8_N13
 \counter_inst|cnt[20]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1070,7 +1066,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(20));
 
--- Location: LCCOMB_X19_Y3_N14
+-- Location: LCCOMB_X11_Y8_N14
 \counter_inst|cnt[21]~66\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[21]~66_combout\ = (\counter_inst|cnt\(21) & (\counter_inst|cnt[20]~65\ $ (GND))) # (!\counter_inst|cnt\(21) & (!\counter_inst|cnt[20]~65\ & VCC))
@@ -1088,7 +1084,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[21]~66_combout\,
 	cout => \counter_inst|cnt[21]~67\);
 
--- Location: FF_X19_Y3_N15
+-- Location: FF_X11_Y8_N15
 \counter_inst|cnt[21]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1103,7 +1099,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(21));
 
--- Location: LCCOMB_X19_Y3_N16
+-- Location: LCCOMB_X11_Y8_N16
 \counter_inst|cnt[22]~68\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[22]~68_combout\ = (\counter_inst|cnt\(22) & (!\counter_inst|cnt[21]~67\)) # (!\counter_inst|cnt\(22) & ((\counter_inst|cnt[21]~67\) # (GND)))
@@ -1121,7 +1117,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[22]~68_combout\,
 	cout => \counter_inst|cnt[22]~69\);
 
--- Location: FF_X19_Y3_N17
+-- Location: FF_X11_Y8_N17
 \counter_inst|cnt[22]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1136,7 +1132,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(22));
 
--- Location: LCCOMB_X19_Y3_N18
+-- Location: LCCOMB_X11_Y8_N18
 \counter_inst|cnt[23]~70\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[23]~70_combout\ = (\counter_inst|cnt\(23) & (\counter_inst|cnt[22]~69\ $ (GND))) # (!\counter_inst|cnt\(23) & (!\counter_inst|cnt[22]~69\ & VCC))
@@ -1154,7 +1150,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[23]~70_combout\,
 	cout => \counter_inst|cnt[23]~71\);
 
--- Location: FF_X19_Y3_N19
+-- Location: FF_X11_Y8_N19
 \counter_inst|cnt[23]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1169,7 +1165,7 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(23));
 
--- Location: IOIBUF_X20_Y0_N15
+-- Location: IOIBUF_X15_Y25_N15
 \button~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1181,7 +1177,7 @@ PORT MAP (
 	i => ww_button,
 	o => \button~input_o\);
 
--- Location: LCCOMB_X19_Y3_N26
+-- Location: LCCOMB_X11_Y11_N16
 \counter_bus_mux_inst|result[0]~0\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_bus_mux_inst|result[0]~0_combout\ = (\button~input_o\ & ((\counter_inst|cnt\(21)))) # (!\button~input_o\ & (\counter_inst|cnt\(23)))
@@ -1197,7 +1193,7 @@ PORT MAP (
 	datad => \button~input_o\,
 	combout => \counter_bus_mux_inst|result[0]~0_combout\);
 
--- Location: LCCOMB_X19_Y3_N20
+-- Location: LCCOMB_X11_Y8_N20
 \counter_inst|cnt[24]~72\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[24]~72_combout\ = (\counter_inst|cnt\(24) & (!\counter_inst|cnt[23]~71\)) # (!\counter_inst|cnt\(24) & ((\counter_inst|cnt[23]~71\) # (GND)))
@@ -1215,7 +1211,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[24]~72_combout\,
 	cout => \counter_inst|cnt[24]~73\);
 
--- Location: FF_X19_Y3_N21
+-- Location: FF_X11_Y8_N21
 \counter_inst|cnt[24]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1230,23 +1226,23 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(24));
 
--- Location: LCCOMB_X20_Y3_N0
+-- Location: LCCOMB_X11_Y10_N16
 \counter_bus_mux_inst|result[1]~1\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_bus_mux_inst|result[1]~1_combout\ = (\button~input_o\ & ((\counter_inst|cnt\(22)))) # (!\button~input_o\ & (\counter_inst|cnt\(24)))
 
 -- pragma translate_off
 GENERIC MAP (
-	lut_mask => "1111000011001100",
+	lut_mask => "1100101011001010",
 	sum_lutc_input => "datac")
 -- pragma translate_on
 PORT MAP (
-	datab => \counter_inst|cnt\(24),
-	datac => \counter_inst|cnt\(22),
-	datad => \button~input_o\,
+	dataa => \counter_inst|cnt\(24),
+	datab => \counter_inst|cnt\(22),
+	datac => \button~input_o\,
 	combout => \counter_bus_mux_inst|result[1]~1_combout\);
 
--- Location: LCCOMB_X19_Y3_N22
+-- Location: LCCOMB_X11_Y8_N22
 \counter_inst|cnt[25]~74\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[25]~74_combout\ = (\counter_inst|cnt\(25) & (\counter_inst|cnt[24]~73\ $ (GND))) # (!\counter_inst|cnt\(25) & (!\counter_inst|cnt[24]~73\ & VCC))
@@ -1264,7 +1260,7 @@ PORT MAP (
 	combout => \counter_inst|cnt[25]~74_combout\,
 	cout => \counter_inst|cnt[25]~75\);
 
--- Location: FF_X19_Y3_N23
+-- Location: FF_X11_Y8_N23
 \counter_inst|cnt[25]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1279,23 +1275,23 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(25));
 
--- Location: LCCOMB_X19_Y3_N28
+-- Location: LCCOMB_X11_Y10_N10
 \counter_bus_mux_inst|result[2]~2\ : fiftyfivenm_lcell_comb
 -- Equation(s):
--- \counter_bus_mux_inst|result[2]~2_combout\ = (\button~input_o\ & (\counter_inst|cnt\(23))) # (!\button~input_o\ & ((\counter_inst|cnt\(25))))
+-- \counter_bus_mux_inst|result[2]~2_combout\ = (\button~input_o\ & ((\counter_inst|cnt\(23)))) # (!\button~input_o\ & (\counter_inst|cnt\(25)))
 
 -- pragma translate_off
 GENERIC MAP (
-	lut_mask => "1100110011110000",
+	lut_mask => "1110010011100100",
 	sum_lutc_input => "datac")
 -- pragma translate_on
 PORT MAP (
-	datab => \counter_inst|cnt\(23),
-	datac => \counter_inst|cnt\(25),
-	datad => \button~input_o\,
+	dataa => \button~input_o\,
+	datab => \counter_inst|cnt\(25),
+	datac => \counter_inst|cnt\(23),
 	combout => \counter_bus_mux_inst|result[2]~2_combout\);
 
--- Location: LCCOMB_X19_Y3_N24
+-- Location: LCCOMB_X11_Y8_N24
 \counter_inst|cnt[26]~76\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \counter_inst|cnt[26]~76_combout\ = \counter_inst|cnt[25]~75\ $ (\counter_inst|cnt\(26))
@@ -1310,7 +1306,7 @@ PORT MAP (
 	cin => \counter_inst|cnt[25]~75\,
 	combout => \counter_inst|cnt[26]~76_combout\);
 
--- Location: FF_X19_Y3_N25
+-- Location: FF_X11_Y8_N25
 \counter_inst|cnt[26]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
@@ -1325,23 +1321,23 @@ PORT MAP (
 	devpor => ww_devpor,
 	q => \counter_inst|cnt\(26));
 
--- Location: LCCOMB_X19_Y3_N30
+-- Location: LCCOMB_X11_Y10_N28
 \counter_bus_mux_inst|result[3]~3\ : fiftyfivenm_lcell_comb
 -- Equation(s):
--- \counter_bus_mux_inst|result[3]~3_combout\ = (\button~input_o\ & ((\counter_inst|cnt\(24)))) # (!\button~input_o\ & (\counter_inst|cnt\(26)))
+-- \counter_bus_mux_inst|result[3]~3_combout\ = (\button~input_o\ & (\counter_inst|cnt\(24))) # (!\button~input_o\ & ((\counter_inst|cnt\(26))))
 
 -- pragma translate_off
 GENERIC MAP (
-	lut_mask => "1110111001000100",
+	lut_mask => "1010110010101100",
 	sum_lutc_input => "datac")
 -- pragma translate_on
 PORT MAP (
-	dataa => \button~input_o\,
+	dataa => \counter_inst|cnt\(24),
 	datab => \counter_inst|cnt\(26),
-	datad => \counter_inst|cnt\(24),
+	datac => \button~input_o\,
 	combout => \counter_bus_mux_inst|result[3]~3_combout\);
 
--- Location: UNVM_X0_Y40_N40
+-- Location: UNVM_X0_Y11_N40
 \~QUARTUS_CREATED_UNVM~\ : fiftyfivenm_unvm
 -- pragma translate_off
 GENERIC MAP (
@@ -1366,7 +1362,7 @@ PORT MAP (
 	se => \~QUARTUS_CREATED_GND~I_combout\,
 	busy => \~QUARTUS_CREATED_UNVM~~busy\);
 
--- Location: ADCBLOCK_X43_Y52_N0
+-- Location: ADCBLOCK_X10_Y24_N0
 \~QUARTUS_CREATED_ADC1~\ : fiftyfivenm_adcblock
 -- pragma translate_off
 GENERIC MAP (
@@ -1388,29 +1384,6 @@ PORT MAP (
 	tsen => \~QUARTUS_CREATED_GND~I_combout\,
 	chsel => \~QUARTUS_CREATED_ADC1~_CHSEL_bus\,
 	eoc => \~QUARTUS_CREATED_ADC1~~eoc\);
-
--- Location: ADCBLOCK_X43_Y51_N0
-\~QUARTUS_CREATED_ADC2~\ : fiftyfivenm_adcblock
--- pragma translate_off
-GENERIC MAP (
-	analog_input_pin_mask => 0,
-	clkdiv => 1,
-	device_partname_fivechar_prefix => "none",
-	is_this_first_or_second_adc => 2,
-	prescalar => 0,
-	pwd => 1,
-	refsel => 0,
-	reserve_block => "true",
-	testbits => 66,
-	tsclkdiv => 1,
-	tsclksel => 0)
--- pragma translate_on
-PORT MAP (
-	soc => \~QUARTUS_CREATED_GND~I_combout\,
-	usr_pwd => VCC,
-	tsen => \~QUARTUS_CREATED_GND~I_combout\,
-	chsel => \~QUARTUS_CREATED_ADC2~_CHSEL_bus\,
-	eoc => \~QUARTUS_CREATED_ADC2~~eoc\);
 END structure;
 
 
