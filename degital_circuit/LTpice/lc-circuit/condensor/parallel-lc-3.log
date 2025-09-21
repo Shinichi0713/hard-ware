@@ -1,0 +1,115 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\lc-circuit\condensor\parallel-lc-3.net
+Start Time: Sun Sep 21 12:18:12 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+.OP point found by inspection.
+.step fx=100
+.step fx=105
+.step fx=110
+.step fx=115
+.step fx=120
+.step fx=125
+.step fx=130
+.step fx=135
+.step fx=140
+.step fx=145
+.step fx=150
+.step fx=155
+.step fx=160
+.step fx=165
+.step fx=170
+.step fx=175
+.step fx=180
+.step fx=185
+.step fx=190
+.step fx=195
+.step fx=200
+.step fx=205
+.step fx=210
+.step fx=215
+.step fx=220
+.step fx=225
+.step fx=230
+.step fx=235
+.step fx=240
+.step fx=245
+.step fx=250
+.step fx=255
+.step fx=260
+.step fx=265
+.step fx=270
+.step fx=275
+.step fx=280
+.step fx=285
+.step fx=290
+.step fx=295
+.step fx=300
+.step fx=305
+.step fx=310
+.step fx=315
+.step fx=320
+.step fx=325
+.step fx=330
+.step fx=335
+.step fx=340
+.step fx=345
+.step fx=350
+.step fx=355
+.step fx=360
+.step fx=365
+.step fx=370
+.step fx=375
+.step fx=380
+.step fx=385
+.step fx=390
+.step fx=395
+.step fx=400
+.step fx=405
+.step fx=410
+.step fx=415
+.step fx=420
+.step fx=425
+.step fx=430
+.step fx=435
+.step fx=440
+.step fx=445
+.step fx=450
+.step fx=455
+.step fx=460
+.step fx=465
+.step fx=470
+.step fx=475
+.step fx=480
+.step fx=485
+.step fx=490
+.step fx=495
+.step fx=500
+.step fx=505
+.step fx=510
+.step fx=515
+.step fx=520
+.step fx=525
+.step fx=530
+.step fx=535
+.step fx=540
+.step fx=545
+.step fx=550
+.step fx=555
+.step fx=560
+.step fx=565
+.step fx=570
+.step fx=575
+.step fx=580
+.step fx=585
+.step fx=590
+.step fx=595
+.step fx=600
+Total elapsed time: 7.303 seconds.
+
+Files loaded:
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\lc-circuit\condensor\parallel-lc-3.net
+
