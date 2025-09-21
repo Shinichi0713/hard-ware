@@ -3,10 +3,10 @@ osc_clk => pll:pll_inst.inclk0
 reset => counter:counter_inst.reset
 reset => pll:pll_inst.areset
 button => counter_bus_mux:counter_bus_mux_inst.sel
-led[0] << counter_bus_mux:counter_bus_mux_inst.result[0]
-led[1] << counter_bus_mux:counter_bus_mux_inst.result[1]
-led[2] << counter_bus_mux:counter_bus_mux_inst.result[2]
-led[3] << counter_bus_mux:counter_bus_mux_inst.result[3]
+led[0] <= counter_bus_mux:counter_bus_mux_inst.result[0]
+led[1] <= counter_bus_mux:counter_bus_mux_inst.result[1]
+led[2] <= counter_bus_mux:counter_bus_mux_inst.result[2]
+led[3] <= counter_bus_mux:counter_bus_mux_inst.result[3]
 
 
 |light_illumination|pll:pll_inst

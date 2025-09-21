@@ -1,5 +1,5 @@
 Flow report for light-illumination
-Mon Sep 15 15:03:33 2025
+Sun Sep 21 13:40:31 2025
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -41,24 +41,24 @@ on the Quartus Prime software download page.
 +--------------------------------------------------------------------------------------+
 ; Flow Summary                                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Flow Status                        ; Successful - Mon Sep 15 15:03:33 2025           ;
+; Flow Status                        ; Successful - Sun Sep 21 13:40:31 2025           ;
 ; Quartus Prime Version              ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                      ; light-illumination                              ;
 ; Top-level Entity Name              ; light_illumination                              ;
 ; Family                             ; MAX 10                                          ;
-; Device                             ; 10M50DAF484C6GES                                ;
-; Timing Models                      ; Preliminary                                     ;
-; Total logic elements               ; N/A until Partition Merge                       ;
-;     Total combinational functions  ; N/A until Partition Merge                       ;
-;     Dedicated logic registers      ; N/A until Partition Merge                       ;
-; Total registers                    ; N/A until Partition Merge                       ;
-; Total pins                         ; N/A until Partition Merge                       ;
-; Total virtual pins                 ; N/A until Partition Merge                       ;
-; Total memory bits                  ; N/A until Partition Merge                       ;
-; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                       ;
-; Total PLLs                         ; N/A until Partition Merge                       ;
-; UFM blocks                         ; N/A until Partition Merge                       ;
-; ADC blocks                         ; N/A until Partition Merge                       ;
+; Device                             ; 10M08SAE144C8G                                  ;
+; Timing Models                      ; Final                                           ;
+; Total logic elements               ; 32 / 8,064 ( < 1 % )                            ;
+;     Total combinational functions  ; 32 / 8,064 ( < 1 % )                            ;
+;     Dedicated logic registers      ; 27 / 8,064 ( < 1 % )                            ;
+; Total registers                    ; 27                                              ;
+; Total pins                         ; 7 / 101 ( 7 % )                                 ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 0 / 387,072 ( 0 % )                             ;
+; Embedded Multiplier 9-bit elements ; 0 / 48 ( 0 % )                                  ;
+; Total PLLs                         ; 1 / 1 ( 100 % )                                 ;
+; UFM blocks                         ; 0 / 1 ( 0 % )                                   ;
+; ADC blocks                         ; 0 / 1 ( 0 % )                                   ;
 +------------------------------------+-------------------------------------------------+
 
 
@@ -67,7 +67,7 @@ on the Quartus Prime software download page.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 09/15/2025 15:03:26 ;
+; Start date & time ; 09/21/2025 13:40:06 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; light-illumination  ;
 +-------------------+---------------------+
@@ -78,7 +78,7 @@ on the Quartus Prime software download page.
 +-------------------------------------+----------------------------------------+--------------------+--------------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value      ; Entity Name        ; Section Id                        ;
 +-------------------------------------+----------------------------------------+--------------------+--------------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 277137602003283.175791620616080        ; --                 ; --                 ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 277137602003283.175842960628632        ; --                 ; --                 ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --                 ; --                 ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --                 ; --                 ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --                 ; --                 ; eda_board_design_signal_integrity ;
@@ -106,29 +106,44 @@ on the Quartus Prime software download page.
 +-------------------------------------+----------------------------------------+--------------------+--------------------+-----------------------------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------+
-; Flow Elapsed Time                                                                                                          ;
-+------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
-+------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:08     ; 1.0                     ; 4830 MB             ; 00:00:17                           ;
-; Total                  ; 00:00:08     ; --                      ; --                  ; 00:00:17                           ;
-+------------------------+--------------+-------------------------+---------------------+------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                        ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis ; 00:00:08     ; 1.0                     ; 4891 MB             ; 00:00:18                           ;
+; Fitter               ; 00:00:05     ; 1.0                     ; 5679 MB             ; 00:00:05                           ;
+; Assembler            ; 00:00:01     ; 1.0                     ; 4733 MB             ; 00:00:01                           ;
+; Power Analyzer       ; 00:00:02     ; 1.0                     ; 4869 MB             ; 00:00:01                           ;
+; Timing Analyzer      ; 00:00:02     ; 1.0                     ; 4873 MB             ; 00:00:03                           ;
+; EDA Netlist Writer   ; 00:00:01     ; 1.0                     ; 4657 MB             ; 00:00:01                           ;
+; Total                ; 00:00:19     ; --                      ; --                  ; 00:00:29                           ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+--------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                      ;
-+------------------------+------------------+------------+------------+----------------+
-; Module Name            ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
-+------------------------+------------------+------------+------------+----------------+
-; Analysis & Elaboration ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
-+------------------------+------------------+------------+------------+----------------+
++------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                    ;
++----------------------+------------------+------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++----------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
+; Power Analyzer       ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
+; EDA Netlist Writer   ; MyComputer       ; Windows 10 ; 10.0       ; x86_64         ;
++----------------------+------------------+------------+------------+----------------+
 
 
 ------------
 ; Flow Log ;
 ------------
-quartus_map --read_settings_files=on --write_settings_files=off light-illumination -c light-illumination --analysis_and_elaboration
+quartus_map --read_settings_files=on --write_settings_files=off light-illumination -c light-illumination
+quartus_fit --read_settings_files=off --write_settings_files=off light-illumination -c light-illumination
+quartus_asm --read_settings_files=off --write_settings_files=off light-illumination -c light-illumination
+quartus_pow --read_settings_files=off --write_settings_files=off light-illumination -c light-illumination
+quartus_sta light-illumination -c light-illumination
+quartus_eda --read_settings_files=off --write_settings_files=off light-illumination -c light-illumination
 
 
 
