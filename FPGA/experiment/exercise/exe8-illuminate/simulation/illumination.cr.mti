@@ -1,0 +1,20 @@
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity tb_counter
+-- Compiling architecture sim of tb_counter
+-- Loading entity counter
+
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity counter
+-- Compiling architecture rtl of counter
+
+} {} {}}
