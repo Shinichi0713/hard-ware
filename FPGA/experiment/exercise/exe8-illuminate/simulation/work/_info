@@ -37,8 +37,8 @@ R3
 Z14 DEx4 work 7 counter 0 22 YA1g2=MmIiDCBzbb9GNne1
 l16
 L14
-Z15 VSJn6Mid:bl6K]e:X6eC<g3
-Z16 !s100 6d9k5kH?J>@lK_jA;P2<R0
+VSJn6Mid:bl6K]e:X6eC<g3
+!s100 6d9k5kH?J>@lK_jA;P2<R0
 R7
 32
 R8
@@ -49,14 +49,55 @@ R11
 !i113 1
 R12
 R13
-Etb_counter
-Z17 w1758598400
+Eselector
+Z15 w1758661436
 R1
 R2
 R3
 R4
-Z18 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd
-Z19 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd
+Z16 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd
+Z17 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd
+l0
+L5
+VQzAA6;J^Pzd6KDV^2?<8l2
+!s100 RMiI?CkX[[1kd71:UT`l_3
+R7
+32
+Z18 !s110 1758661444
+!i10b 1
+Z19 !s108 1758661444.000000
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd|
+Z21 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd|
+!i113 1
+R12
+R13
+Artl
+R1
+R2
+R3
+Z22 DEx4 work 8 selector 0 22 QzAA6;J^Pzd6KDV^2?<8l2
+l15
+L14
+VOk2VUCceSmE4:loXIRXGJ3
+!s100 oTo9^jgQFY[SlGA0FLmT71
+R7
+32
+R18
+!i10b 1
+R19
+R20
+R21
+!i113 1
+R12
+R13
+Etb_counter
+Z23 w1758598400
+R1
+R2
+R3
+R4
+Z24 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd
+Z25 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd
 l0
 L5
 VKRW[^^UjS2mG7HFCMf;[L3
@@ -66,8 +107,8 @@ R7
 R8
 !i10b 1
 R9
-Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd|
-Z21 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd|
+Z26 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd|
+Z27 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/counter_sim.vhd|
 !i113 1
 R12
 R13
@@ -86,8 +127,50 @@ R7
 R8
 !i10b 1
 R9
-R20
-R21
+R26
+R27
+!i113 1
+R12
+R13
+Etb_selector
+Z28 w1758661348
+R1
+R2
+R3
+R4
+Z29 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd
+Z30 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd
+l0
+L5
+V5WGGO]07in[IGQa8PLYB^3
+!s100 `P<0o4iYY??kA;mzQml]h1
+R7
+32
+R18
+!i10b 1
+R19
+Z31 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd|
+Z32 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd|
+!i113 1
+R12
+R13
+Asim
+R22
+R1
+R2
+R3
+DEx4 work 11 tb_selector 0 22 5WGGO]07in[IGQa8PLYB^3
+l14
+L8
+V?jR>>VG2=EPkFFEbSfn=a3
+!s100 5clnVzlQ<8]NC<PLneU[b2
+R7
+32
+R18
+!i10b 1
+R19
+R31
+R32
 !i113 1
 R12
 R13
