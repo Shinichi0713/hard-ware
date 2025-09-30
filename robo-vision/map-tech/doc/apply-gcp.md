@@ -14,7 +14,7 @@ OpenDroneMap (ODM) が 3D マップ（点群・メッシュ・DSM/DTM）を生�
 * EXIF メタデータに含まれる **GPS位置・高度・カメラ情報**
 * （任意で）**Ground Control Points (GCPファイル)** → 精度向上用
 
----
+> EXIFメタデータのGPS情報を取得
 
 ### 2. 特徴点抽出（基準となるポイントの検出）
 
@@ -24,7 +24,7 @@ OpenDroneMap (ODM) が 3D マップ（点群・メッシュ・DSM/DTM）を生�
   → これが ODM の計算基準となるポイント群
 * ここで作られるのが「Sparse Point Cloud（疎点群）」です
 
----
+> 特徴点抽出→tie-points
 
 ### 3. カメラポーズ推定（SfM）
 
@@ -32,14 +32,12 @@ OpenDroneMap (ODM) が 3D マップ（点群・メッシュ・DSM/DTM）を生�
 * **バンドル調整（Bundle Adjustment）** により、カメラ位置と3D点群の誤差を最小化
 * GPS/GCP がある場合は、それを拘束条件として利用し、**座標系を現実の地理座標系（例: UTM）に合わせる**
 
----
-
 ### 4. 密な点群生成（MVS）
 
 * 最適化されたカメラポーズを使い、**Multi-View Stereo** により各ピクセルに対して3D座標を推定
 * これにより、**Dense Point Cloud（密な点群）** が得られる
 
----
+
 
 ### 5. メッシュ生成
 
@@ -73,8 +71,6 @@ OpenDroneMap (ODM) が 3D マップ（点群・メッシュ・DSM/DTM）を生�
 ---
 
 👉 もし「実際に OpenDroneMap の出力から  **どのステージで基準点がどう使われているか確認したい** 」というのであれば、`opensfm` フォルダのログや `reconstruction.json` の中身を見ると、tie-points やカメラ位置が確認できます。
-
-
 
 マップ生成まで
 
@@ -169,8 +165,6 @@ docker run -ti --rm -v /path/to/dataset:/datasets opendronemap/odm \
 * ODMの **SfM + BA** 処理で、GCPを拘束条件にして正しい座標に調整
 * 出力点群やメッシュは **UTMなどの実世界座標** で整合
 
-
-
 # マージの基準として活用
 
 では **「複数フライトで撮影したデータを後でマージするために、座標基準を整える」** 方法にフォーカスして整理しますね。
@@ -250,8 +244,6 @@ docker run -ti --rm -v /path/to/dataset:/datasets opendronemap/odm \
 **(A) できるだけ自動で揃えたい（後処理でICPなどを多用する）** のか、
 
 **(B) 現場でGCPを測量して精度を担保したい** のか、どちらに近いイメージでしょうか？
-
-
 
 # 自動で生成
 
