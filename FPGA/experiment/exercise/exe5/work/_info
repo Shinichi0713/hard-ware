@@ -10,34 +10,34 @@ z2
 cModel Technology
 dC:/Users/yoshinsh.AP/Documents/python_scripts/the_other/hard-ware/FPGA/experiment/exercise/exe4
 Emux4
-Z0 w1756415634
+Z0 w1759353183
 Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z2 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
 Z3 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5
-Z4 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd
-Z5 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd
+Z4 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v5.vhd
+Z5 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v5.vhd
 l0
-L4
-VTUK7mKNUT4EfO^Va;HYI43
-!s100 Kz2=7dofe]iNM=MeWg1@O1
+L5
+V4TCcQiaCnlU[L4YR=<_T41
+!s100 4881m<`TYD_<m_GDPZAQR0
 Z6 OV;C;10.5b;63
 32
-Z7 !s110 1756415637
+Z7 !s110 1759353187
 !i10b 1
-Z8 !s108 1756415637.000000
-Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd|
-Z10 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd|
+Z8 !s108 1759353187.000000
+Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v5.vhd|
+Z10 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v5.vhd|
 !i113 1
 Z11 o-work work -2002 -explicit
 Z12 tExplicit 1 CvgOpt 0
-Abehavioral
+Abehavior
 R1
 R2
-DEx4 work 4 mux4 0 22 TUK7mKNUT4EfO^Va;HYI43
-l14
-L13
-V7=[jBQYZXOC;Uaei8EMV=0
-!s100 YzQ3YBgKAWB9[VVPiX==<3
+DEx4 work 4 mux4 0 22 4TCcQiaCnlU[L4YR=<_T41
+l15
+L14
+V:YogS]z?:>G^D5QIk01_J1
+!s100 M_mV4BB^N_Z967LJ`YG=71
 R6
 32
 R7
@@ -48,6 +48,27 @@ R10
 !i113 1
 R11
 R12
+Abehavioral
+R1
+R2
+DEx4 work 4 mux4 0 22 TUK7mKNUT4EfO^Va;HYI43
+l14
+L13
+V7=[jBQYZXOC;Uaei8EMV=0
+!s100 YzQ3YBgKAWB9[VVPiX==<3
+R6
+32
+!s110 1756415637
+!i10b 1
+!s108 1756415637.000000
+!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd|
+!s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd|
+!i113 1
+R11
+R12
+FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd
+w1756415634
+8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe5/mux4_v3.vhd
 Emux4_sim
 Z13 w1756415581
 Z14 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1

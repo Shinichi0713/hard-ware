@@ -1,13 +1,4 @@
-{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity selector
--- Compiling architecture rtl of selector
-
-} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd}
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector_sim.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -16,5 +7,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity tb_selector
 -- Compiling architecture sim of tb_selector
 -- Loading entity selector
+
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/experiment/exercise/exe8-illuminate/simulation/selector.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity selector
+-- Compiling architecture rtl of selector
 
 } {} {}}
