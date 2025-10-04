@@ -6,23 +6,23 @@
 
 ![1759535730655](image/explain/1759535730655.png)
 
+コイルは電気エネルギを蓄積する効果があります。
 
+蓄積の式は以下で表されます
 
 $$
 L = (k × μ × S × N²) / l
 $$
 
 
-`<span>`---
-
-`<span>`| `<span>`記号 `<span>`| `<span>`意味                         `<span>`| `<span>`単位         `<span>`|
-`<span>`|------|------------------------------|--------------|
-`<span>`| `<span>`L    `<span>`| `<span>`インダクタンス               `<span>`| `<span>`ヘンリー `<span>`(H) `<span>`|
-`<span>`| `<span>`k    `<span>`| `<span>`長岡係数                     `<span>`| `<span>`なし         `<span>`|
-`<span>`| `<span>`μ    `<span>`| `<span>`コアの透磁率                 `<span>`| `<span>`H/m          `<span>`|
-`<span>`| `<span>`N    `<span>`| `<span>`コイルの巻数                 `<span>`| `<span>`回           `<span>`|
-`<span>`| `<span>`S    `<span>`| `<span>`コイルの断面積               `<span>`| `<span>`m²           `<span>`|
-`<span>`| `<span>`l    `<span>`| `<span>`コイルの長さ                 `<span>`| `<span>`m            `<span>`|`</div></pre>`
+| 記号 | 意味           | 単位         |
+| ---- | -------------- | ------------ |
+| L    | インダクタンス | ヘンリー (H) |
+| k    | 長岡係数       | なし         |
+| μ   | コアの透磁率   | H/m          |
+| N    | コイルの巻数   | 回           |
+| S    | コイルの断面積 | m²          |
+| l    | コイルの長さ   | m            |
 
 
 
