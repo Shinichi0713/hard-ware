@@ -1,0 +1,26 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\rectifier_circuit\Draft1.net
+Start Time: Sat Oct  4 09:55:31 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\rectifier_circuit\Draft1.net(3): WARNING: Specified period is not longer than the sum of Trise, Tfall, and Ton. Increasing period to 0.1.
+
+V1 N001 0 PULSE(0 10 10m 0 0 100m 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\rectifier_circuit\Draft1.net(3): Limiting rise time to 1.94289e-17.
+
+V1 N001 0 PULSE(0 10 10m 0 0 100m 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\rectifier_circuit\Draft1.net(3): Limiting fall time to 1.94289e-17.
+
+V1 N001 0 PULSE(0 10 10m 0 0 100m 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.OP point found by inspection.
+Total elapsed time: 0.032 seconds.
+
+Files loaded:
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\rectifier_circuit\Draft1.net
+
