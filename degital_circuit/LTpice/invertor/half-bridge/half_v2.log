@@ -1,0 +1,43 @@
+LTspice 24.1.9 for Windows
+Circuit: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\half-bridge\half_v2.net
+Start Time: Tue Oct  7 06:02:55 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\half-bridge\half_v2.net(11): Limiting rise time to 0.0002.
+
+I1 0 N001 PULSE(0 2 1m 0 0 0 2m) AC 2 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\half-bridge\half_v2.net(11): Limiting fall time to 0.0002.
+
+I1 0 N001 PULSE(0 2 1m 0 0 0 2m) AC 2 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\half-bridge\half_v2.net(12): Limiting rise time to 0.0002.
+
+I2 0 N006 PULSE(0 2 0 0 0 0 2m)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\half-bridge\half_v2.net(12): Limiting fall time to 0.0002.
+
+I2 0 N006 PULSE(0 2 0 0 0 0 2m)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Direct Newton iteration for .op point succeeded.
+Changing Tseed to 9.76562e-09
+Changing Tseed to 9.76563e-11
+Changing Tseed to 9.76562e-08
+Changing Tseed to 9.76562e-12
+Changing Tseed to 9.76563e-07
+Changing Tseed to 9.76562e-13
+Changing Tseed to 9.76562e-06
+Changing Tseed to 9.76563e-14
+Changing Tseed to 9.76563e-05
+Changing Tseed to 9.76562e-15
+Changing Tseed to 0.000976562
+Total elapsed time: 0.325 seconds.
+
+Files loaded:
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\half-bridge\half_v2.net
+C:\Users\yoshinaga\AppData\Local\LTspice\lib\cmp\standard.dio
+C:\Users\yoshinaga\AppData\Local\LTspice\lib\cmp\standard.bjt
+
