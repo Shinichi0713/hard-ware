@@ -1,6 +1,6 @@
 LTspice 24.1.9 for Windows
 Circuit: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\full-bridge\circuit\pnp_v3.net
-Start Time: Sat Oct 11 08:17:05 2025
+Start Time: Sat Oct 11 09:08:27 2025
 solver = Normal
 Maximum thread count: 12
 tnom = 27
@@ -8,11 +8,11 @@ temp = 27
 method = trap
 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\full-bridge\circuit\pnp_v3.net(3): Limiting rise time to 0.0005.
 
-V2 P001 0 PULSE(0 10 2m 0 0 5m 10m)
+V2 N001 0 PULSE(0 10 2m 0 0 5m 10m)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\invertor\full-bridge\circuit\pnp_v3.net(3): Limiting fall time to 0.0005.
 
-V2 P001 0 PULSE(0 10 2m 0 0 5m 10m)
+V2 N001 0 PULSE(0 10 2m 0 0 5m 10m)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Direct Newton iteration for .op point succeeded.
 Total elapsed time: 0.088 seconds.
