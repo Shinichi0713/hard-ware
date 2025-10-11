@@ -1,6 +1,6 @@
 LTspice 24.1.9 for Windows
 Circuit: C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\low-pass-filter\rc_v2.net
-Start Time: Sun Oct  5 09:28:53 2025
+Start Time: Sat Oct 11 09:25:35 2025
 solver = Normal
 Maximum thread count: 12
 tnom = 27
@@ -15,7 +15,7 @@ C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circu
 V1 N001 0 PULSE(0 10 1m 0 0 5m 10m 0)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .OP point found by inspection.
-Total elapsed time: 0.038 seconds.
+Total elapsed time: 0.034 seconds.
 
 Files loaded:
 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\degital_circuit\LTpice\inductance\low-pass-filter\rc_v2.net
