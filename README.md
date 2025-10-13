@@ -14,11 +14,10 @@
 4. CPU
 5. ロボビジョン
 
-
 ## ロボビジョン
+
 画像データを使って空間を予測する技術。
 VisualSlamなどの技術がある。
-
 
 ## FPGA実験の優良サイト
 
@@ -29,6 +28,8 @@ https://tetsufuku-blog.com/adc-max10-fpga/
 https://cdrdv2-public.intel.com/666923/ug-max10m50-fpga-dev-kit-j-683460-666923.pdf
 
 ### FPGAのデバッグを行う
+
+![1760335507401](image/README/1760335507401.png)
 
 https://www.macnica.co.jp/business/semiconductor/articles/intel/134097/
 
