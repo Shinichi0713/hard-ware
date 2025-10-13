@@ -162,7 +162,6 @@ k = H x_k + v_k
 \end{align}
 ```
 
----
 
 ### (2) 更新ステップ (Update)
 
