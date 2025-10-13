@@ -1,0 +1,15 @@
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise1/counter.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise1/counter.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module counter
+
+Top level modules:
+	counter
+
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise1/tb_counter.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise1/tb_counter.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb_counter
+
+Top level modules:
+	tb_counter
+
+} {} {}}
