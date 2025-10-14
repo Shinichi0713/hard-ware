@@ -31,6 +31,8 @@ https://cdrdv2-public.intel.com/666923/ug-max10m50-fpga-dev-kit-j-683460-666923.
 
 ![1760335507401](image/README/1760335507401.png)
 
+![1760389969332](image/README/1760389969332.png)
+
 https://www.macnica.co.jp/business/semiconductor/articles/intel/134097/
 
 Quartusの場合、System Consoleを使用することで実現可能。

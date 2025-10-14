@@ -1,0 +1,49 @@
+//============================================================
+// Testbench for Adder
+//============================================================
+`timescale 1ns/1ps
+
+module tb_adder;
+
+    // ???????
+    parameter WIDTH = 8;
+
+    // DUT?Device Under Test????
+    logic [WIDTH-1:0] a, b;
+    logic [WIDTH-1:0] sum;
+    logic carry;
+
+    // DUT ??????
+    adder dut (
+        .a(a),
+        .b(b),
+        .sum(sum),
+        .carry(carry)
+    );
+
+    // ????????
+    initial begin
+        $display("=== Adder Test Start ===");
+        $display("Time   |   A   |   B   |  Sum  | Carry");
+
+        // ????1
+        a = 8'h0A; b = 8'h05; #10;
+        $display("%4t | %h | %h | %h | %b", $time, a, b, sum, carry);
+
+        // ????2
+        a = 8'hFF; b = 8'h01; #10;
+        $display("%4t | %h | %h | %h | %b", $time, a, b, sum, carry);
+
+        // ????3
+        a = 8'h7F; b = 8'h01; #10;
+        $display("%4t | %h | %h | %h | %b", $time, a, b, sum, carry);
+
+        // ????4
+        a = 8'h55; b = 8'hAA; #10;
+        $display("%4t | %h | %h | %h | %b", $time, a, b, sum, carry);
+
+        $display("=== Adder Test Complete ===");
+        $finish;
+    end
+
+endmodule
