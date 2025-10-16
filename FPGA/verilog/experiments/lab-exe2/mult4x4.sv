@@ -1,7 +1,7 @@
-module mux4x4 #(parameter WIDTH=4)
+module mult4x4
 (
-    input logic [WIDTH-1:0] a,
-    input logic [WIDTH-1:0] b,
+    input logic [3:0] a,
+    input logic [3:0] b,
     output logic [7:0] product
 );
     always_comb begin

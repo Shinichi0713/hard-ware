@@ -1,11 +1,11 @@
-{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/mul4x4.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/mul4x4.sv}
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/mult4x4.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/mult4x4.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
--- Compiling module mux4x4
+-- Compiling module mult4x4
 
 Top level modules:
-	mux4x4
+	mult4x4
 
-} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/tb_mul4x4.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/tb_mul4x4.sv}
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/tb_mult4x4.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe2/tb_mult4x4.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
 -- Compiling module tb_mult4x4
 
