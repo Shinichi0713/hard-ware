@@ -1,0 +1,41 @@
+//============================================================
+// Testbench for mult4x4
+//============================================================
+`timescale 1ns/1ps
+
+module tb_mult4x4;
+    // 時間単位指定 (SystemVerilog推奨構文)
+    timeunit 1ps;
+    timeprecision 1ps;
+
+    // 定数
+    parameter CYCLE = 20000ps;
+    // 信号宣言
+    logic [3:0] a, b;
+    logic [7:0] product;
+
+    // DUT（Device Under Test）インスタンス
+    mult4x4 u1(
+        .a(a),
+        .b(b),
+        .product(product)
+    );
+
+    // テストパターン
+    initial begin
+        a = 4'b0000;
+        forever #(CYCLE) a<=a+1;
+    end
+
+    initial begin
+        b = 4'b1111;
+        forever #(CYCLE) b<=b-1;
+    end
+
+    initial begin
+        $dumpfile("tb_mult4x4.vcd");
+        $dumpvars(0, mult4x4_sim);     // 全信号を記録
+        #(CYCLE * 20);                 // 20サイクル分シミュレーション
+        $finish;
+    end
+endmodule
