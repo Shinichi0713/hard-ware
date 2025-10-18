@@ -1,0 +1,43 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.19789453314586047 0.057427915822109925 0.9785396201663532 2.3547173247443673
+  position 1.6346529675107755 -1.0402495453183094 1.0247707359430311
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation -0.0934453 0.185033 0.05
+  floorSize 2 2
+  floorTileSize 0.25 0.25
+}
+WoodenBox {
+  translation 0.33828997795706506 0.026127742235967925 0.09607584712318894
+  rotation 0.1467978427943933 -0.699291581660459 0.6996010843114283 -2.8499443743037274
+  size 0.1 0.1 0.1
+  mass 10
+}
+E-puck {
+  hidden position_0_0 230.8804541375174
+  hidden position_0_1 272.26137351635157
+  hidden linearVelocity_0 0.003478149382628426 0.05611286721783962 -6.784277966526521e-09
+  hidden angularVelocity_0 -0.004852032697846224 0.00031007897231298206 0.09063496667663308
+  hidden rotation_1 0 0.9999999999999999 0 4.685783079052291
+  hidden linearVelocity_1 0.0033340703966262624 0.053785243357300866 -5.309611256015029e-09
+  hidden angularVelocity_1 -2.6780710894419952 0.16595868306274683 0.09236760334345501
+  hidden rotation_2 0 -1 0 4.198779999550236
+  hidden linearVelocity_2 0.0036255998690943596 0.05848919865736161 5.388734768537028e-09
+  hidden angularVelocity_2 -2.935530378551776 0.18201708748747195 0.09264019178605754
+  translation 0.3718255660022566 -0.2550259466522212 0.04993568117824952
+  rotation -9.338524497983992e-05 -2.1138198458566654e-05 -0.9999999954161863 -1.5105608754852575
+}
