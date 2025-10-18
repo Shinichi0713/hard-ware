@@ -3,18 +3,89 @@
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/pal_robotics/tiago_extensions/protos/TiagoEyesCap.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.18273871657944393 0.31171870243192434 -0.9324365994624274 1.1225059060121492
-  position -2.302076284944029 5.36660226377411 2.016048704435614
+  orientation -0.23792044871318327 -0.03768211320257176 0.9705534083339804 3.5253604774221574
+  position 7.333892543609951 3.8942617578105887 2.96649768192938
+}
+Robot {
+  translation -0.0650558798098908 -0.044594482240200635 0.006020810088229744
+  rotation 0.31669660525277155 -0.9174156282358957 -0.24093946395289173 1.6328907164949729
+  immersionProperties [
+    ImmersionProperties {
+    }
+  ]
+  boundingObject TiagoEyesCap {
+  }
+  physics Physics {
+    mass 5
+    damping Damping {
+    }
+  }
+  linearVelocity 6.543669570949537e-05 -0.0010707453010047586 -1.3236200508556959e-05
+  angularVelocity -0.008453048888066049 -0.000516703392107224 1.0259099865817167e-05
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
+  translation 0.749212 1.2388 -1.33227e-15
   rotation 0.9999500037496876 0 0.009999500037496875 0
   floorSize 10 10
+}
+Solid {
+  translation 0.10833328617087946 -0.01122376701498953 0.08596717798354803
+  rotation 4.3892384571825656e-06 3.619185922897392e-05 0.9999999993354419 0.035454751894589055
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          specularColor 0.9 0 0
+        }
+        texture ImageTexture {
+        }
+        textureTransform TextureTransform {
+          scale 4 4
+        }
+      }
+      geometry Sphere {
+        radius 0.1
+      }
+    }
+    Solid {
+      translation 0 0 -84123.19777404962
+      physics Physics {
+        mass 3
+        damping Damping {
+        }
+      }
+      linearVelocity 0 0 -1284.5606400001245
+    }
+  ]
+  boundingObject Sphere {
+    radius 0.1
+  }
+  physics Physics {
+    mass 6
+    centerOfMass [
+      0 0 0
+    ]
+    damping Damping {
+    }
+  }
+  linearVelocity 2.575627736141659e-07 -2.8911298336304382e-08 -0.0005270938045592814
+  angularVelocity -1.0795968264115684e-11 -1.4431431727311089e-12 -8.225612031282991e-06
+}
+E-puck {
+  hidden position_0_0 107.13427230359406
+  hidden position_0_1 153.24992554661148
+  hidden rotation_1 0 -1 0 5.963063225638497
+  hidden rotation_2 0 1 0 2.4534781743014036
+  translation -1.01521 0.0255616 3.21292e-07
+  rotation 9.55462848564961e-05 4.57120571923084e-05 0.9999999943906577 2.935665506150435
 }
