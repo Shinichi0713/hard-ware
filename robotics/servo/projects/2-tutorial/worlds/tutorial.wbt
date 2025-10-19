@@ -5,12 +5,13 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/balls/protos/Ball.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.19287016662415668 0.966056740466842 -0.17185887531620372 0.8141085452611843
-  position -1.8768910450405032 0.19338239089625445 2.1186497171550807
+  orientation 0.2787730837238117 -0.3329086914103136 -0.9008092866831409 4.506835866589905
+  position 0.5231519273094611 -2.813442571271838 2.471004717910821
 }
 TexturedBackground {
 }
@@ -21,24 +22,49 @@ RectangleArena {
   floorSize 2 2
   floorTileSize 0.25 0.25
 }
+Ball {
+  translation 0 0 0.26663030215047173
+}
+Solid {
+  translation 0 0 0.1342174229171651
+  children [
+    DEF BALL_instance Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+        }
+        textureTransform TextureTransform {
+        }
+      }
+      geometry Sphere {
+        radius 0.1
+      }
+    }
+  ]
+  boundingObject USE BALL_instance
+  physics Physics {
+    mass 10
+  }
+}
 WoodenBox {
-  translation 0.33829751479113607 0.02611822993194189 0.09607599997977771
-  rotation 0.1468104464744416 -0.6994449202512346 0.699445134617948 -2.8500547955349025
+  translation 0.3382975038497465 0.026118212334447274 0.09607599999998248
+  rotation 0.14681034631674642 -0.6994450377843086 0.6994450381075442 -2.8500545908069403
   size 0.1 0.1 0.1
   mass 10
 }
 E-puck {
-  hidden position_0_0 10.00000005169529
-  hidden position_0_1 59.82489513402264
-  hidden linearVelocity_0 2.4631310916826504e-07 2.2615049884076403e-06 1.644911463927201e-08
-  hidden angularVelocity_0 1.9563065274420918e-06 -5.835490919957876e-07 -0.0001519502044853556
-  hidden rotation_1 0 -1 0 2.566370562663883
-  hidden linearVelocity_1 4.198885605735246e-06 1.0448641087833477e-06 6.539183520064844e-08
-  hidden angularVelocity_1 1.932209997044117e-06 -1.1154383853742665e-06 -0.00015195031288058378
-  hidden rotation_2 0 -0.9999999999999999 0 3.006957937773225
-  hidden linearVelocity_2 -3.6298598211028955e-06 3.455376239363727e-06 3.802922554613323e-08
-  hidden angularVelocity_2 -0.00022823175170446212 -6.280000422422541 -0.00016912342592710774
-  translation -1.056672237355227 0.14690054098775893 0.049958354714463284
-  rotation 0.0004765639190824212 0.9999511201268431 -0.009875740169864073 0.004069652099527245
+  hidden linearVelocity_0 -2.3175966911518725e-08 3.904134077934626e-06 -3.700752605103238e-09
+  hidden angularVelocity_0 -9.82670504801595e-08 3.79267869903545e-08 -0.000164965317673897
+  hidden translation_1 0 0.025999999999999995 0.02
+  hidden rotation_1 0 -1 0 2.5663705988219943
+  hidden linearVelocity_1 4.2656536443530514e-06 3.8984426602439726e-06 -6.1344495261295154e-09
+  hidden angularVelocity_1 -9.826676995942567e-08 3.794572805350233e-08 -0.00016496531271284064
+  hidden translation_2 0 -0.025999999999999992 0.02
+  hidden rotation_2 0 0.9999999999999999 0 0.49470631023051115
+  hidden linearVelocity_2 -4.3120664674489726e-06 3.904090572692813e-06 -1.0946580530907964e-09
+  hidden angularVelocity_2 -0.004128018200028278 -6.279998448390992 -0.0001853393323232327
+  translation -1.0566722938821729 0.1469148941926396 0.049958339976817354
+  rotation 0.0007879596571631305 0.987053768239163 -0.16038777298923784 0.004122875006442964
   controller "my_controller"
 }
