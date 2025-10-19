@@ -1,0 +1,27 @@
+
+module seven (
+    input  logic [2:0] inp,   // 3-bit input
+    output logic a,
+    output logic b,
+    output logic c,
+    output logic d,
+    output logic e,
+    output logic f,
+    output logic g
+);
+
+always_comb begin
+	// ?????????
+        a = 1'b0;
+        b = 1'b0;
+        c = 1'b0;
+        d = 1'b0;
+        e = 1'b0;
+        f = 1'b0;
+        g = 1'b0;
+
+	case(inp)
+
+	endcase
+end
+endmodule

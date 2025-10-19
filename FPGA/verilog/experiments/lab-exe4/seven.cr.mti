@@ -1,0 +1,15 @@
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe4/seven_tb.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe4/seven_tb.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module seven_tb
+
+Top level modules:
+	seven_tb
+
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe4/seven.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe4/seven.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module seven
+
+Top level modules:
+	seven
+
+} {} {}}
