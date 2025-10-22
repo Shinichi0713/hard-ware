@@ -119,9 +119,6 @@ amass enum -passive -d docker.com -o subdomains.txt
 
 上記の **crt.sh + Amass + SecurityTrails** の組み合わせが最も効率的です。
 
-
-
-
 いいですね — では **合法的・パッシブな手法を組み合わせて、漏れを減らしつつ効率的にサブドメインを列挙する実用スクリプト**を出します。
 
 ポイントは次の通りです。
@@ -430,9 +427,7 @@ SECURITYTRAILS_APIKEY=xxxx VT_APIKEY=yyyy python3 enumerate_subdomains.py docker
 
 必要なら、上のスクリプトで **出力の可視化（各サブドメインの最終確認日時・WHOIS・CNAMEチェーン）** を追加する形で拡張できます。どの情報を付けたいか教えてください。
 
-
 # Docker社の公式に絞りたい
-
 
 はい。可能です — ただし **「確実に Docker 社が発行（管理）したサブドメインだけを100%自動で判定する」** のは現実的に完全保証できません。
 
@@ -597,8 +592,6 @@ for s in results_owned[:]:
 
 必要なら、前回のスクリプトを直接編集して上の `is_delegated` / TLS 関数を組み込み、`--owned-only` オプションで「Docker 管理下のみを出力」する完全なスクリプトを作成します。作りますか？
 
-
-
 良い質問です。
 
 結論から言うと、 **Docker社（公式）が発行したサブドメインのみを確実に特定する方法は「完全な自動化」はできません** 。
@@ -704,7 +697,6 @@ curl -s "https://crt.sh/?q=%25.docker.com&output=json" | jq '.[].name_value'
 💡「CTログを使って `docker.com` および `docker.io` のサブドメインを列挙するスクリプト（例：Pythonまたはbash）」もご紹介できます。
 
 作成してみましょうか？
-
 
 了解しました！
 
@@ -836,3 +828,127 @@ dig CNAME registry-1.docker.io
 💡「自動で `ping` / `dig` を行って稼働中サブドメインだけ残すフィルタ機能」も追加できます。
 
 追加してみましょうか？
+
+
+
+## プロキシを通過出来ない
+
+Docker環境で **`pip install` がプロキシを通過できない** のは、
+
+単なる「ネットワーク設定の不足」ではなく、
+
+**Dockerのネットワーク分離構造と pip の通信経路の仕組み**が深く関係しています。
+
+以下、分かりやすく段階的に説明します。
+
+---
+
+## 🧩 1. 問題の根本 — Dockerコンテナは「別ネットワーク空間」
+
+Dockerコンテナは、ホスト（あなたのPC）とは独立した**仮想ネットワーク空間**内で動作します。
+
+そのため、ホストの環境変数（`HTTP_PROXY` など）や OS レベルのプロキシ設定は、
+
+**コンテナ内部には自動で引き継がれません。**
+
+### ⚙️ つまり：
+
+ホストでプロキシを設定していても、
+
+```bash
+export http_proxy=http://proxy.example.com:8080
+```
+
+という情報は、 **`docker run` 時に `-e` オプションで明示的に渡さない限り** 、
+
+コンテナ内の pip には届かないのです。
+
+---
+
+## 🧠 2. Docker内部で `pip install` がどのように通信しているか
+
+`pip install` は、内部的に以下のような流れで通信します。
+
+1. **`pip` が PyPI サーバー（[https://pypi.org）に](https://pypi.xn--org)-tc4c/) HTTP(S) リクエストを送信**
+2. このリクエストは Python 標準ライブラリの `urllib` / `requests` 経由で送られる
+
+   → OSレベルや環境変数に設定されたプロキシを自動参照
+3. 通信先が HTTPS の場合、**SSL/TLSハンドシェイク**が発生
+4. プロキシ経由でCONNECTトンネルを張る（HTTP Proxyの場合）
+
+したがって、pip がプロキシを通過できるかどうかは：
+
+* コンテナ内部に `HTTP_PROXY` / `HTTPS_PROXY` 環境変数が設定されているか
+* SSL証明書の検証が通るか（特に社内プロキシで証明書を書き換えている場合）
+
+に依存します。
+
+---
+
+## 🔍 3. なぜ「プロキシを通過できない」ように見えるのか — 主な原因
+
+| 原因                                               | 技術的な説明                                                                                                          |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **① 環境変数がコンテナに渡っていない**      | `pip`は `HTTP_PROXY`/`HTTPS_PROXY`環境変数を参照するが、ホストの設定はDocker内部に自動で引き継がれない。        |
+| **② Dockerfile内で設定していない**          | `RUN pip install ...`実行時に、`ENV HTTP_PROXY=...`を記述していないと、ビルド中のレイヤーで外部通信が遮断される。 |
+| **③ HTTPS通信を社内プロキシがMITMしている** | 社内プロキシが独自証明書を発行してSSL通信を中継している場合、`pip`が証明書エラーを起こして接続できない。            |
+| **④ DNS解決がホスト依存になっている**       | コンテナのDNS設定が内部ネットワークに合っておらず、`pypi.org`に到達できないケースもある。                           |
+
+---
+
+## 🧰 4. 対応方法 — コンテナ内でプロキシを通すには
+
+### ✅ 方法1：`docker run` 時に環境変数を明示
+
+```bash
+docker run -e HTTP_PROXY=http://proxy.example.com:8080 \
+           -e HTTPS_PROXY=http://proxy.example.com:8080 \
+           -e NO_PROXY=localhost,127.0.0.1 \
+           myimage
+```
+
+### ✅ 方法2：`Dockerfile` にプロキシ環境を設定
+
+```Dockerfile
+ENV HTTP_PROXY=http://proxy.example.com:8080
+ENV HTTPS_PROXY=http://proxy.example.com:8080
+ENV NO_PROXY=localhost,127.0.0.1
+```
+
+### ✅ 方法3：pipの設定ファイルでプロキシ指定
+
+コンテナ内で `/etc/pip.conf`（またはユーザディレクトリの `~/.config/pip/pip.conf`）に記述：
+
+```ini
+[global]
+proxy = http://proxy.example.com:8080
+```
+
+### ✅ 方法4：証明書エラーが出る場合
+
+プロキシがSSLを中継しているなら、社内CA証明書をDockerにコピーして登録：
+
+```bash
+COPY corpCA.crt /usr/local/share/ca-certificates/
+RUN update-ca-certificates
+```
+
+---
+
+## 🌐 5. まとめ — 内部で何が起きているかを一言で言うと
+
+> Dockerコンテナ内の `pip install` は、ホストとは独立したネットワーク空間で、
+>
+> Python標準のHTTPライブラリを使ってPyPIへHTTPS通信を行う。
+>
+> この通信は **コンテナ内部の環境変数 `HTTP_PROXY` / `HTTPS_PROXY` に依存** しており、
+>
+> それが設定されていないと、ホストのプロキシ設定は自動的に反映されない。
+>
+> そのため、プロキシ経由での通信が行われず、`pip install` が失敗する。
+
+---
+
+もしよければ、あなたの環境（例：社内プロキシ・証明書付き・Dockerfileを使っている／`docker run` で直接実行など）を教えてもらえれば、
+
+**その構成に最適な設定例**を具体的に示せます。
