@@ -829,8 +829,6 @@ dig CNAME registry-1.docker.io
 
 追加してみましょうか？
 
-
-
 ## プロキシを通過出来ない
 
 Docker環境で **`pip install` がプロキシを通過できない** のは、
@@ -952,3 +950,326 @@ RUN update-ca-certificates
 もしよければ、あなたの環境（例：社内プロキシ・証明書付き・Dockerfileを使っている／`docker run` で直接実行など）を教えてもらえれば、
 
 **その構成に最適な設定例**を具体的に示せます。
+
+
+
+## Docker リクエスト
+
+Dockerが**プロキシ環境下でネットワークリクエスト（例：`apt-get` や `pip install`、`docker build` 中の外部アクセス）**を行うと失敗することがあります。
+
+これは、Dockerの**ネットワークスタックとリクエストの扱い方**が、通常のアプリケーションと異なるためです。
+
+以下で、Docker内部でのリクエスト処理構造を踏まえて、なぜプロキシ設定が効かないのかを体系的に説明します。
+
+---
+
+## 🧩 全体像：Dockerのリクエスト経路
+
+まず大前提として：
+
+Dockerの世界では「3つの層」で通信経路が異なります。
+
+| 層                         | どこで動くか                           | どんなリクエストが通るか                          |
+| -------------------------- | -------------------------------------- | ------------------------------------------------- |
+| ①**ホスト**         | OS上（あなたのPCやサーバ）             | `docker pull`などDocker CLIのリクエスト         |
+| ②**Dockerデーモン** | root権限で動くバックグラウンドプロセス | イメージの取得・ビルド時の外部アクセス            |
+| ③**コンテナ内部**   | 隔離された仮想ネットワーク上           | `apt-get`,`pip install`などがここで実行される |
+
+プロキシ環境で通信が通らない多くのケースは、
+
+👉 **この3層のどこかでプロキシ設定が伝わっていない**
+
+ことが原因です。
+
+> 3層(ホスト、デーモン、コンテナ)がある。このどこかでリクエストが通らない状態だと、通信が通らなくなる。
+
+## ⚙️ ① Docker CLI（`docker pull` など）の場合
+
+`docker pull` はユーザ空間で動作します。
+
+したがって通常の環境変数がそのまま使われます：
+
+```bash
+export HTTP_PROXY=http://proxy.example.com:8080
+export HTTPS_PROXY=http://proxy.example.com:8080
+docker pull ubuntu
+```
+
+➡ この設定が有効なのは **CLI → DockerデーモンへのHTTP通信** まで。
+
+しかし実際の外部通信（レジストリとのやり取り）は  **Dockerデーモンが行います** 。
+
+> docker pull は多分ローカルで実行する
+
+
+## ⚙️ ② Dockerデーモンのリクエスト経路
+
+Dockerデーモンは**システムサービス（root権限）**として動作しており、
+
+**ユーザの環境変数を継承しません。**
+
+つまり：
+
+* `export HTTP_PROXY=...` を設定しても
+
+  → **`dockerd` プロセスには伝わらない**
+
+そのため、`docker pull` で「プロキシがない」とエラーになる場合、
+
+実際には「デーモンがプロキシを知らない」状態です。
+
+> Dockerデーモンは、システムサービスとして動作しており、ユーザーの環境変数を継承しない。
+>
+> デーモンがプロキシを通らない状態。
+
+
+### 🔧 対応策（Dockerデーモン側に設定を渡す）
+
+Dockerデーモンのsystemd設定に環境変数を明示する必要があります：
+
+```bash
+sudo systemctl edit docker
+```
+
+次のように記述します：
+
+```ini
+[Service]
+Environment="HTTP_PROXY=http://proxy.example.com:8080"
+Environment="HTTPS_PROXY=http://proxy.example.com:8080"
+Environment="NO_PROXY=localhost,127.0.0.1,.example.com"
+```
+
+その後、再読み込み：
+
+```bash
+sudo systemctl daemon-reexec
+sudo systemctl restart docker
+```
+
+これで、Dockerデーモンがレジストリへの通信をプロキシ経由で行うようになります。
+
+> Dockerデーモンに設定を通す。
+
+## ⚙️ ③ Dockerコンテナ内部（`docker build` や `run`）
+
+さらにもう一段階あります。
+
+Dockerfile内で `RUN apt-get update` や `pip install` を実行する場合、
+
+**それはコンテナ内部からの通信**です。
+
+このとき、ホストやデーモンのプロキシ設定は**自動的には引き継がれません。**
+
+---
+
+### 🔧 対応策（コンテナ内にプロキシ設定を伝える）
+
+#### ✅ `docker build` 時
+
+```bash
+docker build \
+  --build-arg HTTP_PROXY=http://proxy.example.com:8080 \
+  --build-arg HTTPS_PROXY=http://proxy.example.com:8080 \
+  .
+```
+
+Dockerfileにも以下を追加：
+
+```Dockerfile
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV HTTP_PROXY=${HTTP_PROXY}
+ENV HTTPS_PROXY=${HTTPS_PROXY}
+```
+
+これで、`RUN` コマンド中の `apt-get` や `pip` がプロキシを使えます。
+
+---
+
+#### ✅ `docker run` 時
+
+```bash
+docker run -e HTTP_PROXY=http://proxy.example.com:8080 \
+           -e HTTPS_PROXY=http://proxy.example.com:8080 \
+           myimage
+```
+
+---
+
+## 🔍 まとめ：なぜリクエストが通らないのか
+
+| 原因                                         | 内容                                   | 対応                                      |
+| -------------------------------------------- | -------------------------------------- | ----------------------------------------- |
+| 1️⃣ CLI設定のみで完結している              | デーモンには環境変数が伝わらない       | systemdで設定                             |
+| 2️⃣ コンテナ内部にプロキシが伝わっていない | `RUN`中にプロキシ未設定              | `--build-arg`や `ENV`で渡す           |
+| 3️⃣ HTTPS検証や認証付きプロキシ            | 証明書未登録・認証情報不足             | `/etc/ssl/certs`に登録または `.netrc` |
+| 4️⃣ no_proxy設定不足                       | 内部アドレスまでプロキシ経由になり失敗 | `NO_PROXY`を適切に設定                  |
+
+---
+
+## 🧠 さらに深く（内部動作）
+
+* Dockerデーモンは **Go言語製のHTTPクライアント**を使用しており、
+
+  OSのHTTP設定を直接は読みません。
+* そのため「環境変数」を通じて `http.Transport.Proxy` に設定が必要。
+* コンテナ内部では Linux Namespaces により独立したネットワーク空間を持つため、
+
+  ホストのプロキシ設定は共有されません。
+
+---
+
+もし実際に `docker build` 時の `pip install` が失敗しているケースなら、
+
+`RUN echo $HTTP_PROXY` で値が空かどうかを確認すると、どこで抜けているか特定できます。
+
+
+
+
+## Dockerテンプレート
+
+では、**プロキシ環境でも確実に `pip install` が通る Dockerfile のテンプレート**を、
+
+内部の仕組み（CLI → デーモン → コンテナ）を考慮して構築しましょう。
+
+以下は、企業ネットワークなど **HTTP/HTTPS プロキシが必須の環境**で安定して動作する構成です。
+
+---
+
+## 🧱 目的
+
+* Dockerイメージをビルドする際に `pip install` や `apt-get update` を通す
+* 認証付きプロキシや内部レジストリがある環境でも使える
+* ホスト、Dockerデーモン、コンテナ内部の3層すべてでプロキシを正しく設定
+
+---
+
+## 🧩 Dockerfile テンプレート
+
+```Dockerfile
+# ===========================
+# ベースイメージ
+# ===========================
+FROM python:3.10-slim
+
+# ===========================
+# ビルド時にプロキシ情報を受け取る設定
+# ===========================
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG NO_PROXY
+
+# ===========================
+# 環境変数として保持（コンテナ内部で使用される）
+# ===========================
+ENV HTTP_PROXY=${HTTP_PROXY}
+ENV HTTPS_PROXY=${HTTPS_PROXY}
+ENV NO_PROXY=${NO_PROXY}
+
+# ===========================
+# apt-get 用のプロキシ設定
+# ===========================
+RUN echo "Acquire::http::Proxy \"${HTTP_PROXY}\";"  >> /etc/apt/apt.conf.d/99proxy && \
+    echo "Acquire::https::Proxy \"${HTTPS_PROXY}\";" >> /etc/apt/apt.conf.d/99proxy
+
+# ===========================
+# パッケージインストール (プロキシ経由)
+# ===========================
+RUN apt-get update && apt-get install -y \
+    curl git build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+# ===========================
+# pip プロキシ設定と依存関係インストール
+# ===========================
+RUN pip config set global.proxy "${HTTP_PROXY}" && \
+    pip install --upgrade pip && \
+    pip install numpy pandas requests
+
+# ===========================
+# 動作確認スクリプト
+# ===========================
+RUN python -c "import requests; print('✅ ネットワーク接続成功:', requests.get('https://www.google.com').status_code)"
+
+# ===========================
+# デフォルト実行
+# ===========================
+CMD ["bash"]
+```
+
+---
+
+## 🧭 ビルド方法（Google ColabやCLI）
+
+```bash
+docker build \
+  --build-arg HTTP_PROXY=http://proxy.example.com:8080 \
+  --build-arg HTTPS_PROXY=http://proxy.example.com:8080 \
+  --build-arg NO_PROXY=localhost,127.0.0.1,.example.com \
+  -t proxy-test .
+```
+
+### 実行確認
+
+```bash
+docker run -it proxy-test
+```
+
+---
+
+## 🔍 ポイント解説
+
+| 層                               | 仕組み                                          | 設定方法                                            |
+| -------------------------------- | ----------------------------------------------- | --------------------------------------------------- |
+| **Docker CLI → デーモン** | `--build-arg`でプロキシ情報をデーモンに渡す   | コマンドラインで指定                                |
+| **デーモン → コンテナ**   | `ARG`と `ENV`により Dockerfile 内で受け取る | `ARG HTTP_PROXY`/`ENV HTTP_PROXY=${HTTP_PROXY}` |
+| **コンテナ内部**           | `apt`や `pip`に明示的に設定                 | `/etc/apt/apt.conf.d/99proxy`と `pip config`    |
+
+---
+
+## 💡 補足
+
+### 認証付きプロキシの場合
+
+以下のように認証情報を含めます：
+
+```bash
+--build-arg HTTP_PROXY=http://username:password@proxy.example.com:8080
+```
+
+※パスワードに特殊文字がある場合はURLエンコードしてください（例：`@` → `%40`）。
+
+---
+
+### SSL証明書検証を回避（社内CAなど）
+
+社内プロキシが独自CA証明書を使っている場合、以下のようにします：
+
+```Dockerfile
+COPY your_company_ca.crt /usr/local/share/ca-certificates/
+RUN update-ca-certificates
+```
+
+---
+
+## 🚀 検証ステップ
+
+1. Dockerデーモンにプロキシを設定（systemd）
+2. 上記Dockerfileを `proxy-test` としてビルド
+3. `docker run -it proxy-test` 内で次を確認：
+
+```bash
+echo $HTTP_PROXY
+python -c "import requests; print(requests.get('https://www.google.com').status_code)"
+```
+
+→ `200` が返れば通信成功です。
+
+---
+
+もし希望があれば、
+
+📦 **あなたの実際の企業プロキシ環境（例：認証あり / PACあり / CA証明書あり）** に合わせた完全版テンプレートを作成できます。
+
+環境の特徴（例：「認証あり」「httpsのみ」「証明書検証が必要」など）を教えてもらえますか？
