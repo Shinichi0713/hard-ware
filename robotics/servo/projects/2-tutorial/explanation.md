@@ -135,11 +135,9 @@ webotsのプログラミングの基本について学習する。
 
 周囲の距離センサを取得することが可能。
 
-
 **距離センサー**によって返される値は、距離に対して区分的に線形なスケールで、0から4096の間に収まるように変換されます [1]。4096は大量の光が測定されていること（障害物が近いこと）を意味し、0は光が測定されていないこと（障害物がないこと）を意味します [1]。
 
 **コントローラAPI**は、ロボットのシミュレートされたセンサーやアクチュエーターにアクセスするためのプログラミングインターフェースです [1]。たとえば、`webots/distance_sensor.h`ファイルを含めることで、`wb_distance_sensor_*`関数を使用できるようになり、これらの関数を使って `DistanceSensor`ノードの値を問い合わせることができます [1]。API関数のドキュメントは、各ノードの説明とともに、リファレンスマニュアルで参照できます [1]。
-
 
 ![1761378187883](image/explanation/1761378187883.png)
 
@@ -152,6 +150,14 @@ webotsのプログラミングの基本について学習する。
 作りたいのは簡単な衝突回避を行うコントロールをしたい。
 
 実現するにはFBループをUMLにより書かれたように実現する。
+
+**Hands on #2** : At the beginning of the controller file, add the include directives corresponding to the [Robot](https://cyberbotics.com/doc/reference/robot), the [DistanceSensor](https://cyberbotics.com/doc/reference/distancesensor) and the [Motor](https://cyberbotics.com/doc/reference/motor) nodes in order to be able to use the corresponding API:
+
+```cpp
+#include <webots/robot.h>
+#include <webots/distance_sensor.h>
+#include <webots/motor.h>
+```
 
 
 
