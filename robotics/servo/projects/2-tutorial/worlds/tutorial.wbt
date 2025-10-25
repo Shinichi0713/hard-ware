@@ -6,27 +6,53 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/balls/protos/Ball.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/BrushedAluminium.proto"
 
 WorldInfo {
+  info [
+    ""
+  ]
+  defaultDamping Damping {
+  }
 }
 Viewpoint {
-  orientation 0.2787730837238117 -0.3329086914103136 -0.9008092866831409 4.506835866589905
-  position 0.5231519273094611 -2.813442571271838 2.471004717910821
+  orientation 0.16424726479655882 -0.29087066553278973 -0.9425588002556452 4.7936915475911785
+  position 0.2058036847008255 -3.56630376102198 2.593047702858597
+}
+DirectionalLight {
+  ambientIntensity 1
+  color 0.4 0.3 0.8
+  direction 0 -1 0
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
-  translation -0.0934453 0.185033 0.05
+  translation 0.176628 0.211916 0.05
   floorSize 2 2
   floorTileSize 0.25 0.25
+  wallAppearance BrushedAluminium {
+    textureTransform PBRAppearance {
+      baseColor 0.8 1 1
+      baseColorMap ImageTexture {
+      }
+      roughnessMap ImageTexture {
+      }
+      metalnessMap ImageTexture {
+      }
+      emissiveColorMap ImageTexture {
+      }
+      textureTransform TextureTransform {
+      }
+    }
+  }
 }
 Ball {
-  translation 0 0 0.26663030215047173
+  translation 0 0 0.26663134399916927
 }
 Solid {
-  translation 0 0 0.1342174229171651
+  translation 0 0 0.13421767199994175
   children [
     DEF BALL_instance Shape {
       appearance Appearance {
@@ -46,25 +72,20 @@ Solid {
   physics Physics {
     mass 10
   }
+  linearVelocity 0 0 5.155015972520861e-13
 }
 WoodenBox {
-  translation 0.3382975038497465 0.026118212334447274 0.09607599999998248
-  rotation 0.14681034631674642 -0.6994450377843086 0.6994450381075442 -2.8500545908069403
+  translation 0.33829750383322366 0.0261182123078726 0.096076
+  rotation 0.14681034616549457 -0.6994450379617995 0.6994450379618006 -2.8500545904977725
   size 0.1 0.1 0.1
   mass 10
 }
 E-puck {
-  hidden linearVelocity_0 -2.3175966911518725e-08 3.904134077934626e-06 -3.700752605103238e-09
-  hidden angularVelocity_0 -9.82670504801595e-08 3.79267869903545e-08 -0.000164965317673897
-  hidden translation_1 0 0.025999999999999995 0.02
-  hidden rotation_1 0 -1 0 2.5663705988219943
-  hidden linearVelocity_1 4.2656536443530514e-06 3.8984426602439726e-06 -6.1344495261295154e-09
-  hidden angularVelocity_1 -9.826676995942567e-08 3.794572805350233e-08 -0.00016496531271284064
-  hidden translation_2 0 -0.025999999999999992 0.02
-  hidden rotation_2 0 0.9999999999999999 0 0.49470631023051115
-  hidden linearVelocity_2 -4.3120664674489726e-06 3.904090572692813e-06 -1.0946580530907964e-09
-  hidden angularVelocity_2 -0.004128018200028278 -6.279998448390992 -0.0001853393323232327
-  translation -1.0566722938821729 0.1469148941926396 0.049958339976817354
-  rotation 0.0007879596571631305 0.987053768239163 -0.16038777298923784 0.004122875006442964
+  hidden position_0_0 9.999999965764394
+  hidden position_0_1 9.999999965764417
+  hidden rotation_1 0 -1 0 5.132741247416773
+  hidden rotation_2 0 -1 0 2.0716643383642452
+  translation -0.8560147029260861 0.14678209137880385 0.04993605324449838
+  rotation -0.0002927770146962534 -0.8844439060580932 -0.4666464307356505 0.0014184583774696424
   controller "my_controller"
 }

@@ -36,16 +36,13 @@
 
 →動作しました！
 
-
 ### Modifying the Floor
 
 消して追加です
 
-
 ### The Solid Node
 
 solidノードは、剛体。変形一切しない。
-
 
 剛体とは、外部から加えられる力にかかわらず、その内部のどの2点間の距離も時間とともに一定に保たれる物体のことです。例えば、テーブル、ロボットの指の関節骨（指骨）、車輪などは剛体です。** **
 
@@ -58,7 +55,6 @@ solidノードは、剛体。変形一切しない。
 ![1760842956094](image/explanation/1760842956094.png)
 
 ## ボールをつくる
-
 
 Hands-on #4: シーンツリービューで、最後のノードを選択し、「追加」ボタンを押します。ダイアログボックスで「Bases nodes」セクションを開き、「Solid」ノードを選択します。** **
 
@@ -78,7 +74,6 @@ Hands-on #4: シーンツリービューで、最後のノードを選択し、�
 
 シミュレーションを保存します。** **
 
-
 # DEF-USE
 
 DEF-USEメカニズムは、ノードを1か所で定義し、その定義をシーンツリーの別の場所で再利用できるようにする仕組みです。これは、ワールドファイル内で同一のノードが重複するのを避けるのに役立ちます。さらに、複数のオブジェクトを同時に修正することも可能になります。** **
@@ -96,7 +91,6 @@ DEF-USEメカニズムは、ノードを1か所で定義し、その定義をシ
 
 ![1760844090698](image/explanation/1760844090698.png)
 
-
 壁の追加
 
 あなたの進捗を確認するため、環境を囲む4つの壁をご自身で実装してください。壁は環境に対して静的に定義する必要があります。
@@ -107,10 +101,26 @@ DEF-USEメカニズムは、ノードを1か所で定義し、その定義をシ
 
 期待される結果はこの図に示されています。
 
+## Appearance
+
+シミュレーションの見てくれを編集する。
+
+### ライト
+
+３パターン。
+
+DirectionalLight: 無限遠光
+
+PointLight: 点光源
+
+SpotLight: 拡散ライト
+
+
 
 ## 参考
 
 [Webots documentation: Tutorial 1: Your First Simulation in Webots (30 Minutes)](https://cyberbotics.com/doc/guide/tutorial-1-your-first-simulation-in-webots#:~:text=The%20objective%20of%20this%20first,end%20of%20the%20first%20tutorial.)
 
-
 [Webots documentation: Tutorial 2: Modification of the Environment (30 Minutes)](https://cyberbotics.com/doc/guide/tutorial-2-modification-of-the-environment)
+
+[Webots documentation: Tutorial 3: Appearance (20 Minutes)](https://cyberbotics.com/doc/guide/tutorial-3-appearance)
