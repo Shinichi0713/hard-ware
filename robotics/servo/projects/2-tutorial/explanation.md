@@ -115,6 +115,44 @@ PointLight: 点光源
 
 SpotLight: 拡散ライト
 
+## モータとコントローラ
+
+ロボットコントローラについて学習する。
+
+物体をよける簡単なコントローラを設計する。
+
+webotsのプログラミングの基本について学習する。
+
+シーンツリーとコントローラAPIについて理解することとなる。
+
+ロボットの初期化を行い、センサー値を取得し、ロボットのアルゴリズムと結びつける方法について学ぶ。
+
+### e-puck モデル
+
+コントローラプログラミングはe-puckに関連づいた情報を必要とする。
+
+衝突回避のアルゴリズムを作るには、センサ値を読む必要がある。
+
+周囲の距離センサを取得することが可能。
+
+
+**距離センサー**によって返される値は、距離に対して区分的に線形なスケールで、0から4096の間に収まるように変換されます [1]。4096は大量の光が測定されていること（障害物が近いこと）を意味し、0は光が測定されていないこと（障害物がないこと）を意味します [1]。
+
+**コントローラAPI**は、ロボットのシミュレートされたセンサーやアクチュエーターにアクセスするためのプログラミングインターフェースです [1]。たとえば、`webots/distance_sensor.h`ファイルを含めることで、`wb_distance_sensor_*`関数を使用できるようになり、これらの関数を使って `DistanceSensor`ノードの値を問い合わせることができます [1]。API関数のドキュメントは、各ノードの説明とともに、リファレンスマニュアルで参照できます [1]。
+
+
+![1761378187883](image/explanation/1761378187883.png)
+
+![1761378334846](image/explanation/1761378334846.png)
+
+### プログラムコントロータ
+
+作りたい衝突回避のふるまいについて。
+
+作りたいのは簡単な衝突回避を行うコントロールをしたい。
+
+実現するにはFBループをUMLにより書かれたように実現する。
+
 
 
 ## 参考
@@ -124,3 +162,5 @@ SpotLight: 拡散ライト
 [Webots documentation: Tutorial 2: Modification of the Environment (30 Minutes)](https://cyberbotics.com/doc/guide/tutorial-2-modification-of-the-environment)
 
 [Webots documentation: Tutorial 3: Appearance (20 Minutes)](https://cyberbotics.com/doc/guide/tutorial-3-appearance)
+
+[Webots documentation: Tutorial 4: More about Controllers (30 Minutes)](https://cyberbotics.com/doc/guide/tutorial-4-more-about-controllers)
