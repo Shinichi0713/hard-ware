@@ -200,6 +200,17 @@ Solidノードの質量（mass）は、その **density（密度）** または 
 なお、密度が **1000 [kg/m³]** の場合、それは**水の密度**に相当します（デフォルト値）。
 
 
+## 4-Wheeled Robot
+
+ロボットのスクラッチを行う。
+
+ロボットはボディと４つのホイールより構成される。
+
+![1761430598828](image/explanation/1761430598828.png)
+
+![1761430608177](image/explanation/1761430608177.png)
+
+
 
 ## 参考
 
@@ -210,3 +221,5 @@ Solidノードの質量（mass）は、その **density（密度）** または 
 [Webots documentation: Tutorial 3: Appearance (20 Minutes)](https://cyberbotics.com/doc/guide/tutorial-3-appearance)
 
 [Webots documentation: Tutorial 4: More about Controllers (30 Minutes)](https://cyberbotics.com/doc/guide/tutorial-4-more-about-controllers)
+
+[Webots documentation: Tutorial 6: 4-Wheeled Robot (60 Minutes)](https://cyberbotics.com/doc/guide/tutorial-6-4-wheels-robot)
