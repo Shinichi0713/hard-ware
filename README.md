@@ -33,7 +33,10 @@ https://cdrdv2-public.intel.com/666923/ug-max10m50-fpga-dev-kit-j-683460-666923.
 
 ![1760389969332](image/README/1760389969332.png)
 
-<video src="image/README/motion-robo1.mp4" controls="true"></video>
+<video controls width="600">
+  <source src="image/README/motion-robo1.mp4" type="video/mp4" controls="true">
+  Your browser does not support the video tag.
+</video>
 
 https://www.macnica.co.jp/business/semiconductor/articles/intel/134097/
 
@@ -52,6 +55,11 @@ webotsかwokwiでロボット制御の演習を行う。
 ![1760754576961](image/README/1760754576961.png)
 
 ![1760835265678](image/README/1760835265678.png)
+
+<video controls width="600">
+  <source src="video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 <video src="image/README/motion-robo1.mp4" controls="true">`</video>`
 
