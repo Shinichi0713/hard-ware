@@ -53,8 +53,7 @@ webotsかwokwiでロボット制御の演習を行う。
 
 ![1760835265678](image/README/1760835265678.png)
 
-**<video** src=**"動画のURL"** controls=**"true"**>`</video>`
-
+<video src="image/README/motion-robo1.mp4" controls="true">`</video>`
 
 ## 参考サイト
 
