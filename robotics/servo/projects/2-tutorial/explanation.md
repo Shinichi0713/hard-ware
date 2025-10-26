@@ -183,7 +183,6 @@ Group {
 
 ![1761428929939](image/explanation/1761428929939.png)
 
-
 ### Physics Attributes
 
 Solidノードの物理特性を集約する方法。
@@ -199,7 +198,6 @@ Solidノードの質量（mass）は、その **density（密度）** または 
 
 なお、密度が **1000 [kg/m³]** の場合、それは**水の密度**に相当します（デフォルト値）。
 
-
 ## 4-Wheeled Robot
 
 ロボットのスクラッチを行う。
@@ -209,6 +207,17 @@ Solidノードの質量（mass）は、その **density（密度）** または 
 ![1761430598828](image/explanation/1761430598828.png)
 
 ![1761430608177](image/explanation/1761430608177.png)
+
+### 構成
+
+1. solid nodesと呼ばれるノードで構成される
+2. Device、ロボット、Jointやモータノードより構成される
+3. センサやアクチュエータはsolidやdeviceより同時に構成される
+4. RobotモデルはSolidノードのツリーで構成される
+5. RobotモデルはSolidツリーより構成される
+6. Jointノードにより結合される
+7. Jointノードは自由度の設定ができる。
+8. Jointにより生起されたSolidノードの制約を許可する
 
 
 
@@ -223,3 +232,8 @@ Solidノードの質量（mass）は、その **density（密度）** または 
 [Webots documentation: Tutorial 4: More about Controllers (30 Minutes)](https://cyberbotics.com/doc/guide/tutorial-4-more-about-controllers)
 
 [Webots documentation: Tutorial 6: 4-Wheeled Robot (60 Minutes)](https://cyberbotics.com/doc/guide/tutorial-6-4-wheels-robot)
+
+
+ロボットを実際につくる動画
+
+[Bing 動画](https://www.bing.com/videos/riverview/relatedvideo?&q=webot+4+wheel&&mid=AFC44DB78331A797C2D4AFC44DB78331A797C2D4&mmscn=mtsc&aps=130&FORM=VRDGAR)

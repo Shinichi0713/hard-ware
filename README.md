@@ -54,7 +54,7 @@ webotsかwokwiでロボット制御の演習を行う。
 
 ![1760754576961](image/README/1760754576961.png)
 
-![1760835265678](image/README/1760835265678.png)
+![1761439890709](image/README/1761439890709.png)
 
 <video controls width="600">
   <source src="video.mp4" type="video/mp4">

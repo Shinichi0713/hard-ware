@@ -16,8 +16,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation -0.29210010014903093 -0.08498746102929677 0.9526041480912835 4.004003489166552
-  position 2.9508591591853297 3.897037453723638 3.0845651388901403
+  orientation -0.3690900583904664 -0.44480615673925705 0.816039221927582 4.966855236415505
+  position -0.5372826397360095 0.809257550638042 1.2264912093821954
 }
 DirectionalLight {
   ambientIntensity 1
@@ -74,8 +74,6 @@ Solid {
   physics Physics {
     mass 10
   }
-  linearVelocity -1.3335681260038864e-93 4.437092104376945e-93 2.077800171977415e-16
-  angularVelocity -4.437092104376945e-92 -1.3335681260038864e-92 -3.0635551210149987e-108
 }
 Solid {
   translation 0 -3.706159964372313e-17 0.14320427079157128
@@ -124,31 +122,78 @@ WoodenBox {
   mass 10
 }
 E-puck {
-  hidden linearVelocity_0 -0.023805522587642226 0.05762997444425136 1.4163464024036828e-16
-  hidden angularVelocity_0 6.023758891231046e-10 -1.4585811575007378e-09 5.962012795042434e-09
-  hidden translation_1 0 0.026000000000000002 0.02
-  hidden rotation_1 0 -0.9999999999999999 0 2.695441266983261
-  hidden linearVelocity_1 -0.023805522568954164 0.05762997437835288 -4.097071490414566e-11
-  hidden angularVelocity_1 -2.88149899298366 -1.1902762001619638 8.004719627021762e-08
-  hidden translation_2 0 -0.026 0.02
-  hidden rotation_2 0 1 0 1.28905340541488
-  hidden linearVelocity_2 -0.02380552262087947 0.05762997450426354 4.097454154738306e-11
-  hidden angularVelocity_2 -2.8814989637054516 -1.1902762710550536 -7.209868691597222e-08
   translation 0.832982142770579 0.5028688726641579 0.04993609989043419
   rotation 0.0007235950978023338 -0.0004840000679297434 0.9999996210769626 1.9625238533299287
   controller "my_controller"
 }
+Robot {
+  translation 0 0 0.5
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+      }
+      device [
+        RotationalMotor {
+        }
+      ]
+      endPoint Solid {
+        translation -0.06 -0.1 0
+        rotation 0 1 0 -1.5707963267948966
+        children [
+          Shape {
+            appearance PBRAppearance {
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.04
+            }
+          }
+        ]
+        name "solid(1)"
+      }
+    }
+    DEF Body Shape {
+      appearance Appearance {
+        material Material {
+        }
+        texture ImageTexture {
+        }
+      }
+      geometry Box {
+        size 0.1 0.3 0.04
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+      }
+      device [
+        RotationalMotor {
+        }
+      ]
+      endPoint Solid {
+        translation 0.06 -0.1 0
+        rotation 0 1 0 1.5707963267948968
+        children [
+          DEF wheel_obj Shape {
+            appearance PBRAppearance {
+            }
+            geometry DEF wheel Cylinder {
+              height 0.02
+              radius 0.04
+            }
+          }
+        ]
+        boundingObject USE wheel
+        physics DEF pysics_wheel Physics {
+        }
+      }
+    }
+  ]
+  boundingObject USE Body
+  physics Physics {
+  }
+}
 E-puck {
-  hidden linearVelocity_0 -0.057796432386290876 -0.023398488488408486 1.4677197396805217e-14
-  hidden angularVelocity_0 -5.6241060096924173e-11 -2.219950248453183e-11 -1.5720148158501494e-10
-  hidden translation_1 0 0.026000000000000006 0.02
-  hidden rotation_1 0 -1 0 5.692956247080847
-  hidden linearVelocity_1 -0.05779643238769464 -0.023398488488532695 1.5654474964726465e-12
-  hidden angularVelocity_1 1.1699244929025683 -2.889821890732753 7.595941123783218e-08
-  hidden translation_2 0 -0.025999999999999992 0.02
-  hidden rotation_2 0 1 0 3.7559137710662363
-  hidden linearVelocity_2 -0.05779643238505332 -0.023398488487702353 -1.561329239666361e-12
-  hidden angularVelocity_2 1.169924564014545 -2.8898218619434 -7.618446428429268e-08
   translation 0.015647863593741766 0.9175043917702804 0.049936099890461806
   rotation -0.0007235951608345259 -0.00014091628064876913 -0.9999997282762856 2.7569182530124277
   name "e-puck(1)"
