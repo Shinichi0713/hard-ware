@@ -237,3 +237,8 @@ Solidノードの質量（mass）は、その **density（密度）** または 
 ロボットを実際につくる動画
 
 [Bing 動画](https://www.bing.com/videos/riverview/relatedvideo?&q=webot+4+wheel&&mid=AFC44DB78331A797C2D4AFC44DB78331A797C2D4&mmscn=mtsc&aps=130&FORM=VRDGAR)
+
+
+数学の考え方を可視化
+
+[x^2 + 5x + 6 = 0 - Wolfram|Alpha](https://ja.wolframalpha.com/input?i=x%5E2+%2B+5x+%2B+6+%3D+0)
