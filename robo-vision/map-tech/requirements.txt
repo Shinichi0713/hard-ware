@@ -1,0 +1,32 @@
+# OpenDroneMap Python サンプルコード用依存関係
+
+# 基本パッケージ
+requests>=2.25.1
+configparser>=5.0.2
+
+# 数値計算・データ処理
+numpy>=1.21.0
+matplotlib>=3.5.0
+
+# 画像処理
+opencv-python>=4.5.0
+Pillow>=8.3.0
+
+# 3D処理・可視化（オプション - GPUサポートに注意）
+# open3d>=0.13.0
+
+# 地理空間データ処理（オプション）
+# rasterio>=1.2.0
+# geopandas>=0.9.0
+# fiona>=1.8.0
+# shapely>=1.7.0
+
+# Jupyter Notebook用（オプション）
+# jupyter>=1.0.0
+# ipywidgets>=7.6.0
+
+# WebODM API用
+# PyJWT>=2.1.0
+
+# ログ・進捗表示
+tqdm>=4.61.0
