@@ -33,6 +33,25 @@ https://cdrdv2-public.intel.com/666923/ug-max10m50-fpga-dev-kit-j-683460-666923.
 
 ![1760389969332](image/README/1760389969332.png)
 
+VSCode上でsystem-verilogを実行できるようにした。
+
+```
+# === Adder Test Start ===
+# Time   |   A   |   B   |  Sum  | Carry
+# 10000 | 0a | 05 | 0f | 0
+# 20000 | ff | 01 | 00 | 1
+# 30000 | 7f | 01 | 80 | 0
+# 40000 | 55 | aa | ff | 0
+# === Adder Test Complete ===
+# ** Note: $finish    : C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv(46)
+#    Time: 40 ns  Iteration: 0  Instance: /tb_adder
+# End time: 14:24:07 on Nov 03,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+ *  Terminal will be reused by tasks, press any key to close it. 
+```
+
+## Webots
+
 <video controls width="600">
   <source src="image/README/motion-robo1.mp4" type="video/mp4" controls="true">
   Your browser does not support the video tag.
