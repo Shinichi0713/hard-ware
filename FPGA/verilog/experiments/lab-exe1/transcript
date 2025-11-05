@@ -1,0 +1,20 @@
+# vsim work.tb_adder -do "run -all; quit" 
+# Start time: 14:26:00 on Nov 03,2025
+# Loading sv_std.std
+# Loading work.tb_adder
+# Loading work.adder
+# run -all
+# === Adder Test Start ===
+# Time   |   A   |   B   |  Sum  | Carry
+# 10000 | 0a | 05 | 0f | 0
+# 20000 | ff | 01 | 00 | 1
+# 30000 | 7f | 01 | 80 | 0
+# 40000 | 55 | aa | ff | 0
+# === Adder Test Complete ===
+# ** Note: $finish    : C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv(46)
+#    Time: 40 ns  Iteration: 0  Instance: /tb_adder
+# 1
+# Break in Module tb_adder at C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv line 46
+#  quit
+# End time: 14:27:23 on Nov 03,2025, Elapsed time: 0:01:23
+# Errors: 0, Warnings: 0

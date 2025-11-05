@@ -10,49 +10,48 @@ cModel Technology
 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise1
 vadder
 Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z1 !s110 1760389849
+!s110 1760389849
 !i10b 1
 !s100 gdigBAe1W4De>Q<2TgLMz1
 IFb;6_1QjWo^<me?AM2:8N0
-Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z1 VDg1SIo80bB@j0V0VzS_@n1
 !s105 adder_sv_unit
 S1
-Z3 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1
+Z2 dC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1
 w1760389834
 8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/adder.sv
 FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/adder.sv
 L0 4
-Z4 OV;L;10.5b;63
+Z3 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z5 !s108 1760389849.000000
+!s108 1760389849.000000
 !s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/adder.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/adder.sv|
 !i113 1
-Z6 o-work work -sv
-Z7 tCvgOpt 0
+o-work work -sv
+Z4 tCvgOpt 0
 vtb_adder
 R0
-R1
+!s110 1762147551
 !i10b 1
 !s100 f2ZlPh[]7F8Xmc^19^^h;1
-IT^WFb>YIb_jo4AMF9ZF@V3
-R2
+I0af;2eZJdmkKdP9WOVez>1
+R1
 !s105 tb_adder_sv_unit
 S1
-R3
-w1760389839
-8C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv
-FC:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv
+R2
+w1762147243
+8C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\verilog\experiments\lab-exe1\tb_adder.sv
+FC:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\verilog\experiments\lab-exe1\tb_adder.sv
 L0 6
-R4
+R3
 r1
 !s85 0
 31
-R5
-!s107 C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/lab-exe1/tb_adder.sv|
+!s108 1762147551.000000
+!s107 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\verilog\experiments\lab-exe1\tb_adder.sv|
+!s90 C:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\FPGA\verilog\experiments\lab-exe1\tb_adder.sv|
 !i113 1
-R6
-R7
+R4
