@@ -1,0 +1,15 @@
+{C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise2/d_flipflop.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise2/d_flipflop.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module d_flipflop
+
+Top level modules:
+	d_flipflop
+
+} {} {}} {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise2/tb_d_filpflop.sv} {1 {vlog -work work -sv -stats=none {C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/FPGA/verilog/experiments/exercise2/tb_d_filpflop.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb_d_flipflop
+
+Top level modules:
+	tb_d_flipflop
+
+} {} {}}
