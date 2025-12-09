@@ -17,8 +17,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation 0.3900975099161693 0.6662226150474415 0.6355874133087854 0.6711313598152696
-  position -1.7386315686501446 -1.326685269527885 1.8615781537647955
+  orientation -0.33586657661800345 0.038311000451537035 0.9411301238167362 5.093417183535922
+  position -1.017497460350778 2.3074319010239974 1.1907481589149298
 }
 DirectionalLight {
   ambientIntensity 1
@@ -51,20 +51,22 @@ RectangleArena {
   }
 }
 Robot {
-  translation 0 0 1
+  translation -0.2641808531448149 -0.0023217078850252177 0.09646840023110292
+  rotation -0.20684579823753363 0.9783735563431167 -1.0231711405458149e-17 3.141592653589793
   children [
     Solid {
       translation -0.15 -0.15 -0.05
       children [
         HingeJoint {
           jointParameters HingeJointParameters {
+            position -4.488854601603388e-07
           }
           device [
             RotationalMotor {
             }
           ]
           endPoint Solid {
-            rotation 1 0 0 1.5707996938995747
+            rotation -1 0 -7.850450838758983e-17 -1.570799245014113
             children [
               Shape {
                 appearance PBRAppearance {
@@ -78,6 +80,8 @@ Robot {
             boundingObject USE cylinder
             physics Physics {
             }
+            linearVelocity -1.0276026950497925e-12 -6.234341217530691e-13 -4.7343588180033066e-08
+            angularVelocity 3.350107921876292e-16 -7.568811398688524e-16 3.444761278661926e-16
           }
         }
       ]
@@ -88,13 +92,14 @@ Robot {
       children [
         HingeJoint {
           jointParameters HingeJointParameters {
+            position 3.925231146709438e-17
           }
           device [
             RotationalMotor {
             }
           ]
           endPoint Solid {
-            rotation 1 0 0 1.5707996938995747
+            rotation -1 1.5700898153576188e-16 -1.1775673615182141e-16 -1.5707996938995743
             children [
               Shape {
                 appearance PBRAppearance {
@@ -108,6 +113,8 @@ Robot {
             boundingObject USE cylinder
             physics Physics {
             }
+            linearVelocity 8.638894243731808e-33 4.0730035771248645e-33 -4.7343502964756786e-08
+            angularVelocity -2.8980738711175515e-17 6.54754266473621e-17 6.889522557323872e-16
           }
         }
       ]
@@ -150,13 +157,14 @@ Robot {
       children [
         HingeJoint {
           jointParameters HingeJointParameters {
+            position -6.832478498795556e-10
           }
           device [
             RotationalMotor {
             }
           ]
           endPoint Solid {
-            rotation 1 0 0 1.5707996938995747
+            rotation -1 3.925224539734994e-17 -7.850449079469988e-17 -1.5707996932163262
             children [
               DEF cylinder Shape {
                 appearance PBRAppearance {
@@ -170,6 +178,8 @@ Robot {
             boundingObject USE cylinder
             physics Physics {
             }
+            linearVelocity 1.6710767478606755e-32 7.755975551452606e-33 -4.734350296493925e-08
+            angularVelocity 5.790180903526606e-16 2.1432346073243848e-16 6.889522557323872e-16
           }
         }
       ]
@@ -179,14 +189,16 @@ Robot {
   boundingObject USE robot_body
   physics Physics {
   }
+  linearVelocity 1.7915743830942536e-17 -1.7174998834780247e-18 -1.8323601758585656e-09
+  angularVelocity 2.9862443072927795e-16 9.91357020819213e-17 -4.78274365400382e-17
 }
 Ball {
-  translation -1.5791372621866262 -0.10803925315048295 0.08241367198380568
-  rotation 0.005136435104638006 0.004851603005622389 0.9999750391798246 1.941999213299006
+  translation -1.5794666218395088 -0.1080914187921671 0.08241367201294288
+  rotation 0.0006182556457220216 0.0005839713512556224 0.9999996383686434 1.9419762891268686
 }
 Solid {
-  translation -0.661710455898627 0.29971809931261845 0.13430400000000006
-  rotation -0.6202251584448855 0.7735602466610445 0.13009726214536949 -2.300022051514332
+  translation -0.661710455898627 0.29971809931261845 0.13430400045424412
+  rotation -0.6202251584448857 0.7735602466610442 0.13009726214536954 -2.3000220515143313
   children [
     DEF BALL_instance Shape {
       appearance Appearance {
@@ -206,10 +218,11 @@ Solid {
   physics Physics {
     mass 10
   }
+  linearVelocity 0 0 -3.93969896837697e-09
 }
 Solid {
-  translation -0.5953272535474687 -0.011635601158859862 0.14320337827411878
-  rotation 4.403635380952571e-05 0.9999999645224701 -0.0002627086948811893 0.33216052535711776
+  translation -0.9849540661952977 -0.011641439924750186 0.14320337829101146
+  rotation -2.1591922918489686e-05 0.9999999997561834 4.628388827340009e-06 2.7192688794656745
   children [
     DEF DEF_G0_Group Group {
       children [
@@ -246,178 +259,84 @@ Solid {
   boundingObject USE DEF_G0_Group
   physics Physics {
   }
+  linearVelocity -1.7709040385839364e-18 3.159460577706589e-17 -2.987820549526276e-09
+  angularVelocity -2.638151841989306e-16 4.223575994245359e-17 5.996039165562578e-17
 }
 WoodenBox {
-  translation 0.34546389708994163 0.011397055928720748 0.09607600025131936
-  rotation 0.14146467735960155 -0.6999956232218428 0.699995623221894 -2.8605283072126912
+  translation 0.3475066556720301 0.01166044153381453 0.09607599767874983
+  rotation 0.1383586149906825 -0.7003059136165032 0.7003060195454662 -2.866623473994919
   size 0.1 0.1 0.1
   mass 10
 }
 E-puck {
-  hidden linearVelocity_0 -0.06089692912389903 0.013397047563055153 1.882427489584174e-14
-  hidden angularVelocity_0 1.5996355154441443e-09 -3.51250167767123e-10 5.7974270371233615e-09
-  hidden translation_1 0 0.025999999999999992 0.02
-  hidden rotation_1 0 -1 0 5.043670293342726
-  hidden linearVelocity_1 -0.0608969290630274 0.013397047541786285 -4.245017321553745e-11
-  hidden angularVelocity_1 -0.6698524747934698 -3.0448467188427344 7.997894155345977e-08
-  hidden translation_2 0 -0.026 0.02
-  hidden rotation_2 0 -1 0 2.7310386840398726
-  hidden linearVelocity_2 -0.06089692918816206 0.013397047568386918 4.245082877178515e-11
-  hidden angularVelocity_2 -0.6698523998679521 -3.044846735331238 -7.216700700875657e-08
-  translation 0.15456855284936652 -0.7881308769794318 0.049936099890460765
-  rotation -0.0007235951320163014 7.865372548039178e-05 -0.9999997351118032 -2.9250467414838774
+  hidden position_0_0 730.0751809542104
+  hidden position_0_1 735.696539044254
+  hidden linearVelocity_0 0.0022855987876561267 -0.062416054497289555 3.647991109452871e-05
+  hidden angularVelocity_0 0.004545172692011632 0.002478374809639573 -0.024004972012097336
+  hidden rotation_1 0 -1 0 3.8179849719643606
+  hidden linearVelocity_1 0.0014937230258930997 -0.06243024162668999 -1.6156035589016356e-05
+  hidden angularVelocity_1 3.1216011990355903 0.07924288232407584 -0.021959433339460346
+  hidden rotation_2 0 1 0 4.1160047273820926
+  hidden linearVelocity_2 0.003115667121148526 -0.062346277843090867 9.164181605325292e-06
+  hidden angularVelocity_2 3.1185496076876107 0.15555581920406977 0.008385194870131151
+  translation -0.5987969290054725 0.5521148543211172 0.0499046250304543
+  rotation -0.00034938064068175634 0.0009114174853116041 0.9999995236255543 -1.5321206177799995
   controller "my_controller"
 }
-Robot {
-  translation 0.25490947980789247 0.03144528134177449 0.11288267339704096
-  rotation -0.15048866939610245 0.9866655831619283 0.06200151116805711 1.5746554949809106
-  children [
-    HingeJoint {
-      jointParameters HingeJointParameters {
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint Solid {
-        translation 0.06 0.1 0
-        rotation 0 1 0 1.5707963267948968
-        children [
-          Shape {
-            appearance PBRAppearance {
-            }
-            geometry Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        name "solid(2)"
-      }
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint Solid {
-        translation -0.06 -0.1 0
-        rotation 0 1 0 -1.5707963267948966
-        children [
-          Shape {
-            appearance PBRAppearance {
-            }
-            geometry Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        name "solid(1)"
-      }
-    }
-    DEF Body Shape {
-      appearance Appearance {
-        material Material {
-        }
-        texture ImageTexture {
-        }
-      }
-      geometry Box {
-        size 0.1 0.3 0.04
-      }
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position 2.6324565781962482e-06
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint Solid {
-        translation 0.06000000000000001 -0.09999999999965352 -2.632456578193208e-07
-        rotation 1.316228289096604e-06 0.9999999999982675 1.316228289096604e-06 1.570796326796629
-        children [
-          DEF wheel_obj Shape {
-            appearance PBRAppearance {
-            }
-            geometry DEF wheel Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        boundingObject USE wheel
-        physics DEF pysics_wheel Physics {
-        }
-        linearVelocity -2.775567310018386e-07 -6.282171090788979e-08 1.0354308287517237e-07
-        angularVelocity 6.932058832768476e-07 -3.2735989799324965e-06 -5.926903393264166e-06
-      }
-    }
-  ]
-  boundingObject USE Body
-  physics Physics {
-  }
-}
 E-puck {
-  hidden linearVelocity_0 -0.05304686569733439 -0.0327711290591629 2.724892238974639e-13
-  hidden angularVelocity_0 -3.618759682669215e-09 -2.222820112861771e-09 -5.4911885135418514e-09
-  hidden translation_1 0 0.026 0.02
-  hidden rotation_1 0 1 0 5.650618178779179
-  hidden linearVelocity_1 -0.053046866104794296 -0.03277112840224974 1.0857936965959204e-10
-  hidden angularVelocity_1 1.6385565651503269 -2.6523435414722987 7.129578074633346e-08
-  hidden translation_2 0 -0.026000000000000006 0.02
-  hidden rotation_2 0 -1 0 2.2711075911290632
-  hidden linearVelocity_2 -0.0530468653117757 -0.032771129679779756 -1.0858026093957363e-10
-  hidden angularVelocity_2 1.6385566304158903 -2.6523435011525462 -8.088875089531304e-08
-  translation -0.2777535855178414 0.6969070595055078 0.04993609989034063
-  rotation 0.0007235951101663817 0.0002054856266139424 0.9999997170928467 -2.5882044839362446
+  hidden position_0_0 728.4653142661379
+  hidden position_0_1 721.241220044994
+  hidden linearVelocity_0 0.00022112895174932037 -0.0002032792895784722 -8.865778612998578e-05
+  hidden angularVelocity_0 -0.0024197478806203434 -0.002541053999301884 2.213897765224974
+  hidden rotation_1 0 1 0 5.2664368120850025
+  hidden linearVelocity_1 -0.036513326584149436 -0.04434515756855048 -1.1686795026193472e-06
+  hidden angularVelocity_1 2.402436237584979 -1.9883320988834747 2.2351352038623955
+  hidden rotation_2 0 1 0 2.686987435392031
+  hidden linearVelocity_2 0.03730716932923485 0.044268339341224115 2.0904521577000877e-05
+  hidden angularVelocity_2 -2.40016176361254 1.991351154931065 2.2502616955883217
+  translation -0.6697916998036418 0.5932838252604623 0.049897711603317234
+  rotation -0.0006300527371830762 -0.0002937760075546722 -0.9999997583645736 -0.9254286271676015
   name "e-puck(1)"
   controller "my_controller"
 }
 AiboErs7 {
-  hidden translation_2 0.0675 0 0.0195
-  hidden rotation_2 0.5773536210744087 -0.5773466105999769 -0.5773505758730882 2.094402143923859
-  hidden translation_3 0 0.08 0
-  hidden rotation_3 0 -1 0 2.4394252216435837e-07
-  hidden translation_4 0 0 0
-  hidden rotation_4 -1 0 0 2.920019319991088e-07
-  hidden translation_9 -0.042 0.0145 0.011
-  hidden rotation_9 0 0 -1 0
-  hidden translation_10 0.042 0.0145 0.011
-  hidden rotation_10 0 0 1 0
-  hidden translation_12 -0.102 0 0.033
-  hidden rotation_12 0 1 0 0
-  hidden translation_13 0 0 0
-  hidden rotation_13 1 0 0 0
-  hidden translation_14 0.065 0 0
-  hidden rotation_14 0 1 0 0.0005117544928847172
-  hidden translation_15 0 -0.0625 0
-  hidden rotation_15 -1 0 0 0.18581447975190704
-  hidden translation_16 0.009 -0.0047 -0.0695
-  hidden rotation_16 0.6546562422969814 -0.6546542422953531 -0.37795902881965027 2.418882166603083
-  hidden translation_18 -0.065 0 0
-  hidden rotation_18 0 -1 0 0.8003327493056197
-  hidden translation_19 0 -0.0625 0
-  hidden rotation_19 -1 0 0 0.242287943505769
-  hidden translation_20 -0.009 -0.0047 -0.0695
-  hidden rotation_20 0.44721701524849805 -0.4472100152489089 -0.7745967618918216 1.823486132258957
-  hidden translation_22 0.065 0 0
-  hidden rotation_22 0 1 0 0.19945192292117414
-  hidden translation_23 0 0.0625 0
-  hidden rotation_23 1 0 0 0.11972883016114576
-  hidden translation_24 0.009 0.0047 -0.0695
-  hidden rotation_24 0.6546600003040779 -0.6546580003041504 -0.3779460102179091 2.418903984936066
-  hidden translation_26 -0.065 0 0
-  hidden rotation_26 0 -1 0 0.38672601482982794
-  hidden translation_27 0 0.0625 0
-  hidden rotation_27 1 0 0 0.15380312029498666
-  hidden translation_28 -0.009 0.0047 -0.0695
-  hidden rotation_28 0.44721703817028285 -0.4472100381704972 -0.7745967354241445 1.823486165343351
-  translation 0.08963519761811593 -0.021561601014443207 0.1875726607256085
-  rotation 0.8435251343013102 -0.5213942833324777 0.1288927814509744 0.1604609576794639
-  controller "aibo_controller"
+  hidden position_0_0 0.025821009224549003
+  hidden position_0_1 0.17956428143303518
+  hidden position_0_2 -5.8011498448601e-07
+  hidden position_0_3 -1.6263546859177672e-06
+  hidden position_0_4 -3.401615585289083e-06
+  hidden position_0_5 -1.4693681615634106e-07
+  hidden rotation_2 0.657401708929185 -0.6573942295392996 -0.368314838236824 2.4358036579187234
+  hidden position_2_0 0.013524315437136003
+  hidden rotation_3 0 1 0 0.0135240733219239
+  hidden position_3_0 0.5235997044112854
+  hidden rotation_4 -1 0 0 5.885487096944919e-07
+  hidden position_4_0 1.1092929100782998e-09
+  hidden position_4_1 3.458795931381722e-09
+  hidden rotation_12 0 1 0 0.17956428143303604
+  hidden position_12_0 -2.577314970771999e-07
+  hidden rotation_13 -1 0 0 2.5809568279517867e-07
+  hidden rotation_14 0 1 0 0.0005123346102704566
+  hidden position_14_0 5.583774589495287e-07
+  hidden rotation_15 -1 0 0 0.18581503812936825
+  hidden position_15_0 0.5236191184162614
+  hidden rotation_16 0.6546562276024039 -0.6546542276012951 -0.37795907972311116 2.4188820775217055
+  hidden rotation_18 0 -1 0 0.800334375660306
+  hidden position_18_0 -3.3524540070760773e-06
+  hidden rotation_19 -1 0 0 0.24228459105175906
+  hidden position_19_0 0.5235966463956131
+  hidden rotation_20 0.4472173430157882 -0.44721034301339135 -0.7745963834202582 1.8234866053455985
+  hidden rotation_22 0 1 0 0.19945532453675818
+  hidden position_22_0 2.3666364582428608e-07
+  hidden rotation_23 1 0 0 0.11972906682479174
+  hidden position_23_0 0.5236522331783092
+  hidden rotation_24 0.6546599199836661 -0.6546579199863746 -0.3779462884671486 2.4189034979940756
+  hidden rotation_26 0 -0.9999999999999999 0 0.3867261617666402
+  hidden position_26_0 -1.4936248918059016e-07
+  hidden rotation_27 1 0 0 0.15380297093249046
+  hidden position_27_0 0.5235980726894024
+  hidden rotation_28 0.44721690109374895 -0.44720990109513714 -0.7745968937057401 1.823485967492579
+  translation 0.12949399330955266 -0.03211137706039948 0.18749623748013586
+  rotation 0.6413187685422691 -0.47482430077638965 -0.6027040073764568 0.2036296177242464
+  controller "robot_cont1"
 }
