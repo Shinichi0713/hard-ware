@@ -5,7 +5,7 @@ sceneTreePerspectives: 000000ff00000001000000030000001e000000c0000000fa010000000
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 0 "controllers/robot_cont1/robot_cont1.py"
+textFiles: 0 "C:/Users/yoshinaga/Documents/Python Scripts/hard-related/hard-ware/robotics/servo/projects/2-tutorial/controllers/robot_cont1/robot_cont1.py"
 consoles: Console:All:All
 renderingDevicePerspectives: ERS-7:PRM:/r1/c1/c2/c3/i1-FbkImageSensor:F1;1;0.2;0;0
 renderingDevicePerspectives: e-puck(1):camera;1;0.820513;0;0
