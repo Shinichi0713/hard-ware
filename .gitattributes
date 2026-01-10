@@ -2,3 +2,6 @@
 * text=auto
 *.ipynb linguist-vendored
 *.ipynb linguist-generated
+
+*.py linguist-vendored
+*.py linguist-detectable=false
