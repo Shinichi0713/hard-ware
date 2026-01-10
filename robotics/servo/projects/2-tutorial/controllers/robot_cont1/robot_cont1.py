@@ -1,5 +1,7 @@
 from controller import Robot, Motor
 import math
+import common_resources
+import robot_motioner
 
 # ロボットの初期化
 robot = Robot()
@@ -39,100 +41,28 @@ JOINTS = {
     'rl_ankle': 'PRM:/r5/c1/c2/c3-Joint2:53',
 }
 
-# --- 2. デバイスの取得と初期設定 ---
-# このブロックはループ外で一度だけ実行されるべきです。
-# ロボットの初期化コードと統合しました。
+# --- 2. デバイスの取得と初期化 ---
 motors = {}
-camera = None
 for name, device_id in JOINTS.items():
-    device = robot.getDevice(device_id)
-    if device:
-        if 'camera' in name:
-            camera = device # カメラはMotorではない
-        else:
-            motor = device
-            # モーターの初期設定
-            motor.setVelocity(float('inf')) 
-            motor.setForce(100.0) 
-            motors[name] = motor
-    else:
-        print(f"ERROR: Device {device_id} not found.")
+    motor = robot.getDevice(device_id)
+    if motor and isinstance(motor, Motor):
+        # 重要な変更点：初期トルクと速度を制限して急激な動きを防ぐ
+        motor.setPosition(0.0)  # 最初はホームポジションへ
+        motor.setVelocity(2.0)  # 爆発を防ぐため速度を制限（後で調整可）
+        # motor.setAvailableTorque(10.0) # 必要に応じてトルク制限
+        motors[name] = motor
 
 
 # --- 2. カメラの有効化 ---
-if camera is not None:
-    camera.enable(timestep)
-    print(f"カメラを有効化しました: {JOINTS['camera']}")
-else:
-    print("WARNING: カメラが見つかりませんでした。")
+# if camera is not None:
+#     camera.enable(timestep)
+#     print(f"カメラを有効化しました: {JOINTS['camera']}")
+# else:
+#     print("WARNING: カメラが見つかりませんでした。")
 
-# --- 3. 歩行パラメータの設定 (定数としてループ外に保持) ---
-FREQUENCY = 1.5   # 歩行頻度 (Hz)
-AMPLITUDE_H = 0.1 # 水平方向（Hip）の振幅 (rad)
-AMPLITUDE_V = 0.2 # 垂直方向（Knee/Ankle）の振幅 (rad)
-OFFSET_V = 0.5    # 垂直方向のオフセット（足を上げるための初期角度）
-HEAD_SWING = 0.05 # 首の振幅 (rad)
-TAIL_SWING_AMP = 0.15
-TAIL_SWING_OFF = 0.15
 
-# --- 4. メインループ (歩行ロジック) ---
-print("Aibo controller started! 簡易トロット歩行を実行します。")
+# --- 3. 歩行パラメータの微調整 ---
+motioner = robot_motioner.MotionController(robot, motors)
+# 数値を小さめから始めて、徐々に大きくするのがコツです
 while robot.step(timestep) != -1:
-    time = robot.getTime()
-    
-    # 進行角 (サイン波の引数)
-    angle = 2.0 * math.pi * FREQUENCY * time
-    
-    # トロット歩行の実現 (対角線セット)
-    set_a_phase = math.sin(angle)
-    set_b_phase = math.sin(angle + math.pi) # 180度 (π) ずらす
-
-    
-    # --- A. 脚の動作制御 (FR & RL) ---
-    # セットAの関節名リスト
-    set_a_hips = [motors.get('fr_hip'), motors.get('rl_hip')]
-    set_a_knees = [motors.get('fr_knee'), motors.get('rl_knee')]
-    set_a_ankles = [motors.get('fr_ankle'), motors.get('rl_ankle')] # 追加
-
-    for hip, knee, ankle in zip(set_a_hips, set_a_knees, set_a_ankles):
-        if hip:
-            # Hip: 前後スイング
-            hip.setPosition(set_a_phase * AMPLITUDE_H)
-        
-        if knee:
-            # Knee & Ankle: 足を持ち上げて前に出す
-            knee.setPosition(set_a_phase * AMPLITUDE_V + OFFSET_V)
-            
-        if ankle:
-            # Ankle: 安定化のためKneeと逆方向に動かすなど、調整が必要
-            # ここではKneeの動きを反転させて設定
-            ankle.setPosition(-set_a_phase * AMPLITUDE_V + OFFSET_V) 
-
-
-    # --- B. 脚の動作制御 (FL & RR) ---
-    # セットBの関節名リスト
-    set_b_hips = [motors.get('fl_hip'), motors.get('rr_hip')]
-    set_b_knees = [motors.get('fl_knee'), motors.get('rr_knee')]
-    set_b_ankles = [motors.get('fl_ankle'), motors.get('rr_ankle')] # 追加
-
-    for hip, knee, ankle in zip(set_b_hips, set_b_knees, set_b_ankles):
-        if hip:
-            # Hip: 前後スイング
-            hip.setPosition(set_b_phase * AMPLITUDE_H)
-
-        if knee:
-            # Knee & Ankle: 足を持ち上げて前に出す
-            knee.setPosition(set_b_phase * AMPLITUDE_V + OFFSET_V)
-
-        if ankle:
-            # Ankle: 安定化のためKneeの動きを反転
-            ankle.setPosition(-set_b_phase * AMPLITUDE_V + OFFSET_V) 
-
-
-    # --- C. 頭と尻尾の制御 (一本化) ---
-    if 'head_pan' in motors:
-        motors['head_pan'].setPosition(HEAD_SWING * math.sin(2.0 * time))
-
-    if 'tail_pan' in motors:
-        tail_pos = TAIL_SWING_AMP * math.sin(10.0 * time) + TAIL_SWING_OFF
-        motors['tail_pan'].setPosition(tail_pos)
+    motioner.walk()
