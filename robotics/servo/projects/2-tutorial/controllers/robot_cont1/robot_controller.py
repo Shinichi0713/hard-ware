@@ -1,5 +1,5 @@
 from controller import Robot
-
+import math
 
 class RobotController(Robot):
     def __init__(self):
@@ -36,7 +36,10 @@ class RobotController(Robot):
 
         # 最大角速度(rad/s)
         self.speed = self.MAX_SPEED * 0.5
-
+        self.sensor_angles = [
+            -0.3,  -0.79,  -1.57, -2.62, # ls0, ls1, ls2, ls3
+            2.62, 1.57,  0.79,  0.3  # ls4, ls5, ls6, ls7 (近似値)
+        ]
         self.__get_sensor()
 
     def __get_sensor(self):
@@ -78,6 +81,44 @@ class RobotController(Robot):
                 # 障害物がない場合、前進
                 self.left_motor.setVelocity(self.speed)
                 self.right_motor.setVelocity(self.speed)
+
+    def __aware_dirction(self):
+        direction_x = 0.0
+        direction_y = 0.0
+        # 障害物の方向を数値で返す（-1: 右, 0: 前, 1: 左）
+        ps_values = [max(0.0, s.getValue() / 4000.0) for s in self.sensors]
+        print(f"Sensor Values: {[f'{v:.2f}' for v in ps_values]}")  # センサー値のデバッグ出力
+        index_max = ps_values.index(max(ps_values))
+        if max(ps_values) > 0.1:
+            angle = self.sensor_angles[index_max]
+        else:
+            angle = math.pi
+        return angle, ps_values[index_max]
+
+    def run_vector_field(self):
+        base_speed = self.MAX_SPEED / 2.0  # 基本の進行速度
+
+        while self.step(self.timestep) != -1:
+            angle, val_sensor = self.__aware_dirction()
+
+            # 方向ベクトルを正規化
+            if val_sensor > 0.1:
+                if math.fabs(angle) < math.pi / 2:  # ある程度の角度がある場合のみ旋回
+                    target_angle = angle
+                    print(f"Direction Vector: ({math.cos(target_angle)*val_sensor:.2f}, {math.sin(target_angle)*val_sensor:.2f}), Target Angle: {math.degrees(target_angle):.2f} degrees, Total Brightness: {val_sensor:.2f}")
+                    if angle > 0:
+                        self.left_motor.setVelocity(base_speed)
+                        self.right_motor.setVelocity(-base_speed)
+                    else:
+                        self.left_motor.setVelocity(-base_speed)
+                        self.right_motor.setVelocity(base_speed)
+                else:
+                    self.left_motor.setVelocity(base_speed)
+                    self.right_motor.setVelocity(base_speed)
+            else:
+                self.left_motor.setVelocity(base_speed)
+                self.right_motor.setVelocity(base_speed)
+
 
     def run_pid(self):
         target_value = 100.0  # 目標とする壁との距離（センサー値）
