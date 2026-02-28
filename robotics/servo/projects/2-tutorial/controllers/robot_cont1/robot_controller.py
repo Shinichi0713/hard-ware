@@ -78,3 +78,48 @@ class RobotController(Robot):
                 # 障害物がない場合、前進
                 self.left_motor.setVelocity(self.speed)
                 self.right_motor.setVelocity(self.speed)
+
+    def run_pid(self):
+        target_value = 100.0  # 目標とする壁との距離（センサー値）
+        kp = 0.15              # 比例ゲイン（反応の強さ）
+        ki = 0.001             # 積分ゲイン（残留偏差の解消）
+        kd = 0.05              # 微分ゲイン（ガタつきの抑制）
+
+        integral = 0.0
+        last_error = 0.0
+        base_speed = 3.0      # 基本の進行速度
+
+        while self.step(self.timestep) != -1:
+            # 現在のセンサー値を取得
+            current_value = self.sensors[0].getValue()
+
+            # 1. 偏差（エラー）を計算
+            error = target_value - current_value
+            
+            # 2. 積分項（過去の蓄積）
+            integral += error
+            
+            # 3. 微分項（変化の速さ）
+            derivative = error - last_error
+    
+            # PID計算：ステアリング（旋回）量を決める
+            # 目標より壁が遠い（error > 0）なら右へ、近いなら左へ
+            steering = (kp * error) + (ki * integral) + (kd * derivative)
+            
+            # モーター速度の計算
+            left_speed = base_speed + steering
+            right_speed = base_speed - steering
+
+            print(f"Sensor:{current_value}, SensorError: {error:.2f}, Steering: {steering:.2f}, Left Speed: {left_speed:.2f}, Right Speed: {right_speed:.2f}")
+            
+            # 速度を制限（MAX_SPEEDを超えないように）
+            left_speed = max(min(left_speed, self.MAX_SPEED), -self.MAX_SPEED)
+            right_speed = max(min(right_speed, self.MAX_SPEED), -self.MAX_SPEED)
+
+            # 適用
+            self.left_motor.setVelocity(left_speed)
+            self.right_motor.setVelocity(right_speed)
+            
+            # 次のループのためにエラーを保存
+            last_error = error
+            
