@@ -1,5 +1,8 @@
-from controller import Robot
+from controller import Robot, Display
 import math
+import cv2
+import numpy as np
+
 
 class RobotController(Robot):
     def __init__(self):
@@ -53,6 +56,25 @@ class RobotController(Robot):
             sensor = self.getDevice(name)
             sensor.enable(self.timestep)
             self.sensors.append(sensor)
+        
+        self.camera = self.getDevice("camera")
+        self.camera.enable(self.timestep)
+
+        # self.display = self.getDevice("display")
+        # self.display.attachCamera(self.camera)
+
+    def get_image(self):
+        # カメラから画像を取得してOpenCV形式に変換
+        width = self.camera.getWidth()
+        height = self.camera.getHeight()
+        image = self.camera.getImage()
+
+        # print(image[:20])
+        # Webotsのカメラ画像はBGRA形式なので、OpenCVのBGR形式に変換
+        img_array = np.frombuffer(image, dtype=np.uint8).reshape((height, width, 4))
+        frame = cv2.resize(img_array, (250, 250), interpolation=cv2.INTER_NEAREST)
+
+        return frame
 
     def __aware_obstacle(self):
         # 障害物を検知したかどうかを返す
@@ -118,6 +140,10 @@ class RobotController(Robot):
             else:
                 self.left_motor.setVelocity(base_speed)
                 self.right_motor.setVelocity(base_speed)
+
+            image = self.get_image()
+            cv2.imshow("e-puck Camera View", image)
+            cv2.waitKey(1)
 
 
     def run_pid(self):
