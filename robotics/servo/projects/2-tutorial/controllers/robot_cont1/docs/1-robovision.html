@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x305d;&#x3082;&#x305d;&#x3082;&#x306e;&#x30e2;&#x30c1;&#x30d9;&#x30fc;&#x30b7;&#x30e7;&#x30f3;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>本日は、ロボット制御の練習をやる良い環境ないかと探していて見つけた仮想環境と、お試しで行ったセンサのトライアルについて説明します。</p>
+<h2 id="そもそものモチベーション">そもそものモチベーション</h2>
+<p>強化学習の応用としてロボット制御を考えていました。
+ですが、現実世界のロボットを自作する場合、お金がメチャかかるという課題がありました。
+(物価高騰中の今だとピンキリですがセンサ一つ$50くらいでしょうか。)</p>
+<p>ですので、PCで動作させる仮想環境はないかと探していました。</p>
+<h2 id="webotsとは">Webotsとは</h2>
+<p>Webots（ウェボッツ）は、世界中の研究者や教育機関で最も広く使われている<strong>オープンソースの3次元ロボットシミュレーター</strong>です。</p>
+<p>一言でいうと、「コンピューターの中に現実そっくりの物理空間を作り、ロボットの動作を安全・高速にテストできるソフト」です。</p>
+<h3 id="webotsの主な特徴">Webotsの主な特徴</h3>
+<p>Webotsがなぜ選ばれるのか、その魅力を3つのポイントでまとめました。</p>
+<ul>
+<li><strong>物理エンジンの搭載</strong>: 重力、摩擦、空気抵抗、物体の硬さなどがシミュレートされています。ロボットが壁にぶつかったり、坂道を転がったりする動きも現実的に再現されます。</li>
+<li><strong>豊富なロボットモデル</strong>: 今回使用している <strong>e-puck</strong> のほか、<strong>Boston DynamicsのSpot</strong>、<strong>Aibo</strong>、ドローン、自動運転車、ヒューマノイド（NAO等）など、多種多様なモデルが標準で用意されています。</li>
+<li><strong>マルチ言語対応</strong>: Python、C++、C、Java、MATLAB、さらにROS（Robot Operating System）との連携も可能です。</li>
+</ul>
+<h3 id="webotsでできること">Webotsでできること</h3>
+<p>プログラミング初心者から高度なAI研究まで、幅広い用途に使われています。</p>
+<table>
+<thead>
+<tr>
+<th>分野</th>
+<th>具体的な内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>教育・学習</strong></td>
+<td>物理的な故障を気にせず、アルゴリズムの勉強ができる。</td>
+</tr>
+<tr>
+<td><strong>AI・強化学習</strong></td>
+<td>仮想空間で何万回も試行錯誤させ、ロボットに歩き方などを学習させる。</td>
+</tr>
+<tr>
+<td><strong>自動運転</strong></td>
+<td>カメラやLiDAR（レーザーセンサー）を使って、街中を走るシミュレーションを行う。</td>
+</tr>
+<tr>
+<td><strong>群ロボット</strong></td>
+<td>数十台、数百台のロボットを同時に動かし、集団行動の実験をする。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="仕組みのイメージscene-tree-と-controller">仕組みのイメージ：Scene Tree と Controller</h3>
+<p>Webotsを理解する上で重要なのが、以下の2つの要素です。</p>
+<p><strong>1. Scene Tree（シーン・ツリー）</strong></p>
+<p>シミュレーションの世界にある「物体」のリストです。</p>
+<ul>
+<li>ロボットの形、センサーの種類、ライトの明るさ、床の摩擦係数などを設定します。</li>
+<li>いわば、 <strong>「ロボットの体（ハードウェア）」</strong> を作る場所です。</li>
+</ul>
+<p><strong>2. Controller（コントローラー）</strong></p>
+<p>あなたがPythonなどで書いているプログラムのことです。</p>
+<ul>
+<li>センサーの値を読み取り、モーターに速度を指令します。</li>
+<li>いわば、**「ロボットの脳（ソフトウェア）」**を作る場所です。</li>
+</ul>
+<h3 id="webotsが選ばれる理由">webotsが選ばれる理由</h3>
+<p>現実のロボット（実機）だけで開発しようとすると、以下のような問題が発生します。</p>
+<ul>
+<li>バッテリーがすぐに切れる。</li>
+<li>プログラムのミスで壁に激突し、高価なロボットが壊れる。</li>
+<li>実機の準備や場所の確保が大変。</li>
+</ul>
+<p>Webotsを使えば、 <strong>「何度失敗しても壊れず」「ボタン一つでリセットでき」「現実よりも高速にシミュレーションを回す」</strong> ことができるため、開発効率が劇的に上がります。</p>
+<h3 id="使えるプログラミング言語">使えるプログラミング言語</h3>
+<p>Webotsは非常に柔軟なシミュレーターで、初心者からプロの研究者まで対応できるように、複数のプログラミング言語をサポートしています。</p>
+<p>主に以下の言語を使って、ロボットの「脳」となるコントローラーを記述できます。</p>
+<p><strong>1. 公式にサポートされている主要言語</strong></p>
+<p>Webotsをインストールした直後から、標準的な設定で使用できる言語です。</p>
+<table>
+<thead>
+<tr>
+<th>言語</th>
+<th>特徴</th>
+<th>おすすめの用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Python</strong></td>
+<td>最も人気があります。記述が簡単で、AIや画像処理のライブラリ（OpenCV, PyTorch等）が豊富です。</td>
+<td>初心者、AI研究、プロトタイプ開発</td>
+</tr>
+<tr>
+<td><strong>C++</strong></td>
+<td>実行速度が非常に高速です。複雑な計算や、リアルタイム性が求められる制御に向いています。</td>
+<td>高度な物理計算、製品開発</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>マイコンに近い低レイヤーな記述が可能です。実機の組み込み開発を意識した学習に適しています。</td>
+<td>組み込みエンジニアの学習</td>
+</tr>
+<tr>
+<td><strong>Java</strong></td>
+<td>オブジェクト指向を活かした大規模なシステム開発に向いています。</td>
+<td>教育機関でのオブジェクト指向学習</td>
+</tr>
+<tr>
+<td><strong>MATLAB</strong></td>
+<td>数値解析や制御理論のシミュレーションに特化しています。専用のツールボックスが使えます。</td>
+<td>制御工学の研究、複雑な数式処理</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. その他の高度な連携方法</strong></p>
+<p>直接的な言語以外にも、Webotsは外部のフレームワークと通信して動かすことができます。
+ROSが使えるのは結構大きいですね。</p>
+<ul>
+<li><strong>ROS / ROS 2 (Robot Operating System)</strong>
+現代のロボット開発のデファクトスタンダードです。Webotsを「シミュレーター（体）」として使い、ROS側のノードで「知能」を動かす構成が一般的です。</li>
+<li><strong>TCP/IP 経由の外部制御</strong>
+コントローラーをWebotsのプロセスとは別に立ち上げ、ネットワーク経由でコマンドを送ることも可能です。これにより、JavaScriptなど他の言語から制御する試みも行われています。</li>
+</ul>
+<p><strong>3. 言語の選び方の基準</strong></p>
+<p>どの言語を使うべきかは、あなたの目的によって変わります。</p>
+<ul>
+<li><strong>「とにかく動かしてみたい」「AIを組み込みたい」</strong>
+-&gt; <strong>Python</strong> が最適です。情報量も最も多く、今回のように対話形式でコードを作成するのにも向いています。</li>
+<li><strong>「将来的に実機（マイコン）にコードを移植したい」</strong>
+-&gt; <strong>C言語</strong> または <strong>C++</strong> を選ぶと、実機のハードウェア制御に近い感覚を学べます。</li>
+<li><strong>「大学の研究で複雑な軌道計算をしたい」</strong>
+-&gt; <strong>MATLAB</strong> との連携が強力な武器になります。</li>
+</ul>
+<h2 id="手始めの環境">手始めの環境</h2>
+<p>いろいろ試してみました。
+結果ですが、既に設定されているロボットを使った制御の練習が効率が良いです。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\robotics\servo\projects\2-tutorial\controllers\robot_cont1\docs\image\1-robovision\1772314600683.png" alt="1772314600683"></p>
+<p>ということで選択したロボットは<strong>e-puck</strong>というロボットです。</p>
+<h3 id="e-puckとは">e-puckとは</h3>
+<p>e-puck（イープック）は、スイス連邦工科大学ローザンヌ校（EPFL）で教育・研究用に開発された、手のひらサイズの<strong>小型自律移動ロボット</strong>です。</p>
+<p>ロボット工学の学習や、複数のロボットを連携させる「群ロボット（Swarm Robotics）」の研究において、世界で最も標準的に使われている機体の一つです。</p>
+<p><strong>e-puckの主な特徴</strong></p>
+<ul>
+<li>
+<p><strong>コンパクトな設計</strong>: 直径約7cm、高さ約5cmと非常に小さく、机の上で手軽に実験ができます。</p>
+</li>
+<li>
+<p><strong>豊富なセンサー</strong>:</p>
+</li>
+<li>
+<p>8つの<strong>近接・光センサー</strong>（周囲の壁や明るさを検知）</p>
+</li>
+<li>
+<p><strong>カメラ</strong>（前方の画像認識）</p>
+</li>
+<li>
+<p><strong>3軸加速度センサー</strong>（傾きや衝撃を検知）</p>
+</li>
+<li>
+<p><strong>マイクとスピーカー</strong>（音の検知や発信）</p>
+</li>
+<li>
+<p><strong>床下センサー</strong>（ライントレースや崖検知用）</p>
+</li>
+<li>
+<p><strong>移動機構</strong>: 左右2つの車輪を独立して制御する「差動二輪方式」で、その場での旋回が可能です。</p>
+</li>
+<li>
+<p><strong>LEDリング</strong>: 機体の周囲に複数のLEDがあり、光らせることでロボットの状態を表現したり、他のロボットと通信したりできます。</p>
+</li>
+</ul>
+<p><strong>なぜWebotsでよく使われるのか？</strong></p>
+<p>Webotsの開発元であるCyberbotics社はスイスにあり、e-puckの開発元と近いこともあって、Webots内でのe-puckのシミュレーション精度は非常に高いです。</p>
+<ul>
+<li><strong>実機とシミュレーションの互換性</strong>: Webotsで作成したPythonコードを、そのまま実機のe-puckに転送して動かすことが（通信環境を整えれば）可能です。</li>
+<li><strong>教育に最適</strong>: センサーが円周上に配置されているため、「右に壁があるから左に避ける」といった直感的なプログラミングを学ぶのに適しています。</li>
+<li><strong>拡張性</strong>: センサーを追加した「e-puck2」などの進化版もあり、Wi-FiやBluetoothでの通信機能も備えています。</li>
+</ul>
+<p><strong>e-puckのスペック（概要）</strong></p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>制御CPU</strong></td>
+<td>dsPIC (初期型) / STM32 (e-puck2)</td>
+</tr>
+<tr>
+<td><strong>直径</strong></td>
+<td>約 70 mm</td>
+</tr>
+<tr>
+<td><strong>重量</strong></td>
+<td>約 150 g</td>
+</tr>
+<tr>
+<td><strong>最高速度</strong></td>
+<td>約 13 cm/s (6.28 rad/s)</td>
+</tr>
+<tr>
+<td><strong>通信</strong></td>
+<td>Bluetooth, 赤外線, Wi-Fi (e-puck2)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="トライアル">トライアル</h2>
+<p>ということで、トライアルを試してみました。</p>
+<p>やった内容はe-puckに搭載されている近接センサを使った移動制御と、搭載されているカメラセンサを使って、画面に描画するです。</p>
+<h3 id="移動制御">移動制御</h3>
+<p>近接センサは通常の赤外センサで、正直かなり接近しないとピクリとも反応しません。
+あまり凝った制御はできないかもしれません。</p>
+<p>今回はついている8つのセンサを使って、障害物の位置を割り出し、移動方向に障害物がないように方向を変えて前進するという制御にしました。</p>
+<h3 id="カメラビジョン">カメラビジョン</h3>
+<p>カメラもかなり解像度が低いです。
+カメラの設定の上で、opencvを使ってビジョンをとりあえず取得→画面に表示しました。</p>
+<p>本試行のコードは以下に保管しています。</p>
+<p><a href="https://github.com/Shinichi0713/hard-ware/tree/main/robotics/servo/projects/2-tutorial/controllers/robot_cont1">https://github.com/Shinichi0713/hard-ware/tree/main/robotics/servo/projects/2-tutorial/controllers/robot_cont1</a></p>
+<p>実際に動作させた動画は以下のようになります。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\robotics\servo\projects\2-tutorial\controllers\robot_cont1\docs\image\1-robovision\1772314600683.png" alt="1772314600683"></p>
+<h2 id="総括">総括</h2>
+<p>今回はロボットの仮想環境であるwebotsの紹介と、デモ的にお試ししたコードについて説明しました。
+ロボット制御を研究するけど、ソフトウェアの方に関心があるという読者様、是非ご参考下さい。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+        </body>
+        </html>
