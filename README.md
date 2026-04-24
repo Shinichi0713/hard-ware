@@ -69,7 +69,11 @@ System Console (システム・コンソール)は、FPGA でデザインを実�
 
 ## Robotics
 
-webotsかwokwiでロボット制御の演習を行う。
+webotsでロボット制御の演習を行う。
+
+### 環境構築
+
+ロボットの環境構築は以下のようにモジュールを結合していくことで行う。
 
 ![1760754576961](image/README/1760754576961.png)
 
@@ -80,7 +84,10 @@ webotsかwokwiでロボット制御の演習を行う。
   Your browser does not support the video tag.
 </video>
 
-<video src="image/README/motion-robo1.mp4" controls="true">`</video>`
+### 動作
+一旦作った環境でロボットを動作させてみた。
+
+<video src="image/README/motion-robo1.mp4" width="600" controls="true">`</video>`
 
 ## 参考サイト
 

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>VIO&#x3068;&#x306f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+            <p>他社の技術を調べているとVIOによる自立制御なる面白い技術が見つかりました。
+VIOを用いることでロボットが自分の位置を認識できるようになるようです。
+結構関心領域だったこともあり、調べてみました。</p>
+<h2 id="vioとは">VIOとは</h2>
+<p>VIO（Visual-Inertial Odometry）は、<strong>カメラ画像（動画）と慣性センサ（IMU）の情報を組み合わせて、ロボットやデバイスの自己位置と姿勢を推定する手法</strong>です。</p>
+<h3 id="1-vioの基本的な考え方">1. VIOの基本的な考え方</h3>
+<ul>
+<li>
+<p><strong>Visual（カメラ）</strong><br>
+連続する画像（動画）から、特徴点の移動などを追跡し、「カメラがどれだけ動いたか」を推定します。<br>
+例：ある特徴点がフレーム1では画面左側、フレーム2では右側に映っている → カメラが右に動いたと推定する。</p>
+</li>
+<li>
+<p><strong>Inertial（IMU）</strong><br>
+加速度計・ジャイロスコープなどで、<strong>瞬間的な加速度や角速度</strong>を測定します。<br>
+これにより、「どれだけ速く動いたか」「どれだけ回転したか」を高頻度で把握できます。</p>
+</li>
+</ul>
+<p>VIOは、この<strong>カメラの視覚情報</strong>と<strong>IMUの慣性情報</strong>を融合して、より安定かつ高精度に自己位置推定（Odometry）を行う手法です。</p>
+<h3 id="2-なぜ画像の動画を使うのか">2. なぜ「画像の動画」を使うのか</h3>
+<ul>
+<li>
+<p>単一画像だけでは「どれだけ動いたか」が分かりませんが、<strong>動画（連続フレーム）</strong> であれば、</p>
+<ul>
+<li>特徴点の移動（オプティカルフロー）</li>
+<li>三角測量（複数フレームで対応点を追跡して距離を推定）<br>
+などから、カメラの<strong>移動量・回転量</strong>を推定できます。</li>
+</ul>
+</li>
+<li>
+<p>ただし、カメラだけでは</p>
+<ul>
+<li>急な動きやブレ</li>
+<li>テクスチャの少ない場所（白い壁など）<br>
+で推定が不安定になりやすいです。</li>
+</ul>
+</li>
+</ul>
+<p>そこでIMUを併用し、<strong>高頻度で安定した動きの情報</strong>を補うことで、</p>
+<ul>
+<li>動きの速い場面</li>
+<li>視覚情報が乏しい場面<br>
+でも、自己位置推定を継続できるようにします。</li>
+</ul>
+<h3 id="3-vioの代表的なアルゴリズムの流れ概要">3. VIOの代表的なアルゴリズムの流れ（概要）</h3>
+<ol>
+<li>
+<p><strong>画像処理</strong></p>
+<ul>
+<li>各フレームから特徴点（コーナーなど）を抽出</li>
+<li>フレーム間で対応点を追跡（特徴点マッチング）</li>
+</ul>
+</li>
+<li>
+<p><strong>IMUからの予測</strong></p>
+<ul>
+<li>加速度・角速度を積分して、「この短時間でどれだけ動いたはずか」という<strong>予測姿勢</strong>を計算</li>
+</ul>
+</li>
+<li>
+<p><strong>融合（フィルタ or 最適化）</strong></p>
+<ul>
+<li>カメラの観測（特徴点の移動）とIMUの予測を組み合わせて、<br>
+最も矛盾の少ない<strong>カメラの位置・姿勢</strong>を推定</li>
+<li>代表的な枠組みとして
+<ul>
+<li>**EKF（拡張カルマンフィルタ）**系のフィルタリング手法</li>
+<li><strong>VINS-Mono</strong>などの<strong>グラフ最適化（バンドル調整＋IMU）</strong><br>
+があります。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>スケールの決定</strong></p>
+<ul>
+<li>カメラ単独では「移動距離の絶対的な大きさ（スケール）」が分かりにくいですが、<br>
+IMUの加速度情報を積分することで、<strong>実世界のスケール</strong>を推定できます。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-vioの特徴メリット">4. VIOの特徴・メリット</h3>
+<ul>
+<li>
+<p><strong>高頻度で安定した推定</strong><br>
+IMUは数百Hz程度で計測できるため、カメラのフレームレート（30–60Hz）より細かく動きを補間できます。</p>
+</li>
+<li>
+<p><strong>動きの激しいシーンに強い</strong><br>
+急な回転や加速度変化があっても、IMUが補完してくれるため、カメラだけよりロバストです。</p>
+</li>
+<li>
+<p><strong>スケールが分かる</strong><br>
+カメラ単独のVisual Odometryでは「相対的な動き」しか分かりませんが、<br>
+IMUを組み合わせることで<strong>メートル単位のスケール</strong>が推定可能になります。</p>
+</li>
+<li>
+<p><strong>暗所・テクスチャ不足への対応</strong><br>
+視覚情報が乏しいときでも、IMUの情報で一時的に姿勢を維持できます。</p>
+</li>
+</ul>
+<h3 id="5-応用例">5. 応用例</h3>
+<ul>
+<li><strong>スマートフォンAR</strong>（ARKit, ARCore など）</li>
+<li><strong>ドローン・ロボットの自律ナビゲーション</strong></li>
+<li><strong>VR/ARヘッドセットのトラッキング</strong></li>
+<li><strong>自動運転・ロボットの初期位置推定（SLAMの一部として）</strong></li>
+</ul>
+<p>など、移動体の自己位置推定が必要な多くの分野で使われています。</p>
+<p>要するに、VIOは<br>
+「<strong>カメラの動画から得られる視覚情報</strong>」と「<strong>IMUの慣性情報</strong>」を組み合わせて、<br>
+<strong>高精度かつ高頻度で自己位置・姿勢を推定する手法</strong>です。<br>
+特に、動きが激しい環境や視覚情報が不安定な環境で強みを発揮します。</p>
+<h2 id="e-pucksのスペックとvio">e-pucksのスペックとVIO</h2>
+<p>ふとVIO調べていて手元で動作させられるか気になりました。
+手元に仮想環境で動作するe-pucksというロボットがあります。e-pucksのスペックは以下の表のとおりです。</p>
+<table>
+<thead>
+<tr>
+<th>デバイス名</th>
+<th>デバイスの種類</th>
+<th>意味・役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>left wheel motor</code></strong></td>
+<td>Motor</td>
+<td><strong>左車輪用モーター</strong>。左側のタイヤを回転させます。</td>
+</tr>
+<tr>
+<td><strong><code>right wheel motor</code></strong></td>
+<td>Motor</td>
+<td><strong>右車輪用モーター</strong>。右側のタイヤを回転させます。</td>
+</tr>
+<tr>
+<td>**<code>ps0</code> 〜 <code>ps7**</code></td>
+<td>DistanceSensor</td>
+<td><strong>近接センサー（8個）</strong>。赤外線で周囲の障害物との距離を測ります（0が前方、時計回りに配置）。</td>
+</tr>
+<tr>
+<td>**<code>ls0</code> 〜 <code>ls7**</code></td>
+<td>LightSensor</td>
+<td><strong>光センサー（8個）</strong>。周囲の光の強さを測定します。近接センサーと同じ場所に配置されています。</td>
+</tr>
+<tr>
+<td>**<code>gs0</code>, <code>gs1</code>, <code>gs2**</code></td>
+<td>DistanceSensor</td>
+<td><strong>グラウンド（床面）センサー</strong>。底面にあり、床の色や線を検知します（ライントレース用）。</td>
+</tr>
+<tr>
+<td>**<code>led0</code> 〜 <code>led9**</code></td>
+<td>LED</td>
+<td><strong>LEDライト</strong>。本体の周りや上部にあるLEDを点灯・消灯させます。</td>
+</tr>
+<tr>
+<td><strong><code>camera</code></strong></td>
+<td>Camera</td>
+<td><strong>カメラ</strong>。前方の画像を取得します。標準解像度は低め（52x52など）に設定されています。</td>
+</tr>
+<tr>
+<td><strong><code>accelerometer</code></strong></td>
+<td>Accelerometer</td>
+<td><strong>加速度計</strong>。3軸の加速度（重力や衝撃）を測定し、ロボットの傾きなどを知ることができます。</td>
+</tr>
+<tr>
+<td><strong><code>gyro</code></strong></td>
+<td>Gyro</td>
+<td><strong>ジャイロセンサー</strong>。ロボットの角速度（回転する速さ）を測定します。</td>
+</tr>
+<tr>
+<td><strong><code>left wheel sensor</code></strong></td>
+<td>PositionSensor</td>
+<td><strong>左車輪エンコーダ</strong>。左タイヤがどれくらい回転したか（角度）を測定します。</td>
+</tr>
+<tr>
+<td><strong><code>right wheel sensor</code></strong></td>
+<td>PositionSensor</td>
+<td><strong>右車輪エンコーダ</strong>。右タイヤがどれくらい回転したか（角度）を測定します。</td>
+</tr>
+<tr>
+<td><strong><code>microphone</code></strong></td>
+<td>Microphone</td>
+<td><strong>マイク</strong>。周囲の音を検知します（Webotsのスピーカーデバイスと組み合わせて使用）。</td>
+</tr>
+</tbody>
+</table>
+<p>このロボットでVIOできそうか考えてみました。</p>
+<p>結論から言うと、<strong>e-puckでも「精度は悪いが、VIO的な処理は原理的には可能」</strong> です。<br>
+ただし、実用的な精度・安定性を求めるなら、かなり厳しい条件といえます。</p>
+<h3 id="1-e-puckのセンサ構成とvioに必要なもの">1. e-puckのセンサ構成とVIOに必要なもの</h3>
+<p>VIOに最低限必要なのは：</p>
+<ul>
+<li><strong>カメラ</strong>（連続画像＝動画）</li>
+<li><strong>IMU</strong>（加速度計＋ジャイロ）</li>
+</ul>
+<p>e-puckには：</p>
+<ul>
+<li><code>camera</code>（前方カメラ）</li>
+<li><code>accelerometer</code>（3軸加速度計）</li>
+<li><code>gyro</code>（ジャイロ）</li>
+</ul>
+<p>が搭載されているので、<strong>VIOを構成するためのセンサは揃っている</strong>と言えます。</p>
+<h3 id="2-カメラ性能とvioへの影響">2. カメラ性能とVIOへの影響</h3>
+<p>検索結果によると、e-puckのカメラは：</p>
+<ul>
+<li>解像度：<strong>最大 640×480（VGA）</strong><br>
+<a href="https://grokipedia.com/page/e_puck_mobile_robot">Grokipedia</a></li>
+<li>フレームレート：<strong>最大 16 FPS 程度</strong>（処理負荷で 10 FPS まで落ちる場合もある）<br>
+<a href="https://www.researchgate.net/publication/220055326_Open-hardware_e-puck_Linux_extension_board_for_experimental_swarm_robotics_research">ResearchGate</a></li>
+</ul>
+<p>一般的なVIO（例：スマホAR）では：</p>
+<ul>
+<li>カメラ：30–60 FPS、1080p 以上</li>
+<li>IMU：100–400 Hz</li>
+</ul>
+<p>と比べると、e-puckは<strong>フレームレートがかなり低い</strong>です。</p>
+<p><strong>影響</strong>：</p>
+<ul>
+<li>動きが速いと、フレーム間の対応点が追跡しにくくなり、<strong>トラッキングが不安定</strong>になりやすい。</li>
+<li>解像度はVGAなので、特徴点抽出自体は可能ですが、<strong>遠方の特徴点や細かいテクスチャの追跡は難しい</strong>。</li>
+</ul>
+<h3 id="3-imu性能とvioへの影響">3. IMU性能とVIOへの影響</h3>
+<p>e-puckのIMU（加速度計・ジャイロ）は：</p>
+<ul>
+<li>データレート：<strong>10 Hz 程度</strong>（検索結果のIMU例に基づく概算）<br>
+<a href="https://www.mdpi.com/1424-8220/18/3/827">MDPI Sensors</a></li>
+</ul>
+<p>一般的なVIO用IMUは 100–400 Hz なので、<strong>10 Hz はかなり低い</strong>です。</p>
+<p><strong>影響</strong>：</p>
+<ul>
+<li>高頻度で姿勢を補間するのが難しく、<strong>急な動きや振動を捉えきれない</strong>。</li>
+<li>加速度・角速度の積分誤差が大きくなり、<strong>ドリフトが強くなりやすい</strong>。</li>
+<li>カメラのフレームレート（10–16 FPS）とIMUレート（10 Hz）が近いため、<strong>VIOの「高頻度補間」というメリットが弱くなる</strong>。</li>
+</ul>
+<h3 id="4-精度は悪くてもvioは可能かの評価">4. 「精度は悪くてもVIOは可能か」の評価</h3>
+<p><strong>可能な点</strong></p>
+<ul>
+<li>センサ構成は揃っているので、<strong>原理的にはVIOアルゴリズムを実装できる</strong>。</li>
+<li>ゆっくり動く・テクスチャが豊かな環境であれば、
+<ul>
+<li>カメラで特徴点追跡</li>
+<li>IMUで姿勢・加速度補正<br>
+を組み合わせて、<strong>粗い自己位置推定</strong>は可能です。</li>
+</ul>
+</li>
+</ul>
+<p><strong>難しい点・精度の問題</strong></p>
+<ul>
+<li><strong>フレームレート・IMUレートが低い</strong><br>
+→ 動きが速いとトラッキングが破綻しやすい。</li>
+<li><strong>IMUのノイズ・ドリフト</strong><br>
+→ 長時間走行すると位置誤差が大きく累積する。</li>
+<li><strong>カメラ視野が狭い・解像度が低め</strong><br>
+→ 特徴点が少ない環境ではVIOが不安定になりやすい。</li>
+</ul>
+<p>そのため、<strong>「研究用・デモ用の簡易VIO」としては可能</strong>ですが、<br>
+「実用的なナビゲーションに使える精度」を期待するのは難しいです。</p>
+<h3 id="5-実現する場合の工夫">5. 実現する場合の工夫</h3>
+<p>e-puckでVIO的な処理を試すなら、以下のような工夫が考えられます。</p>
+<ol>
+<li>
+<p><strong>動きをゆっくりに制限</strong></p>
+<ul>
+<li>高速回転・急加速を避け、フレーム間の対応点が追える範囲に抑える。</li>
+</ul>
+</li>
+<li>
+<p><strong>環境を工夫</strong></p>
+<ul>
+<li>テクスチャが豊かな床・壁を用意し、特徴点を多く確保する。</li>
+</ul>
+</li>
+<li>
+<p><strong>車輪エンコーダとの融合</strong></p>
+<ul>
+<li><code>left wheel sensor</code> / <code>right wheel sensor</code>（エンコーダ）も使って、<br>
+車輪オドメトリとVIOを組み合わせることで、<strong>ドリフトを抑える</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>低解像度・低FPS向けのVIOアルゴリズム選択</strong></p>
+<ul>
+<li>特徴点数を絞る、トラッキングの閾値を緩めるなど、<br>
+低スペック環境向けにパラメータ調整する。</li>
+</ul>
+</li>
+</ol>
+<h2 id="vioの処理フロー">VIOの処理フロー</h2>
+<p>e-puckでVIOを行う場合の処理フローを、<strong>センサ取得 → 前処理 → 特徴点追跡 → IMU予測 → 融合（位置・姿勢推定）</strong> という流れで整理します。</p>
+<h3 id="1-全体フロー概要">1. 全体フロー（概要）</h3>
+<ol>
+<li>
+<p><strong>センサデータ取得</strong></p>
+<ul>
+<li>カメラ画像（動画）</li>
+<li>IMU（加速度計・ジャイロ）</li>
+<li>（可能なら）車輪エンコーダ</li>
+</ul>
+</li>
+<li>
+<p><strong>前処理</strong></p>
+<ul>
+<li>画像の前処理（リサイズ、ノイズ除去など）</li>
+<li>IMUデータのキャリブレーション・バイアス補正</li>
+</ul>
+</li>
+<li>
+<p><strong>視覚処理（Visual）</strong></p>
+<ul>
+<li>特徴点抽出・追跡</li>
+<li>フレーム間の対応点マッチング</li>
+<li>カメラの相対運動（回転・並進）の推定</li>
+</ul>
+</li>
+<li>
+<p><strong>IMU処理（Inertial）</strong></p>
+<ul>
+<li>加速度・角速度の積分による姿勢・速度の予測</li>
+<li>ノイズ・ドリフトのモデル化</li>
+</ul>
+</li>
+<li>
+<p><strong>融合（VIOコア）</strong></p>
+<ul>
+<li>視覚情報とIMU情報を組み合わせて、ロボットの位置・姿勢を推定</li>
+<li>必要に応じて車輪エンコーダも組み合わせる</li>
+</ul>
+</li>
+<li>
+<p><strong>出力</strong></p>
+<ul>
+<li>現在の位置・姿勢（Odometry）</li>
+<li>必要ならマップ（特徴点の3D位置）も保持</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-ステップごとの詳細">2. ステップごとの詳細</h3>
+<p><strong>2.1 センサデータ取得</strong></p>
+<p><strong>入力</strong>：e-puckの各種センサ</p>
+<ul>
+<li>
+<p><code>camera</code></p>
+<ul>
+<li>解像度：VGA（640×480）程度</li>
+<li>フレームレート：最大 16 FPS 程度（処理負荷で 10 FPS 程度まで落ちる場合も）</li>
+<li>取得タイミング：一定周期（例：10 Hz）で画像を取得</li>
+</ul>
+</li>
+<li>
+<p><code>accelerometer</code>・<code>gyro</code></p>
+<ul>
+<li>3軸加速度・3軸角速度</li>
+<li>サンプリングレート：10 Hz 程度（実機に依存）</li>
+<li>取得タイミング：カメラより高頻度が望ましいが、e-puckではカメラと同程度になる可能性あり</li>
+</ul>
+</li>
+<li>
+<p>（オプション）<code>left wheel sensor</code>・<code>right wheel sensor</code></p>
+<ul>
+<li>車輪の回転角度（エンコーダ）</li>
+<li>ロボットの移動距離・回転量の補助情報として利用</li>
+</ul>
+</li>
+</ul>
+<p><strong>処理</strong>：</p>
+<ul>
+<li>各センサのタイムスタンプを記録</li>
+<li>カメラとIMUのタイムスタンプを同期（可能な範囲で）</li>
+</ul>
+<p><strong>2.2 前処理</strong></p>
+<p><strong>2.2.1 画像前処理</strong></p>
+<ul>
+<li>画像サイズの調整
+<ul>
+<li>フルVGA（640×480）だと重いので、<br>
+<strong>52×52 などに縮小</strong>して処理負荷を下げる（Webotsのデフォルト設定に近い）</li>
+</ul>
+</li>
+<li>ノイズ除去（ガウシアンフィルタなど）</li>
+<li>必要に応じてコントラスト強調</li>
+</ul>
+<p><strong>2.2.2 IMU前処理</strong></p>
+<ul>
+<li>バイアス補正（静止時の平均値を引く）</li>
+<li>スケール補正（キャリブレーション係数を掛ける）</li>
+<li>重力成分の除去（水平面での加速度計のオフセット）</li>
+</ul>
+<p><strong>2.3 視覚処理（Visual Odometry部分）</strong></p>
+<p><strong>2.3.1 特徴点抽出</strong></p>
+<ul>
+<li>各フレームで特徴点を抽出
+<ul>
+<li>例：FASTコーナー、Shi-Tomasiコーナー、ORBなど</li>
+</ul>
+</li>
+<li>e-puckの低解像度・低FPSを考慮し、<strong>特徴点数は抑えめ（50〜100点程度）</strong> に設定</li>
+</ul>
+<p><strong>2.3.2 特徴点追跡</strong></p>
+<ul>
+<li>前フレームと現フレームで対応点を追跡
+<ul>
+<li>オプティカルフロー（Lucas-Kanadeなど）</li>
+<li>または特徴点マッチング（ORB記述子など）</li>
+</ul>
+</li>
+<li>外れ値除去（RANSACなど）で誤対応を排除</li>
+</ul>
+<p><strong>2.3.3 相対運動の推定</strong></p>
+<ul>
+<li>対応点のペアから、カメラの<strong>回転 R と並進 t</strong> を推定
+<ul>
+<li>基本行列（Essential Matrix）またはホモグラフィの推定</li>
+<li>三角測量で特徴点の3D位置を推定（スパースな3Dマップ）</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意点</strong>：</p>
+<ul>
+<li>e-puckはフレームレートが低いので、<strong>動きが速いと対応点が追えなくなる</strong><br>
+→ ロボットの速度を制限するか、IMUで補間する必要がある。</li>
+</ul>
+<p><strong>2.4 IMU処理（Inertial部分）</strong></p>
+<p><strong>2.4.1 姿勢予測</strong></p>
+<ul>
+<li>ジャイロから角速度を積分して、<strong>姿勢（クォータニオン or オイラー角）を更新</strong></li>
+<li>加速度計から重力方向を観測し、<strong>姿勢のドリフトを補正</strong></li>
+</ul>
+<p><strong>2.4.2 速度・位置予測</strong></p>
+<ul>
+<li>加速度から速度・位置を積分
+<ul>
+<li>ただし、e-puckのIMUはノイズが大きく、<strong>長時間積分するとドリフトが大きい</strong><br>
+→ 主に「短時間の補間」として使うのが現実的</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.4.3 予測モデル</strong></p>
+<ul>
+<li>
+<p>状態ベクトル例：</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo>=</mo><mo stretchy="false">[</mo><mi>p</mi><mo separator="true">,</mo><mi>v</mi><mo separator="true">,</mo><mi>q</mi><mo separator="true">,</mo><msub><mi>b</mi><mi>a</mi></msub><mo separator="true">,</mo><msub><mi>b</mi><mi>g</mi></msub><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">x = [p, v, q, b_a, b_g]^T
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1774em;vertical-align:-0.2861em;"></span><span class="mopen">[</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>：位置</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span>：速度</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>：姿勢（クォータニオン）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">b_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：加速度計バイアス</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mi>g</mi></msub></mrow><annotation encoding="application/x-tex">b_g</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9805em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>：ジャイロバイアス</li>
+</ul>
+</li>
+<li>
+<p>IMU測定値（加速度・角速度）を用いて、<strong>予測ステップ</strong>を実行</p>
+<ul>
+<li>例：拡張カルマンフィルタ（EKF）の予測ステップ</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.5 融合（VIOコア）</strong></p>
+<p><strong>2.5.1 視覚観測のモデル化</strong></p>
+<ul>
+<li>
+<p>カメラで観測された特徴点の2D位置を、<br>
+現在の姿勢・位置から予測される3D点の投影としてモデル化</p>
+</li>
+<li>
+<p>観測方程式（例）：</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>q</mi><mo separator="true">,</mo><mi>P</mi><mo stretchy="false">)</mo><mo>+</mo><mi>ν</mi></mrow><annotation encoding="application/x-tex">z = h(p, q, P) + \nu
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.06366em;">ν</span></span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span>：画像上の特徴点座標</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span>：3D特徴点位置</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ν</mi></mrow><annotation encoding="application/x-tex">\nu</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.06366em;">ν</span></span></span></span>：観測ノイズ</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.5.2 フィルタ or 最適化</strong></p>
+<p><strong>方式1：EKFベースのVIO</strong></p>
+<ul>
+<li>IMUで予測ステップ（高頻度）</li>
+<li>カメラで観測ステップ（低頻度）</li>
+<li>視覚観測が入ったタイミングで、EKFの更新ステップを実行</li>
+</ul>
+<p><strong>方式2：グラフ最適化ベース（VINS-Mono風）</strong></p>
+<ul>
+<li>一定時間ごとにキーフレームを選び、<br>
+特徴点・IMU測定値をグラフに追加</li>
+<li>バンドル調整＋IMU拘束をまとめて最適化</li>
+</ul>
+<p>e-puckの計算リソースを考えると、<strong>EKFベースの軽量VIO</strong>が現実的です。</p>
+<p><strong>2.5.3 車輪エンコーダの利用（オプション）</strong></p>
+<ul>
+<li><code>left wheel sensor</code>・<code>right wheel sensor</code>から、<br>
+車輪オドメトリ（移動距離・回転量）を計算</li>
+<li>VIOの位置推定と組み合わせて、<strong>ドリフトを抑制</strong>
+<ul>
+<li>例：VIOの位置推定と車輪オドメトリを重み付きで平均</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-e-puck向けの実装上のポイント">3. e-puck向けの実装上のポイント</h3>
+<p><strong>3.1 性能制約への対応</strong></p>
+<ul>
+<li><strong>フレームレートが低い</strong><br>
+→ ロボットの速度を制限し、フレーム間の動きを小さくする。</li>
+<li><strong>IMUレートが低い</strong><br>
+→ IMUは主に姿勢推定と短時間補間に使い、<br>
+長時間の位置推定は視覚＋車輪オドメトリに頼る。</li>
+<li><strong>計算リソースが限られる</strong><br>
+→ 特徴点数を絞り、EKFなどの軽量手法を採用。</li>
+</ul>
+<p><strong>3.2 環境設計</strong></p>
+<ul>
+<li>テクスチャが豊かな床・壁を用意し、特徴点を多く確保。</li>
+<li>照明を安定させ、画像の明るさ変化を抑える。</li>
+</ul>
+<p><strong>3.3 初期化</strong></p>
+<ul>
+<li>最初の数秒は静止またはゆっくり動き、<br>
+IMUのバイアス推定とカメラの初期特徴点抽出を行う。</li>
+</ul>
+<h3 id="4-まとめe-puck向けvio処理フロー簡易版">4. まとめ：e-puck向けVIO処理フロー（簡易版）</h3>
+<ol>
+<li>
+<p><strong>センサ取得</strong></p>
+<ul>
+<li>カメラ画像（10–16 Hz）</li>
+<li>IMU（10 Hz）</li>
+<li>車輪エンコーダ（任意）</li>
+</ul>
+</li>
+<li>
+<p><strong>前処理</strong></p>
+<ul>
+<li>画像縮小・ノイズ除去</li>
+<li>IMUバイアス補正</li>
+</ul>
+</li>
+<li>
+<p><strong>視覚処理</strong></p>
+<ul>
+<li>特徴点抽出（50〜100点）</li>
+<li>フレーム間追跡（オプティカルフロー）</li>
+<li>外れ値除去（RANSAC）</li>
+<li>相対運動（R, t）の推定</li>
+</ul>
+</li>
+<li>
+<p><strong>IMU処理</strong></p>
+<ul>
+<li>姿勢・速度の予測（EKF予測ステップ）</li>
+</ul>
+</li>
+<li>
+<p><strong>融合（VIO）</strong></p>
+<ul>
+<li>視覚観測をEKFの更新ステップに反映</li>
+<li>必要に応じて車輪オドメトリも融合</li>
+</ul>
+</li>
+<li>
+<p><strong>出力</strong></p>
+<ul>
+<li>現在の位置・姿勢（Odometry）</li>
+<li>必要なら特徴点の3Dマップ（スパース）</li>
+</ul>
+</li>
+</ol>
+<p>このフローであれば、<strong>e-puckでも「精度は低いがVIO的な処理」は実現可能</strong>っぽいです。
+処理イメージは次のようになります。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\robotics\servo\projects\2-tutorial\controllers\robot_cont1\docs\image\2_vio\1776553579773.png" alt="1776553579773"></p>
+<h2 id="総括">総括</h2>
+<p>ということで今回はVIOについて調べていきました。</p>
+<ul>
+<li>VIOとはカメラと慣性センサの情報を基に自己位置推定する手法です。</li>
+<li>VIOの処理は画像の対応をとりカメラ位置とIMU情報を融合して自己位置の推測を行う手法です。</li>
+</ul>
+<p>因みにロボットの自律歩行における、この後続処理ですが。</p>
+<p>VIOで現在の位置・姿勢を推定 → 目標との差を計算 → モータを制御して差を減らす</p>
+<p>ということで実現されているとのことです。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+        </body>
+        </html>
