@@ -5,3 +5,6 @@
 
 *.py linguist-vendored
 *.py linguist-detectable=false
+
+*.html linguist-vendored
+*.html linguist-detectable=false
