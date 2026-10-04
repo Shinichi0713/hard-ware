@@ -134,7 +134,6 @@
 .markdown-alert.markdown-alert-caution .markdown-alert-title {
   color: var(--color-caution);
 }
-/* 目次全体のコンテナ */
 nav {
     background-color: #f8f9fa;
     border: 1px solid #e1e4e8;
@@ -370,7 +369,6 @@ blockquote::before {
         <ul id="toc"></ul> 
 </nav>
 
-
             <p>他社の技術を調べているとVIOによる自立制御なる面白い技術が見つかりました。
 VIOを用いることでロボットが自分の位置を認識できるようになるようです。
 結構関心領域だったこともあり、調べてみました。</p>
@@ -378,16 +376,10 @@ VIOを用いることでロボットが自分の位置を認識できるよう�
 <p>VIO（Visual-Inertial Odometry）は、<strong>カメラ画像（動画）と慣性センサ（IMU）の情報を組み合わせて、ロボットやデバイスの自己位置と姿勢を推定する手法</strong>です。</p>
 <h3 id="1-vioの基本的な考え方">1. VIOの基本的な考え方</h3>
 <ul>
-<li>
-<p><strong>Visual（カメラ）</strong><br>
-連続する画像（動画）から、特徴点の移動などを追跡し、「カメラがどれだけ動いたか」を推定します。<br>
-例：ある特徴点がフレーム1では画面左側、フレーム2では右側に映っている → カメラが右に動いたと推定する。</p>
-</li>
-<li>
-<p><strong>Inertial（IMU）</strong><br>
-加速度計・ジャイロスコープなどで、<strong>瞬間的な加速度や角速度</strong>を測定します。<br>
-これにより、「どれだけ速く動いたか」「どれだけ回転したか」を高頻度で把握できます。</p>
-</li>
+<li>**Visual（カメラ）**連続する画像（動画）から、特徴点の移動などを追跡し、「カメラがどれだけ動いたか」を推定します。例：ある特徴点がフレーム1では画面左側、フレーム2では右側に映っている → カメラが右に動いたと推定する。</li>
+<li><strong>Inertial（IMU）</strong>
+加速度計・ジャイロスコープなどで、<strong>瞬間的な加速度や角速度</strong>を測定します。
+これにより、「どれだけ速く動いたか」「どれだけ回転したか」を高頻度で把握できます。</li>
 </ul>
 <p>VIOは、この<strong>カメラの視覚情報</strong>と<strong>IMUの慣性情報</strong>を融合して、より安定かつ高精度に自己位置推定（Odometry）を行う手法です。</p>
 <h3 id="2-なぜ画像の動画を使うのか">2. なぜ「画像の動画」を使うのか</h3>
@@ -396,7 +388,7 @@ VIOを用いることでロボットが自分の位置を認識できるよう�
 <p>単一画像だけでは「どれだけ動いたか」が分かりませんが、<strong>動画（連続フレーム）</strong> であれば、</p>
 <ul>
 <li>特徴点の移動（オプティカルフロー）</li>
-<li>三角測量（複数フレームで対応点を追跡して距離を推定）<br>
+<li>三角測量（複数フレームで対応点を追跡して距離を推定）
 などから、カメラの<strong>移動量・回転量</strong>を推定できます。</li>
 </ul>
 </li>
@@ -404,7 +396,7 @@ VIOを用いることでロボットが自分の位置を認識できるよう�
 <p>ただし、カメラだけでは</p>
 <ul>
 <li>急な動きやブレ</li>
-<li>テクスチャの少ない場所（白い壁など）<br>
+<li>テクスチャの少ない場所（白い壁など）
 で推定が不安定になりやすいです。</li>
 </ul>
 </li>
@@ -412,7 +404,7 @@ VIOを用いることでロボットが自分の位置を認識できるよう�
 <p>そこでIMUを併用し、<strong>高頻度で安定した動きの情報</strong>を補うことで、</p>
 <ul>
 <li>動きの速い場面</li>
-<li>視覚情報が乏しい場面<br>
+<li>視覚情報が乏しい場面
 でも、自己位置推定を継続できるようにします。</li>
 </ul>
 <h3 id="3-vioの代表的なアルゴリズムの流れ概要">3. VIOの代表的なアルゴリズムの流れ（概要）</h3>
@@ -433,12 +425,11 @@ VIOを用いることでロボットが自分の位置を認識できるよう�
 <li>
 <p><strong>融合（フィルタ or 最適化）</strong></p>
 <ul>
-<li>カメラの観測（特徴点の移動）とIMUの予測を組み合わせて、<br>
-最も矛盾の少ない<strong>カメラの位置・姿勢</strong>を推定</li>
+<li>カメラの観測（特徴点の移動）とIMUの予測を組み合わせて、最も矛盾の少ない<strong>カメラの位置・姿勢</strong>を推定</li>
 <li>代表的な枠組みとして
 <ul>
 <li>**EKF（拡張カルマンフィルタ）**系のフィルタリング手法</li>
-<li><strong>VINS-Mono</strong>などの<strong>グラフ最適化（バンドル調整＋IMU）</strong><br>
+<li><strong>VINS-Mono</strong>などの<strong>グラフ最適化（バンドル調整＋IMU）</strong>
 があります。</li>
 </ul>
 </li>
@@ -447,30 +438,18 @@ VIOを用いることでロボットが自分の位置を認識できるよう�
 <li>
 <p><strong>スケールの決定</strong></p>
 <ul>
-<li>カメラ単独では「移動距離の絶対的な大きさ（スケール）」が分かりにくいですが、<br>
+<li>カメラ単独では「移動距離の絶対的な大きさ（スケール）」が分かりにくいですが、
 IMUの加速度情報を積分することで、<strong>実世界のスケール</strong>を推定できます。</li>
 </ul>
 </li>
 </ol>
 <h3 id="4-vioの特徴メリット">4. VIOの特徴・メリット</h3>
 <ul>
-<li>
-<p><strong>高頻度で安定した推定</strong><br>
-IMUは数百Hz程度で計測できるため、カメラのフレームレート（30–60Hz）より細かく動きを補間できます。</p>
-</li>
-<li>
-<p><strong>動きの激しいシーンに強い</strong><br>
-急な回転や加速度変化があっても、IMUが補完してくれるため、カメラだけよりロバストです。</p>
-</li>
-<li>
-<p><strong>スケールが分かる</strong><br>
-カメラ単独のVisual Odometryでは「相対的な動き」しか分かりませんが、<br>
-IMUを組み合わせることで<strong>メートル単位のスケール</strong>が推定可能になります。</p>
-</li>
-<li>
-<p><strong>暗所・テクスチャ不足への対応</strong><br>
-視覚情報が乏しいときでも、IMUの情報で一時的に姿勢を維持できます。</p>
-</li>
+<li><strong>高頻度で安定した推定</strong>IMUは数百Hz程度で計測できるため、カメラのフレームレート（30–60Hz）より細かく動きを補間できます。</li>
+<li><strong>動きの激しいシーンに強い</strong>急な回転や加速度変化があっても、IMUが補完してくれるため、カメラだけよりロバストです。</li>
+<li><strong>スケールが分かる</strong>カメラ単独のVisual Odometryでは「相対的な動き」しか分かりませんが、IMUを組み合わせることで<strong>メートル単位のスケール</strong>が推定可能になります。</li>
+<li><strong>暗所・テクスチャ不足への対応</strong>
+視覚情報が乏しいときでも、IMUの情報で一時的に姿勢を維持できます。</li>
 </ul>
 <h3 id="5-応用例">5. 応用例</h3>
 <ul>
@@ -480,9 +459,9 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <li><strong>自動運転・ロボットの初期位置推定（SLAMの一部として）</strong></li>
 </ul>
 <p>など、移動体の自己位置推定が必要な多くの分野で使われています。</p>
-<p>要するに、VIOは<br>
-「<strong>カメラの動画から得られる視覚情報</strong>」と「<strong>IMUの慣性情報</strong>」を組み合わせて、<br>
-<strong>高精度かつ高頻度で自己位置・姿勢を推定する手法</strong>です。<br>
+<p>要するに、VIOは
+「<strong>カメラの動画から得られる視覚情報</strong>」と「<strong>IMUの慣性情報</strong>」を組み合わせて、
+<strong>高精度かつ高頻度で自己位置・姿勢を推定する手法</strong>です。
 特に、動きが激しい環境や視覚情報が不安定な環境で強みを発揮します。</p>
 <h2 id="e-pucksのスペックとvio">e-pucksのスペックとVIO</h2>
 <p>ふとVIO調べていて手元で動作させられるか気になりました。
@@ -559,7 +538,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 </tbody>
 </table>
 <p>このロボットでVIOできそうか考えてみました。</p>
-<p>結論から言うと、<strong>e-puckでも「精度は悪いが、VIO的な処理は原理的には可能」</strong> です。<br>
+<p>結論から言うと、<strong>e-puckでも「精度は悪いが、VIO的な処理は原理的には可能」</strong> です。
 ただし、実用的な精度・安定性を求めるなら、かなり厳しい条件といえます。</p>
 <h3 id="1-e-puckのセンサ構成とvioに必要なもの">1. e-puckのセンサ構成とVIOに必要なもの</h3>
 <p>VIOに最低限必要なのは：</p>
@@ -577,9 +556,8 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <h3 id="2-カメラ性能とvioへの影響">2. カメラ性能とVIOへの影響</h3>
 <p>検索結果によると、e-puckのカメラは：</p>
 <ul>
-<li>解像度：<strong>最大 640×480（VGA）</strong><br>
-<a href="https://grokipedia.com/page/e_puck_mobile_robot">Grokipedia</a></li>
-<li>フレームレート：<strong>最大 16 FPS 程度</strong>（処理負荷で 10 FPS まで落ちる場合もある）<br>
+<li>解像度：<strong>最大 640×480（VGA）</strong><a href="https://grokipedia.com/page/e_puck_mobile_robot">Grokipedia</a></li>
+<li>フレームレート：<strong>最大 16 FPS 程度</strong>（処理負荷で 10 FPS まで落ちる場合もある）
 <a href="https://www.researchgate.net/publication/220055326_Open-hardware_e-puck_Linux_extension_board_for_experimental_swarm_robotics_research">ResearchGate</a></li>
 </ul>
 <p>一般的なVIO（例：スマホAR）では：</p>
@@ -596,7 +574,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <h3 id="3-imu性能とvioへの影響">3. IMU性能とVIOへの影響</h3>
 <p>e-puckのIMU（加速度計・ジャイロ）は：</p>
 <ul>
-<li>データレート：<strong>10 Hz 程度</strong>（検索結果のIMU例に基づく概算）<br>
+<li>データレート：<strong>10 Hz 程度</strong>（検索結果のIMU例に基づく概算）
 <a href="https://www.mdpi.com/1424-8220/18/3/827">MDPI Sensors</a></li>
 </ul>
 <p>一般的なVIO用IMUは 100–400 Hz なので、<strong>10 Hz はかなり低い</strong>です。</p>
@@ -613,21 +591,19 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <li>ゆっくり動く・テクスチャが豊かな環境であれば、
 <ul>
 <li>カメラで特徴点追跡</li>
-<li>IMUで姿勢・加速度補正<br>
+<li>IMUで姿勢・加速度補正
 を組み合わせて、<strong>粗い自己位置推定</strong>は可能です。</li>
 </ul>
 </li>
 </ul>
 <p><strong>難しい点・精度の問題</strong></p>
 <ul>
-<li><strong>フレームレート・IMUレートが低い</strong><br>
-→ 動きが速いとトラッキングが破綻しやすい。</li>
-<li><strong>IMUのノイズ・ドリフト</strong><br>
-→ 長時間走行すると位置誤差が大きく累積する。</li>
-<li><strong>カメラ視野が狭い・解像度が低め</strong><br>
+<li><strong>フレームレート・IMUレートが低い</strong>→ 動きが速いとトラッキングが破綻しやすい。</li>
+<li><strong>IMUのノイズ・ドリフト</strong>→ 長時間走行すると位置誤差が大きく累積する。</li>
+<li><strong>カメラ視野が狭い・解像度が低め</strong>
 → 特徴点が少ない環境ではVIOが不安定になりやすい。</li>
 </ul>
-<p>そのため、<strong>「研究用・デモ用の簡易VIO」としては可能</strong>ですが、<br>
+<p>そのため、<strong>「研究用・デモ用の簡易VIO」としては可能</strong>ですが、
 「実用的なナビゲーションに使える精度」を期待するのは難しいです。</p>
 <h3 id="5-実現する場合の工夫">5. 実現する場合の工夫</h3>
 <p>e-puckでVIO的な処理を試すなら、以下のような工夫が考えられます。</p>
@@ -647,14 +623,14 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <li>
 <p><strong>車輪エンコーダとの融合</strong></p>
 <ul>
-<li><code>left wheel sensor</code> / <code>right wheel sensor</code>（エンコーダ）も使って、<br>
+<li><code>left wheel sensor</code> / <code>right wheel sensor</code>（エンコーダ）も使って、
 車輪オドメトリとVIOを組み合わせることで、<strong>ドリフトを抑える</strong>。</li>
 </ul>
 </li>
 <li>
 <p><strong>低解像度・低FPS向けのVIOアルゴリズム選択</strong></p>
 <ul>
-<li>特徴点数を絞る、トラッキングの閾値を緩めるなど、<br>
+<li>特徴点数を絞る、トラッキングの閾値を緩めるなど、
 低スペック環境向けにパラメータ調整する。</li>
 </ul>
 </li>
@@ -746,7 +722,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <ul>
 <li>画像サイズの調整
 <ul>
-<li>フルVGA（640×480）だと重いので、<br>
+<li>フルVGA（640×480）だと重いので、
 <strong>52×52 などに縮小</strong>して処理負荷を下げる（Webotsのデフォルト設定に近い）</li>
 </ul>
 </li>
@@ -790,7 +766,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 </ul>
 <p><strong>注意点</strong>：</p>
 <ul>
-<li>e-puckはフレームレートが低いので、<strong>動きが速いと対応点が追えなくなる</strong><br>
+<li>e-puckはフレームレートが低いので、<strong>動きが速いと対応点が追えなくなる</strong>
 → ロボットの速度を制限するか、IMUで補間する必要がある。</li>
 </ul>
 <p><strong>2.4 IMU処理（Inertial部分）</strong></p>
@@ -803,7 +779,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <ul>
 <li>加速度から速度・位置を積分
 <ul>
-<li>ただし、e-puckのIMUはノイズが大きく、<strong>長時間積分するとドリフトが大きい</strong><br>
+<li>ただし、e-puckのIMUはノイズが大きく、<strong>長時間積分するとドリフトが大きい</strong>
 → 主に「短時間の補間」として使うのが現実的</li>
 </ul>
 </li>
@@ -833,8 +809,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <p><strong>2.5.1 視覚観測のモデル化</strong></p>
 <ul>
 <li>
-<p>カメラで観測された特徴点の2D位置を、<br>
-現在の姿勢・位置から予測される3D点の投影としてモデル化</p>
+<p>カメラで観測された特徴点の2D位置を、現在の姿勢・位置から予測される3D点の投影としてモデル化</p>
 </li>
 <li>
 <p>観測方程式（例）：</p>
@@ -856,15 +831,13 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 </ul>
 <p><strong>方式2：グラフ最適化ベース（VINS-Mono風）</strong></p>
 <ul>
-<li>一定時間ごとにキーフレームを選び、<br>
-特徴点・IMU測定値をグラフに追加</li>
+<li>一定時間ごとにキーフレームを選び、特徴点・IMU測定値をグラフに追加</li>
 <li>バンドル調整＋IMU拘束をまとめて最適化</li>
 </ul>
 <p>e-puckの計算リソースを考えると、<strong>EKFベースの軽量VIO</strong>が現実的です。</p>
 <p><strong>2.5.3 車輪エンコーダの利用（オプション）</strong></p>
 <ul>
-<li><code>left wheel sensor</code>・<code>right wheel sensor</code>から、<br>
-車輪オドメトリ（移動距離・回転量）を計算</li>
+<li><code>left wheel sensor</code>・<code>right wheel sensor</code>から、車輪オドメトリ（移動距離・回転量）を計算</li>
 <li>VIOの位置推定と組み合わせて、<strong>ドリフトを抑制</strong>
 <ul>
 <li>例：VIOの位置推定と車輪オドメトリを重み付きで平均</li>
@@ -874,12 +847,9 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 <h3 id="3-e-puck向けの実装上のポイント">3. e-puck向けの実装上のポイント</h3>
 <p><strong>3.1 性能制約への対応</strong></p>
 <ul>
-<li><strong>フレームレートが低い</strong><br>
-→ ロボットの速度を制限し、フレーム間の動きを小さくする。</li>
-<li><strong>IMUレートが低い</strong><br>
-→ IMUは主に姿勢推定と短時間補間に使い、<br>
-長時間の位置推定は視覚＋車輪オドメトリに頼る。</li>
-<li><strong>計算リソースが限られる</strong><br>
+<li><strong>フレームレートが低い</strong>→ ロボットの速度を制限し、フレーム間の動きを小さくする。</li>
+<li><strong>IMUレートが低い</strong>→ IMUは主に姿勢推定と短時間補間に使い、長時間の位置推定は視覚＋車輪オドメトリに頼る。</li>
+<li><strong>計算リソースが限られる</strong>
 → 特徴点数を絞り、EKFなどの軽量手法を採用。</li>
 </ul>
 <p><strong>3.2 環境設計</strong></p>
@@ -889,7 +859,7 @@ IMUを組み合わせることで<strong>メートル単位のスケール</stro
 </ul>
 <p><strong>3.3 初期化</strong></p>
 <ul>
-<li>最初の数秒は静止またはゆっくり動き、<br>
+<li>最初の数秒は静止またはゆっくり動き、
 IMUのバイアス推定とカメラの初期特徴点抽出を行う。</li>
 </ul>
 <h3 id="4-まとめe-puck向けvio処理フロー簡易版">4. まとめ：e-puck向けVIO処理フロー（簡易版）</h3>
@@ -942,6 +912,11 @@ IMUのバイアス推定とカメラの初期特徴点抽出を行う。</li>
 <p>このフローであれば、<strong>e-puckでも「精度は低いがVIO的な処理」は実現可能</strong>っぽいです。
 処理イメージは次のようになります。</p>
 <p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\robotics\servo\projects\2-tutorial\controllers\robot_cont1\docs\image\2_vio\1776553579773.png" alt="1776553579773"></p>
+<h2 id="実装">実装</h2>
+<p>ロジックは慣性センサーの推測値＋画像による補正だということで、まずは実装してみました。</p>
+<p>慣性センサーの推測値が小さすぎて(精度が悪いせいか、単位を誤っているか)、ロボットの動作が少し怪しいですが。</p>
+<source src="vio_movie.gif" type="video/mp4">
+<p>コードは以下に保管しています。</p>
 <h2 id="総括">総括</h2>
 <p>ということで今回はVIOについて調べていきました。</p>
 <ul>
