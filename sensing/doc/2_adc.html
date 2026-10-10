@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>ADC&#x3068;&#x306f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+            <h2 id="adcとは">ADCとは</h2>
+<p>ADC（Analog-to-Digital Converter / アナログ・デジタル変換器）とは、<strong>センサが出す「連続的な電圧信号」を、マイコンが理解できる「0と1の数字」に変換する装置</strong>です。</p>
+<h3 id="1-基本概念">1. 基本概念</h3>
+<p>センサ（温度センサや光センサなど）は、測った物理量を「電圧の大きさ」として出力します。しかしマイコン（ArduinoやESP32など）は、電圧そのものではなく「数字」しか扱えません。ADCはその橋渡しをする部品です。</p>
+<h3 id="2-直感的なアナロジー目盛りのないものを目盛りで測る">2. 直感的なアナロジー：目盛りのないものを目盛りで測る</h3>
+<p>温度を測るとします。</p>
+<ul>
+<li><strong>アナログ信号</strong>: 「今、ちょうど26.3度…いや、26.35度…」と<strong>滑らかに変化する</strong>連続的な値</li>
+<li><strong>デジタル値</strong>: 「26度」と<strong>決まった刻みで区切った</strong>離散的な値</li>
+</ul>
+<p>ADCは、滑らかな温度変化を「どの目盛りの区間に入るか」で数字に変換する、いわば<strong>目盛り付きの定規</strong>のようなものです。
+ただし、目盛りが細かければ細かいほど正確に測れますが、目盛りが粗いと「26.3度」と「26.7度」が同じ「26度」として記録されてしまいます。</p>
+<h3 id="3-メカニズムadcはどうやって変換するのか">3. メカニズム：ADCはどうやって変換するのか</h3>
+<p>ADCにはいくつかの方式がありますが、最も一般的な<strong>逐次比較型</strong>の考え方を簡単に説明します。</p>
+<p><strong>例：3ビットADCで電圧を測る</strong></p>
+<p>3ビットのADCは、電圧を <strong>2^3 = 8段階</strong>（0〜7の数字）で表します。</p>
+<table>
+<thead>
+<tr>
+<th>入力電圧範囲 (0〜5Vを8分割)</th>
+<th>デジタル出力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.00V 〜 0.625V</td>
+<td>000 (0)</td>
+</tr>
+<tr>
+<td>0.625V 〜 1.25V</td>
+<td>001 (1)</td>
+</tr>
+<tr>
+<td>1.25V 〜 1.875V</td>
+<td>010 (2)</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>4.375V 〜 5.00V</td>
+<td>111 (7)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1段階（1 LSB）の幅 = 5V / 8 = 0.625V</strong></p>
+<p>つまり、入力電圧が1.5Vだったら、出力は「010（2）」になります。0.1Vの変化は検出できません。</p>
+<p><strong>分解能（ビット数）が重要</strong></p>
+<p>実際のマイコンでは、もっとビット数が多いです。</p>
+<table>
+<thead>
+<tr>
+<th>ビット数</th>
+<th>段階数</th>
+<th>5V範囲での1段階の幅</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8ビット</td>
+<td>256段階</td>
+<td>約 19.5 mV</td>
+</tr>
+<tr>
+<td>10ビット</td>
+<td>1024段階</td>
+<td>約 4.9 mV</td>
+</tr>
+<tr>
+<td>12ビット</td>
+<td>4096段階</td>
+<td>約 1.2 mV</td>
+</tr>
+<tr>
+<td>16ビット</td>
+<td>65536段階</td>
+<td>約 0.076 mV</td>
+</tr>
+</tbody>
+</table>
+<p>Arduino UnoのADCは<strong>10ビット</strong>なので、0〜5Vを1024段階で測ります。1段階約4.9mVの精度です。</p>
+<h3 id="4-adcの重要なパラメータ">4. ADCの重要なパラメータ</h3>
+<p><strong>分解能（Resolution）</strong></p>
+<p>何ビットで測るか。ビット数が多いほど細かい変化を捉えられる。</p>
+<p><strong>変換速度（Sampling Rate）</strong></p>
+<p>1秒間に何回変換できるか。音を測る場合は高速（数万〜数十万回/秒）が必要。温度測定なら低速でも十分。</p>
+<p><strong>入力電圧範囲</strong></p>
+<p>通常 0〜3.3V または 0〜5V。この範囲外の電圧を入れると壊れる。</p>
+<p><strong>量子化誤差</strong></p>
+<p>連続的な値を離散的な段階に丸めることで生じる誤差。最大で ±0.5 LSB（1段階の半分）。</p>
+<h3 id="5-センサとの関係でよくある混同">5. センサとの関係でよくある混同</h3>
+<p><strong>ADC vs センサ</strong></p>
+<ul>
+<li><strong>センサ</strong>: 温度・光・距離などの物理量 → 電圧に変換</li>
+<li><strong>ADC</strong>: 電圧 → 数字に変換</li>
+</ul>
+<p>センサとADCは別物です。マイコン内部にADCが内蔵されていることが多いので、気づかないうちに使っていることがあります。</p>
+<p><strong>ADC vs DAC</strong></p>
+<ul>
+<li><strong>ADC（Analog → Digital）</strong>: アナログをデジタルに変換（測る側）</li>
+<li><strong>DAC（Digital → Analog）</strong>: デジタルをアナログに変換（出力側、例：音を鳴らす）</li>
+</ul>
+<h3 id="6-実際のコード例arduino">6. 実際のコード例（Arduino）</h3>
+<pre><code class="language-cpp"><span class="hljs-type">int</span> value = <span class="hljs-built_in">analogRead</span>(A0);  <span class="hljs-comment">// A0ピンの電圧を10ビットADCで読む</span>
+<span class="hljs-comment">// 返り値は 0〜1023</span>
+<span class="hljs-comment">// 0 = 0V, 1023 = 5V（Arduino Unoの場合）</span>
+</code></pre>
+<p>この <code>analogRead()</code> の裏側で、ADCが電圧を数字に変換しています。</p>
+<h2 id="adcの仕組み">ADCの仕組み</h2>
+<p>ADCは<strong>基本的にハードウェア</strong>です。ただし、ソフトウェアでADCの一部機能を代替することも可能で、実際にそういう手法も存在します。両者の違いを整理します。</p>
+<h3 id="1-通常のadcはハードウェア">1. 通常のADCはハードウェア</h3>
+<p>マイコンに内蔵されているADC（Arduinoの <code>analogRead()</code> が使うものなど）は、<strong>シリコン上に実際の物理回路として存在</strong>します。</p>
+<p><strong>なぜハードウェアなのか</strong></p>
+<p>ADCの変換には、以下のような物理的な動作が必要です。</p>
+<ul>
+<li><strong>サンプル&amp;ホールド回路</strong>: 入力電圧を一瞬「取り込んで保持」する</li>
+<li><strong>コンパレータ</strong>: 2つの電圧を比較してどちらが大きいか判定する</li>
+<li><strong>DAC（内部参照用）</strong>: 比較の基準となる電圧を生成する</li>
+<li><strong>逐次比較レジスタ</strong>: ビットごとに「この電圧より大きい？小さい？」を判定していく</li>
+</ul>
+<p>これらはすべて<strong>トランジスタ・コンデンサ・抵抗</strong>などの物理部品で構成されたアナログ回路です。ソフトウェアだけでは電圧を直接測れません。</p>
+<h3 id="2-ソフトウェアでadcを代用する方法もある">2. ソフトウェアでADCを「代用」する方法もある</h3>
+<p>ハードウェアADCがないマイコンや、より高分解能が必要な場合、<strong>ソフトウェア＋簡易ハードウェア</strong>でADCに近いことができます。</p>
+<p><strong>例：ΣΔ（シグマ・デルタ）ADCをソフトウェアで実現</strong></p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\doc\image.png" alt="alt text"></p>
+<p>この方式では、GPIOピンを高速に切り替えながらコンデンサの充放電を制御し、ソフトウェアでそのパターンを解析して電圧を推定します。</p>
+<p><strong>ソフトウェアADCのメリット・デメリット</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ハードウェアADC</th>
+<th>ソフトウェアADC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>精度</strong></td>
+<td>高い（設計された回路なので安定）</td>
+<td>低〜中（GPIOの速度・ノイズに依存）</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>速い（µsオーダー）</td>
+<td>遅い（ms〜sオーダー）</td>
+</tr>
+<tr>
+<td><strong>分解能</strong></td>
+<td>固定（10ビット、12ビットなど）</td>
+<td>調整可能（平均化回数で変えられる）</td>
+</tr>
+<tr>
+<td><strong>CPU負荷</strong></td>
+<td>ほぼなし（変換中もCPUは別の処理ができる）</td>
+<td>高い（GPIO操作と計算を繰り返す）</td>
+</tr>
+<tr>
+<td><strong>部品数</strong></td>
+<td>内蔵なら0、外部ICなら1個</td>
+<td>外部に抵抗・コンデンサが必要</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-実際の使い分け">3. 実際の使い分け</h3>
+<p><strong>ハードウェアADCを使う場面（ほとんどの場合）</strong></p>
+<ul>
+<li>Arduinoで温度センサを読む</li>
+<li>ESP32でジョイスティックの電圧を読む</li>
+<li>マイコン内蔵ADCで十分な精度・速度が出る場合</li>
+</ul>
+<p><strong>ソフトウェアADCを使う場面（特殊な場合）</strong></p>
+<ul>
+<li><strong>GPIOが余っていてADC専用ピンがない</strong>安価なマイコン（PICやAVRの一部）</li>
+<li><strong>超高分解能</strong>（20ビット以上）が必要で、高価な外部ADC ICを避けたい場合</li>
+<li><strong>複数チャンネルを同時に測りたい</strong>が、内蔵ADCのチャンネル数が足りない場合</li>
+</ul>
+<h2 id="adcを実装したもの">ADCを実装したもの</h2>
+<p>ADCを実行できる基盤（ハードウェアプラットフォーム）は、用途や必要な精度・速度によって大きく分けて以下のカテゴリがあります。</p>
+<h3 id="1-マイコンボード内蔵adc付き">1. マイコンボード（内蔵ADC付き）</h3>
+<p>最も身近で手軽な基盤です。ほとんどの現代マイコンにはADCが内蔵されています。</p>
+<table>
+<thead>
+<tr>
+<th>基盤</th>
+<th>MCU</th>
+<th>ADC仕様</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arduino Uno</strong></td>
+<td>ATmega328P</td>
+<td>10ビット、6ch、約0.1ms/変換</td>
+<td>初心者向け。<code>analogRead()</code>で即座に使える</td>
+</tr>
+<tr>
+<td><strong>Arduino Mega</strong></td>
+<td>ATmega2560</td>
+<td>10ビット、16ch</td>
+<td>チャンネル数が多い</td>
+</tr>
+<tr>
+<td><strong>Raspberry Pi Pico</strong></td>
+<td>RP2040</td>
+<td>12ビット、4ch、500ksps</td>
+<td>高速。MicroPython/Cで使える</td>
+</tr>
+<tr>
+<td><strong>ESP32</strong></td>
+<td>ESP32</td>
+<td>12ビット、18ch、2Msps</td>
+<td>WiFi/Bluetooth搭載。IoT向き</td>
+</tr>
+<tr>
+<td><strong>ESP32-S2/S3</strong></td>
+<td>ESP32-S2/S3</td>
+<td>12ビット、20ch</td>
+<td>より高速・高精度なモデルも</td>
+</tr>
+<tr>
+<td><strong>STM32 Nucleo</strong></td>
+<td>STM32F4/F7等</td>
+<td>12〜16ビット、複数ch、高速</td>
+<td>産業用レベルの性能。HALライブラリ使用</td>
+</tr>
+<tr>
+<td><strong>Teensy 4.1</strong></td>
+<td>ARM Cortex-M7</td>
+<td>12ビット、高速変換</td>
+<td>オーディオ処理等、高速ADCが必要な場合</td>
+</tr>
+<tr>
+<td><strong>Adafruit Feather</strong></td>
+<td>各種</td>
+<td>搭載MCU依存</td>
+<td>小型・無線機能付き。 wearable 向き</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ロボット制御・センシング学習には、Raspberry Pi PicoやESP32がコストパフォーマンス良くおすすめ</strong>です。</p>
+<h3 id="2-シングルボードコンピュータsbc外部adc">2. シングルボードコンピュータ（SBC）＋外部ADC</h3>
+<p>SBC自体にはGPIOに内蔵ADCがない（あるいは限定的な）ものが多いため、外部ADC ICを使います。</p>
+<table>
+<thead>
+<tr>
+<th>基盤</th>
+<th>対応外部ADC</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Raspberry Pi</strong></td>
+<td>ADS1115（I2C）、MCP3008（SPI）、ADC HAT</td>
+<td>画像処理＋センサ入力。AIロボット等</td>
+</tr>
+<tr>
+<td><strong>BeagleBone Black</strong></td>
+<td>内蔵ADC（7ch、12ビット）あり</td>
+<td>Linux上でリアルタイムADCが可能</td>
+</tr>
+<tr>
+<td><strong>NVIDIA Jetson</strong></td>
+<td>外部ADC IC、またはUSB-DAQ</td>
+<td>AI推論＋センサ融合</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-外部adc-icブレイクアウトボード">3. 外部ADC IC（ブレイクアウトボード）</h3>
+<p>マイコンの内蔵ADCでは精度や速度が足りない場合に使います。I2CやSPIで接続します。</p>
+<table>
+<thead>
+<tr>
+<th>IC/モジュール</th>
+<th>分解能</th>
+<th>インターフェース</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ADS1115</strong></td>
+<td>16ビット</td>
+<td>I2C</td>
+<td>精密電圧測定。温度・光センサ等</td>
+</tr>
+<tr>
+<td><strong>ADS1015</strong></td>
+<td>12ビット</td>
+<td>I2C</td>
+<td>ADS1115の低分解能版。安価</td>
+</tr>
+<tr>
+<td><strong>MCP3008</strong></td>
+<td>10ビット</td>
+<td>SPI</td>
+<td>8チャンネル。Raspberry Piと組み合わせて定番</td>
+</tr>
+<tr>
+<td><strong>HX711</strong></td>
+<td>24ビット</td>
+<td>専用シリアル</td>
+<td><strong>ロードセル（重さ測定）専用</strong>。高分解能</td>
+</tr>
+<tr>
+<td><strong>AD7606</strong></td>
+<td>16ビット</td>
+<td>並列/SPI</td>
+<td>8チャンネル同時サンプリング。電力計測等</td>
+</tr>
+<tr>
+<td><strong>NAU7802</strong></td>
+<td>24ビット</td>
+<td>I2C</td>
+<td>ロードセル・精密計量向け</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-データアクイジションdaqデバイス">4. データアクイジション（DAQ）デバイス</h3>
+<p>産業用・計測用の基盤です。高価ですが高精度・多チャンネル・高速度です。</p>
+<table>
+<thead>
+<tr>
+<th>メーカー・製品</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NI（National Instruments）myDAQ / USB-6001</strong></td>
+<td>LabVIEW連携。教育向け。14ビット、200ksps</td>
+</tr>
+<tr>
+<td><strong>NI USB-4431</strong></td>
+<td>24ビット、高精度音響・振動計測</td>
+</tr>
+<tr>
+<td><strong>Keysight U2331A</strong></td>
+<td>USB接続、64Msps、産業用DAQ</td>
+</tr>
+<tr>
+<td><strong>Digilent Analog Discovery</strong></td>
+<td>学生向け。オシロスコープ＋波形ジェネレータ＋電源＋DAQの統合</td>
+</tr>
+</tbody>
+</table>
+<p><strong>大学の実験や産業現場のプロトタイピング</strong>でよく使われます。</p>
+<h3 id="5-fpgaベース">5. FPGAベース</h3>
+<p>超高速・並列処理が必要な場合に使います。ソフトウェアADCも実装可能です。</p>
+<table>
+<thead>
+<tr>
+<th>基盤</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Xilinx Zynq（PYNQ等）</strong></td>
+<td>ARM + FPGA。高速ADCと連携可能</td>
+</tr>
+<tr>
+<td><strong>Terasic DE10-Nano</strong></td>
+<td>FPGAボード。外部ADCモジュール接続可能</td>
+</tr>
+<tr>
+<td><strong>Red Pitaya</strong></td>
+<td>オシロスコープ/DAQとして使える。125Msps、14ビット</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ソフトウェア無線（SDR）・高速制御・リアルタイム信号処理</strong>などに使われます。</p>
+<h3 id="6-オシロスコープ計測器adcを内内蔵した観測基盤">6. オシロスコープ・計測器（ADCを内内蔵した観測基盤）</h3>
+<p>厳密には「基盤」ではなく計測器ですが、内部に超高速ADCを搭載しています。</p>
+<table>
+<thead>
+<tr>
+<th>機器</th>
+<th>ADC性能</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>デジタルオシロスコープ</strong></td>
+<td>1Gsps〜（8〜12ビット）</td>
+<td>波形観測。ADCの動作確認に</td>
+</tr>
+<tr>
+<td><strong>ロジックアナライザ</strong></td>
+<td>デジタル信号専用</td>
+<td>UART/SPI/I2Cのデジタル波形解析</td>
+</tr>
+<tr>
+<td><strong>USBオシロスコープ</strong>（Hantek等）</td>
+<td>20〜100Msps</td>
+<td>安価。個人での信号確認に</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-ソフトウェアadc基盤特殊なアプローチ">7. ソフトウェアADC基盤（特殊なアプローチ）</h3>
+<p>ハードウェアADCを使わず、GPIO＋外部回路＋ソフトウェアでADCを実現する方法です。</p>
+<pre><code>[センサ電圧] ──→ [RC回路] ──→ [GPIO入力] ──→ [ソフトウェアで充放電時間を計測]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>基盤</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Raspberry Pi（GPIOのみ）</strong></td>
+<td>RC充放電時間を測って電圧推定。精度は低い</td>
+</tr>
+<tr>
+<td><strong>安価なPIC/AVR</strong></td>
+<td>コンパレータ内蔵ピンを使ったΣΔ変換のソフト実装</td>
+</tr>
+</tbody>
+</table>
+<p><strong>「ADCピンがない」「もう1チャンネル必要」という場合の救済策</strong>として存在します。</p>
+<h2 id="gpioピン">GPIOピン</h2>
+<p>GPIOピン（General Purpose Input/Output Pin / 汎用入出力ピン）とは、<strong>マイコンが「外の世界」と情報をやり取りするための汎用的な端子</strong>です。</p>
+<h3 id="1-基本概念-1">1. 基本概念</h3>
+<p>GPIOピンは、マイコンにとっての<strong>手と目と口</strong>のようなものです。</p>
+<ul>
+<li><strong>入力（Input）</strong>: 外からの信号を「読む」（目・耳）</li>
+<li><strong>出力（Output）</strong>: 外に信号を「送る」（手・口）</li>
+</ul>
+<p>1本のピンが「読むモード」と「送るモード」を切り替えて使えます。</p>
+<h3 id="2-直感的なアナロジー部屋の電気スイッチとコンセント">2. 直感的なアナロジー：部屋の電気スイッチとコンセント</h3>
+<p>GPIOピンを「部屋の壁にある端子」だと想像してください。</p>
+<ul>
+<li><strong>出力モード</strong>: スイッチをONにすると電気が流れて、LEDが光る（部屋の照明をつける）</li>
+<li><strong>入力モード</strong>: ドアベルのボタンが押されたかを確認する（外からの信号を読む）</li>
+</ul>
+<p>1つの端子が「電気を出す側」にも「電気を受け取る側」にもなれるのがGPIOの汎用性です。</p>
+<h3 id="3-gpioピンが存在する理由">3. GPIOピンが存在する理由</h3>
+<p>マイコン（ArduinoやESP32、Picoなど）は、内部では0と1のデジタル世界を生きています。しかし、外の世界は<strong>電圧の高低</strong>や<strong>アナログ信号</strong>として存在します。GPIOはその<strong>境界の翻訳窓口</strong>です。</p>
+<p><strong>GPIOでできること</strong></p>
+<table>
+<thead>
+<tr>
+<th>モード</th>
+<th>具体的な使い方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>デジタル出力</strong></td>
+<td>LEDを点滅させる、リレーを駆動する、モーターを回す</td>
+</tr>
+<tr>
+<td><strong>デジタル入力</strong></td>
+<td>ボタンのON/OFFを読む、人感センサの信号を受ける</td>
+</tr>
+<tr>
+<td><strong>アナログ入力</strong></td>
+<td>温度センサや光センサの電圧値を読む（ADC機能付きピン）</td>
+</tr>
+<tr>
+<td><strong>PWM出力</strong></td>
+<td>LEDの明るさ調整、モーターの速度制御（擬似的なアナログ出力）</td>
+</tr>
+<tr>
+<td><strong>通信プロトコル</strong></td>
+<td>UART・I2C・SPIで他のデバイスと通信する</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-gpioピンの種類">4. GPIOピンの種類</h3>
+<p>マイコンボードのピンは、すべてが「自由に使えるGPIO」ではありません。役割が決まっているものもあります。</p>
+<p><strong>主な種類</strong></p>
+<table>
+<thead>
+<tr>
+<th>ピンの種類</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPIO（汎用）</strong></td>
+<td>自由に入出力をプログラムで設定できる</td>
+</tr>
+<tr>
+<td><strong>GND</strong></td>
+<td>グラウンド（基準電位、0V）。必ず必要</td>
+</tr>
+<tr>
+<td><strong>VCC / 3.3V / 5V</strong></td>
+<td>電源ピン。外部回路やセンサに電力を供給</td>
+</tr>
+<tr>
+<td><strong>ADC専用ピン</strong></td>
+<td>アナログ電圧を読む専用（ArduinoのA0〜A5など）</td>
+</tr>
+<tr>
+<td><strong>特殊機能ピン</strong></td>
+<td>通信（TX/RX, SDA/SCL）、リセット、ブートモード切替など</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意点：電圧レベル</strong></p>
+<ul>
+<li><strong>5V系</strong>（Arduino Uno等）: HIGH = 5V、LOW = 0V</li>
+<li><strong>3.3V系</strong>（ESP32、Pico等）: HIGH = 3.3V、LOW = 0V</li>
+</ul>
+<p><strong>3.3Vのマイコンに5Vを直接入れると壊れることがあります</strong>。レベル変換回路が必要な場合があります。</p>
+<h3 id="5-コードでのイメージarduino">5. コードでのイメージ（Arduino）</h3>
+<pre><code class="language-cpp"><span class="hljs-built_in">pinMode</span>(<span class="hljs-number">13</span>, OUTPUT);  <span class="hljs-comment">// 13番ピンを「出力モード」に設定</span>
+<span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">13</span>, HIGH);  <span class="hljs-comment">// 13番ピンに5Vを出力 → LEDが光る</span>
+
+<span class="hljs-built_in">pinMode</span>(<span class="hljs-number">2</span>, INPUT);  <span class="hljs-comment">// 2番ピンを「入力モード」に設定</span>
+<span class="hljs-type">int</span> buttonState = <span class="hljs-built_in">digitalRead</span>(<span class="hljs-number">2</span>);  <span class="hljs-comment">// 2番ピンの状態を読む（HIGH or LOW）</span>
+
+<span class="hljs-type">int</span> sensorValue = <span class="hljs-built_in">analogRead</span>(A0);  <span class="hljs-comment">// A0ピンのアナログ電圧をADC変換して読む</span>
+</code></pre>
+<h2 id="総括">総括</h2>
+<p>ADCの本質を簡潔にまとめると、以下の3点です。</p>
+<h3 id="adcの本質">ADCの本質</h3>
+<p><strong>1. ADCとは何か</strong>
+<strong>「連続的な電圧」を「離散的な数字」に変換する装置。</strong> センサが測った物理量（温度・光・距離など）は電圧として現れますが、マイコンは電圧そのものではなく数字しか扱えません。ADCはその橋渡しをします。</p>
+<p><strong>2. ADCはハードウェアである</strong>
+マイコン内部に<strong>物理的な回路（コンパレータ・コンデンサ・トランジスタ）</strong> として存在します。ソフトウェアだけでは電圧を直接測れません。Arduinoの <code>analogRead()</code> の裏側で、このハードウェア回路が動いています。</p>
+<p><strong>3. ADCの性能は「分解能」と「速度」で決まる</strong></p>
+<ul>
+<li><strong>分解能（ビット数）</strong>: 電圧を何段階に切り分けるか。Arduino Unoは10ビット（1024段階）、ESP32/Picoは12ビット（4096段階）。</li>
+<li><strong>変換速度</strong>: 1秒間に何回測れるか。音響計測なら高速が必要、温度計測なら低速で十分。</li>
+</ul>
+<h3 id="補足gpioとの関係">補足：GPIOとの関係</h3>
+<p>ADCはマイコンの<strong>ADC専用ピン</strong>（ArduinoではA0〜A5など）を通じて外部の電圧を読みます。GPIOはマイコンが外界と接続する汎用端子で、その一部のピンがADC機能を兼ね備えています。</p>
+<h3 id="一言で言えば">一言で言えば</h3>
+<blockquote>
+<p><strong>ADCは、センサの「電圧の言葉」をマイコンの「数字の言葉」に翻訳する、マイコン内蔵のハードウェア回路です。</strong></p>
+</blockquote>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/nvJTScoa5aE?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+        </body>
+        </html>
