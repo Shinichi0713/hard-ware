@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x554f;&#x984c;&#x8a2d;&#x5b9a;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p><a href="https://yoshishinnze.hatenablog.com/entry/2026/11/16/043000">先日のADC</a>を実際に体感してみたいということで仮想環境の<a href="https://wokwi.com/">Wokwi</a>を用いて例題を行ってみようと思います。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+        <h2 id="問題設定">問題設定</h2>
+<p>基本はアナログ出力を行うセンサを、ADCが実装されたマイコンで読み取るということがタスクとなります。</p>
+<p><strong>センサの出力形式とADCの必要性</strong></p>
+<p>センサは<strong>出力形式</strong>によって、ADCが必要かどうかが決まります。</p>
+<table>
+<thead>
+<tr>
+<th>センサの出力形式</th>
+<th>具体例</th>
+<th>ADCが必要？</th>
+<th>読み取り方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>アナログ電圧出力</strong></td>
+<td>ポテンショメータ、TMP36、光センサ（CdS）、距離センサ（GP2Y0A）</td>
+<td><strong>必要</strong></td>
+<td><code>analogRead()</code> でADC変換して読む</td>
+</tr>
+<tr>
+<td><strong>デジタルパルス出力</strong></td>
+<td>ロータリーエンコーダ、超音波距離センサ（HC-SR04 Echo）</td>
+<td><strong>不要</strong></td>
+<td><code>digitalRead()</code> や <code>pulseIn()</code> で読む</td>
+</tr>
+<tr>
+<td><strong>通信プロトコル出力</strong></td>
+<td>BME280（I2C/SPI）、MPU6050（I2C）、GPSモジュール（UART）</td>
+<td><strong>不要</strong></td>
+<td><code>Wire.h</code>（I2C）、<code>SPI.h</code>、<code>Serial</code> で読む</td>
+</tr>
+<tr>
+<td><strong>PWM出力</strong></td>
+<td>サーボ用角度センサ、一部距離センサ</td>
+<td><strong>不要</strong>（<code>pulseIn()</code>で対応可）</td>
+<td>デューティ比やパルス幅を測定</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>アナログ電圧を出力するセンサには、マイコンがその電圧を数字として理解するためにADCが必要です。</strong></p>
+<p>一方、デジタル信号や通信プロトコルでデータを出すセンサには、ADCは不要です。</p>
+</blockquote>
+<p>ロータリーエンコーダは「デジタルパルス出力」なのでADCは不要で、<code>digitalRead()</code> や割り込みで読み取ります。前回の例題Bでは、エンコーダを「ADCの分解能を変えるための入力デバイス」として使っていただけで、エンコーダ自体はADCを必要としない、ということになります。</p>
+<h2 id="例題1">例題1</h2>
+<p>Wokwiで試せるADCの簡単な例題を2つ用意しました。<strong>ポテンショメータ（可変抵抗）</strong> でADCの基本を体感する例と、<strong>温度センサ</strong>で実用的な計測を体験する例です。</p>
+<h3 id="問題ポテンショメータで電圧を読む">問題：ポテンショメータで電圧を読む</h3>
+<p>回転ノブを動かすと電圧が変わり、ADC値（0〜1023）が変化します。ADCの分解能を視覚的に理解できます。</p>
+<p><strong>使用部品</strong></p>
+<ul>
+<li>Arduino Uno × 1</li>
+<li>Potentiometer（ポテンショメータ / 可変抵抗）× 1</li>
+</ul>
+<p><strong>配線方法</strong></p>
+<pre><code>ポテンショメータ
+├─ 左端子 ───→ Arduino 5V
+├─ 中央端子 ──→ Arduino A0（ADC入力）
+└─ 右端子 ───→ Arduino GND
+</code></pre>
+<p>Wokwi上では、部品パレットから「Potentiometer」を選んでドラッグ&amp;ドロップし、上記の通り配線してください。</p>
+<p><strong>Arduinoコード</strong></p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">9600</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-type">int</span> adcValue = <span class="hljs-built_in">analogRead</span>(A0);           <span class="hljs-comment">// 10ビットADCで読む（0〜1023）</span>
+  <span class="hljs-type">float</span> voltage = adcValue * (<span class="hljs-number">5.0</span> / <span class="hljs-number">1023.0</span>); <span class="hljs-comment">// 電圧に変換（5V基準）</span>
+
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ADC Value: &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(adcValue);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;  |  Voltage: &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(voltage);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot; V&quot;</span>);
+
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">500</span>);
+}
+</code></pre>
+<p>コードの解説はこんな感じです。</p>
+<p>プログラムは大きく分けて、最初に1度だけ実行される <code>setup()</code> 関数と、電源が入っている間ずっと繰り返される <code>loop()</code> 関数の2つで構成されています。</p>
+<p><strong>1. 初期設定 (<code>setup</code> 関数)</strong></p>
+<ul>
+<li><code>Serial.begin(9600);</code></li>
+<li>パソコンとマイコンの間で通信を行うための<strong>シリアル通信を開始</strong>します。通信速度（ボーレート）は <code>9600 bps</code> に設定されています。これにより、マイコン内部のデータをパソコンの「シリアルモニター」画面で確認できるようになります。</li>
+</ul>
+<p><strong>2. メインループ (<code>loop</code> 関数)</strong></p>
+<ul>
+<li>
+<p><code>int adcValue = analogRead(A0);</code></p>
+</li>
+<li>
+<p>アナログ入力ピン <code>A0</code> にかかっている電圧を読み取ります。一般的なArduino（Unoなど）のADC（アナログ・デジタル変換器）は10ビットの精度を持つため、<strong>0 から 1023 まで</strong>のデジタル値に変換されて <code>adcValue</code> に格納されます（例：0Vなら0、5Vなら1023付近）。</p>
+</li>
+<li>
+<p><code>float voltage = adcValue * (5.0/1023.0);</code></p>
+</li>
+<li>
+<p>読み取った0〜1023の数値を、実際の<strong>電圧値（ボルト）に変換</strong>する計算です。基準電圧を 5.0V と仮定し、比例計算によって「何ボルトか」を浮動小数点（<code>float</code>）で求めます。</p>
+</li>
+<li>
+<p><code>Serial.print(...)</code> / <code>Serial.println(...)</code></p>
+</li>
+<li>
+<p>読み取った元のADC値と、計算した電圧値を組み合わせ、次のような形式でシリアルモニターに出力します。</p>
+</li>
+<li>
+<p>出力例：<code>ADC Value: 512  |  Voltage: 2.50 V</code></p>
+</li>
+<li>
+<p><code>delay(500);</code></p>
+</li>
+<li>
+<p>処理の間に <strong>0.5秒（500ミリ秒）の待機時間</strong> を入れます。これにより、データが流れる速度が人間が読み取りやすい適度な速さに調整されます。</p>
+</li>
+</ul>
+<p><strong>試し方</strong></p>
+<ol>
+<li><a href="https://wokwi.com/">Wokwi</a> で新規プロジェクトを作成（Arduino Unoを選択）</li>
+</ol>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791615087854.png" alt="1791615087854"></p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791615174849.png" alt="1791615174849"></p>
+<ol start="2">
+<li>部品パレットから「Potentiometer」を追加</li>
+</ol>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791615704601.png" alt="1791615704601"></p>
+<p>ポテンショメータには3本の端子があります。こんな感じで左から順に配線します。</p>
+<pre><code>ポテンショメータの左端子  ──→  Arduino 5V
+ポテンショメータの中央端子 ──→  Arduino A0
+ポテンショメータの右端子  ──→  Arduino GND
+</code></pre>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791615913240.png" alt="1791615913240"></p>
+<ol start="3">
+<li>上記コードを <code>sketch.ino</code> に貼り付け</li>
+<li>シミュレーションを開始（▶ボタン）</li>
+<li><strong>ポテンショメータのノブをドラッグして回転</strong>させると、シリアルモニタの値が0〜1023の間で変化します</li>
+</ol>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791616068728.png" alt="1791616068728"></p>
+<p><strong>確認ポイント</strong></p>
+<ul>
+<li>ノブを最小にすると <code>ADC Value: 0</code> / <code>Voltage: 0.00 V</code></li>
+<li>ノブを最大にすると <code>ADC Value: 1023</code> / <code>Voltage: 5.00 V</code></li>
+<li>真ん中だと <code>ADC Value: 約512</code> / <code>Voltage: 約2.50 V</code></li>
+</ul>
+<p>これで、ポテンショメータがアナログ信号を出力し、マイコンでDC変換を行うという、 <strong>連続的な電圧が1024段階の数字に区切られている</strong> というADCの性質が体感できます。</p>
+<h2 id="例題2">例題2</h2>
+<p>Wokwiには「<strong>wokwi-ntc-temperature-sensor</strong>」という部品があり、アナログ電圧（OUTピン）を出力します。<a href="https://docs.wokwi.com/parts/wokwi-ntc-temperature-sensor">Wokwi Docs</a>でも、OUTピンは「Output signal (analog)」と明記されています。</p>
+<h3 id="ntc温度センサとは">NTC温度センサとは</h3>
+<p>NTC（Negative Temperature Coefficient / 負の温度係数）サーミスタは、<strong>温度が上がると抵抗値が下がる</strong>半導体センサです。</p>
+<p>モジュール内部では、NTCと固定抵抗（10kΩ）が<strong>分圧回路</strong>を構成しており、温度変化に応じてOUTピンの電圧が変化します。これをADCで読み取り、電圧→抵抗→温度へと換算します。</p>
+<h3 id="問題設定-1">問題設定</h3>
+<p>NTC温度センサを使って周囲の温度を測定し、シリアルモニタに以下を表示する。</p>
+<ul>
+<li>ADCの生値（0〜1023）</li>
+<li>分圧回路の電圧（V）</li>
+<li>サーミスタの抵抗値（Ω）</li>
+<li>換算された温度（℃）</li>
+</ul>
+<p>Wokwi上でセンサをクリックすると温度スライダーが出現するので、温度を変えてADC値と計算温度がどう変化するか確認する。</p>
+<h3 id="使用部品">使用部品</h3>
+<table>
+<thead>
+<tr>
+<th>部品</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arduino Uno</td>
+<td>1</td>
+</tr>
+<tr>
+<td>NTC Temperature Sensor</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配線">配線</h3>
+<p>WokwiのNTCモジュールは内部で分圧回路ができているため、<strong>3本の線だけ</strong>で接続できます。</p>
+<pre><code>NTC Temperature Sensor    Arduino Uno
+├─ VCC  ─────────────────→  5V
+├─ OUT  ─────────────────→  A0（ADC入力）
+└─ GND  ─────────────────→  GND
+</code></pre>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791620162321.png" alt="1791620162321"></p>
+<h3 id="ntc温度換算の数式">NTC温度換算の数式</h3>
+<p>NTCサーミスタの温度計算には、<strong>Steinhart-Hart方程式の簡易版（β式）</strong> を使います。</p>
+<pre><code>1. ADC値 → 電圧:        Vout = ADC × (5.0 / 1023)
+2. 電圧 → 抵抗値:        Rntc = R_series × (Vcc / Vout - 1)
+                         ※ R_series = 10kΩ, Vcc = 5V
+3. 抵抗値 → 温度:        1/T = 1/T0 + (1/β) × ln(Rntc / R0)
+                         ※ T0 = 25℃ = 298.15K, R0 = 10kΩ, β = 3950
+4. ケルビン → 摂氏:      T(℃) = T(K) - 273.15
+</code></pre>
+<h3 id="arduinoコード">Arduinoコード</h3>
+<pre><code class="language-cpp"><span class="hljs-comment">// NTC温度センサ（サーミスタ）を使った温度測定</span>
+<span class="hljs-comment">// ADC値 → 電圧 → 抵抗 → 温度 の変換を体験する例題</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> NTC_PIN A0       <span class="hljs-comment">// NTCセンサの出力をA0（ADC）で読む</span></span>
+
+<span class="hljs-comment">// NTCサーミスタのパラメータ（10kΩ @ 25℃ の一般的なNTC）</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> R0 10000.0       <span class="hljs-comment">// 基準抵抗 10kΩ</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> T0 298.15        <span class="hljs-comment">// 基準温度 25℃ をケルビンに換算（25 + 273.15）</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> BETA 3950.0      <span class="hljs-comment">// β係数（データシート参照。Wokwiデフォルトも3950）</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> R_SERIES 10000.0 <span class="hljs-comment">// 分圧回路の直列抵抗 10kΩ</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> VCC 5.0          <span class="hljs-comment">// 電源電圧 5V</span></span>
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">9600</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;=== NTC Thermistor Temperature Measurement ===&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;ADC Raw | Voltage(V) | R_ntc(ohm) | Temp(C)&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;-------------------------------------------&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// 1. ADCで読む（10ビット: 0〜1023）</span>
+  <span class="hljs-type">int</span> adcValue = <span class="hljs-built_in">analogRead</span>(NTC_PIN);
+
+  <span class="hljs-comment">// 2. ADC値 → 電圧に変換</span>
+  <span class="hljs-type">float</span> voltage = adcValue * (VCC / <span class="hljs-number">1023.0</span>);
+
+  <span class="hljs-comment">// 3. 電圧 → サーミスタの抵抗値に変換</span>
+  <span class="hljs-comment">// 分圧回路: Vout = VCC × (R_ntc / (R_series + R_ntc))</span>
+  <span class="hljs-comment">// 変形して: R_ntc = R_series × (VCC / Vout - 1)</span>
+  <span class="hljs-type">float</span> resistance;
+  <span class="hljs-keyword">if</span> (voltage &lt; <span class="hljs-number">0.001</span>) {
+    resistance = <span class="hljs-number">999999.0</span>;  <span class="hljs-comment">// ゼロ除算回避</span>
+  } <span class="hljs-keyword">else</span> {
+    resistance = R_SERIES * ((VCC / voltage) - <span class="hljs-number">1.0</span>);
+  }
+
+  <span class="hljs-comment">// 4. 抵抗値 → 温度（ケルビン）に変換（β式）</span>
+  <span class="hljs-comment">// 1/T = 1/T0 + (1/β) × ln(R / R0)</span>
+  <span class="hljs-type">float</span> tempKelvin = <span class="hljs-number">1.0</span> / (
+    (<span class="hljs-number">1.0</span> / T0) + 
+    (<span class="hljs-number">1.0</span> / BETA) * <span class="hljs-built_in">log</span>(resistance / R0)
+  );
+
+  <span class="hljs-comment">// 5. ケルビン → 摂氏</span>
+  <span class="hljs-type">float</span> tempCelsius = tempKelvin - <span class="hljs-number">273.15</span>;
+
+  <span class="hljs-comment">// シリアルモニタに表示</span>
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;  &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(adcValue);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;    |   &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(voltage, <span class="hljs-number">3</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;   |  &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>((<span class="hljs-type">long</span>)resistance);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;   | &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(tempCelsius, <span class="hljs-number">2</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot; C&quot;</span>);
+
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">500</span>);
+}
+</code></pre>
+<h3 id="wokwiでの実装手順">Wokwiでの実装手順</h3>
+<p><strong>Step 1: プロジェクト作成</strong></p>
+<ol>
+<li><a href="https://wokwi.com/">Wokwi</a> にアクセス</li>
+<li>「<strong>New Project</strong>」→「<strong>Arduino Uno</strong>」を選択</li>
+</ol>
+<p><strong>Step 2: 部品を追加</strong></p>
+<ol>
+<li>「<strong>+</strong>」ボタンをクリック</li>
+<li>検索欄に「<strong>ntc</strong>」と入力</li>
+<li>「<strong>NTC Temperature Sensor</strong>」をクリックして追加</li>
+<li>Arduinoの右側にドラッグして配置</li>
+</ol>
+<p><strong>Step 3: 配線</strong></p>
+<pre><code>NTC.VCC ──→ Arduino 5V
+NTC.OUT ──→ Arduino A0
+NTC.GND ──→ Arduino GND
+</code></pre>
+<p>各部品の接続点をドラッグして配線してください。</p>
+<p><strong>Step 4: コードを入力</strong></p>
+<ol>
+<li>コードエディタに上記コードを貼り付け</li>
+<li>「<strong>▶ Start Simulation</strong>」をクリック</li>
+</ol>
+<p><strong>Step 5: 動作確認</strong></p>
+<ol>
+<li><strong>NTCセンサ部品をクリック</strong>すると、温度を調整するスライダーが表示されます</li>
+<li>スライダーを動かして温度を変えると、シリアルモニタの値がリアルタイムで変化します</li>
+</ol>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\adc_example\image\readme\1791620369069.png" alt="1791620369069"></p>
+<h3 id="確認ポイント">確認ポイント</h3>
+<table>
+<thead>
+<tr>
+<th>温度</th>
+<th>ADC値（目安）</th>
+<th>電圧（目安）</th>
+<th>抵抗値（目安）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0℃</strong></td>
+<td>約300</td>
+<td>約1.46V</td>
+<td>約24kΩ</td>
+</tr>
+<tr>
+<td><strong>25℃</strong></td>
+<td>約512</td>
+<td>約2.50V</td>
+<td>約10kΩ</td>
+</tr>
+<tr>
+<td><strong>50℃</strong></td>
+<td>約693</td>
+<td>約3.39V</td>
+<td>約4.1kΩ</td>
+</tr>
+<tr>
+<td><strong>100℃</strong></td>
+<td>約905</td>
+<td>約4.42V</td>
+<td>約680Ω</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ポイント</strong>: 温度が上がると抵抗値が下がり、電圧が上がり、ADC値が増加します。</p>
+<h2 id="配線観点">配線観点</h2>
+<p>マイコンとセンサを配線する際に押さえるべき観点を、<strong>電気・通信・物理・実装</strong>の4つの軸で整理します。</p>
+<h3 id="1-電気的な観点">1. 電気的な観点</h3>
+<p><strong>電圧レベルの一致</strong></p>
+<p>マイコンとセンサの動作電圧が合っていないと、動作不良や破損の原因になります。</p>
+<table>
+<thead>
+<tr>
+<th>マイコン</th>
+<th>動作電圧</th>
+<th>注意点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arduino Uno</td>
+<td>5V</td>
+<td>5Vセンサと直接接続可</td>
+</tr>
+<tr>
+<td>Raspberry Pi Pico</td>
+<td>3.3V</td>
+<td>5Vセンサの信号をそのまま入力すると破損リスク</td>
+</tr>
+<tr>
+<td>ESP32</td>
+<td>3.3V</td>
+<td>一部5Vトレラントピンありだが原則3.3V</td>
+</tr>
+<tr>
+<td>Raspberry Pi</td>
+<td>3.3V</td>
+<td>5V入力は絶対不可</td>
+</tr>
+</tbody>
+</table>
+<p><strong>対策</strong>:</p>
+<ul>
+<li>5Vセンサ → 3.3Vマイコン: <strong>レベル変換回路（レベルシフター）</strong> が必要</li>
+<li>3.3Vセンサ → 5Vマイコン: 通常そのままで動作するが、電圧が低すぎてHIGH判定されない場合あり</li>
+</ul>
+<p><strong>電源ピンの使い分け</strong></p>
+<table>
+<thead>
+<tr>
+<th>ピン</th>
+<th>用途</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>5V / 3.3V</strong></td>
+<td>センサや外部回路への電源供給</td>
+<td>マイコンから供給できる電流には上限あり</td>
+</tr>
+<tr>
+<td><strong>Vin</strong></td>
+<td>外部電源入力（Arduino等）</td>
+<td>レギュレータを通してマイコンを動かす</td>
+</tr>
+<tr>
+<td><strong>GND</strong></td>
+<td>基準電位（0V）</td>
+<td><strong>必ず共有する</strong>。GNDを繋がないと電位の基準がずれて動作しない</td>
+</tr>
+</tbody>
+</table>
+<p><strong>重要</strong>: 複数の電源を使う場合（例：マイコンをUSBで、モータを別電源で）、<strong>GNDは必ず共通に接続</strong>してください。GNDが繋がっていないと信号電圧の基準が合わず、通信エラーや誤動作が起こります。</p>
+<p><strong>電流容量の確認</strong></p>
+<p>マイコンの5V/3.3Vピンから供給できる電流には限界があります。</p>
+<ul>
+<li><strong>Arduino Uno</strong>: 5Vピンから約500mA（USB給電時）</li>
+<li><strong>ESP32</strong>: 3.3Vレギュレータから約500mA</li>
+</ul>
+<p>消費電流の大きいセンサ（ヒーター付きガスセンサ、GPSモジュール等）やアクチュエータ（サーボモータ、リレー）を直接マイコンから動かすと、<strong>電圧降下でマイコンがリセット</strong>する場合があります。</p>
+<p><strong>対策</strong>: 外部電源を使い、マイコンは信号線だけ制御する。</p>
+<h3 id="2-通信プロトコル別の配線観点">2. 通信プロトコル別の配線観点</h3>
+<p><strong>アナログセンサ（ADC使用）</strong></p>
+<pre><code>センサOUT ──→ マイコンADCピン（A0等）
+センサVCC ──→ 5Vまたは3.3V
+センサGND ──→ GND
+</code></pre>
+<p><strong>観点</strong>:</p>
+<ul>
+<li>ADCピンは専用ピン（ArduinoではA0〜A5）を使う</li>
+<li>入力電圧がマイコンのADC基準電圧を超えないようにする（通常5Vまたは3.3V）</li>
+<li>信号線が長い場合、ノイズが乗りやすいのでフィルタ（コンデンサ）を入れる</li>
+</ul>
+<p><strong>UART</strong></p>
+<pre><code>マイコンTX ──→ センサRX
+マイコンRX ──→ センサTX
+GND    ──────→ GND（必須）
+</code></pre>
+<p><strong>観点</strong>:</p>
+<ul>
+<li><strong>TXとRXは交差させる</strong>（送信側のTXを受信側のRXに）</li>
+<li><strong>ボーレート（通信速度）を両者で一致</strong>させる必要がある</li>
+<li>フロー制御（RTS/CTS）が必要な場合もある</li>
+<li>電圧レベルの不一致に注意（5V UARTと3.3V UARTはレベルシフターが必要）</li>
+</ul>
+<p><strong>I2C</strong></p>
+<pre><code>SDA ────→ SDA（データ線、双方向）
+SCL ────→ SCL（クロック線、マスターから）
+VCC ────→ 電源
+GND ────→ GND
+</code></pre>
+<p><strong>観点</strong>:</p>
+<ul>
+<li><strong>プルアップ抵抗が必要</strong>（通常マイコン内部に内蔵されているが、長配線や複数デバイスでは外部抵抗を追加）</li>
+<li>SDAとSCLはそれぞれ1本ずつで、<strong>複数のデバイスを並列接続</strong>できる</li>
+<li>各デバイスには<strong>I2Cアドレス</strong>が割り当てられ、重複しないようにする</li>
+<li>配線が長いと信号の立ち上がりが遅くなり、通信エラーが起こる</li>
+</ul>
+<p><strong>SPI</strong></p>
+<pre><code>MOSI ──→ MOSI（マスター出力和スレーブ入力）
+MISO ──→ MISO（マスター入力スレーブ出力）
+SCK  ──→ SCK（クロック）
+CS   ──→ CS（チップセレクト、デバイスごとに1本必要）
+VCC  ──→ 電源
+GND  ──→ GND
+</code></pre>
+<p><strong>観点</strong>:</p>
+<ul>
+<li><strong>CSピンはデバイスごとに独立</strong>に必要（1台増えるごとにGPIOが1本消費）</li>
+<li>I2Cより高速だが、配線本数が多い</li>
+<li>配線長に注意（高速通信ほど長い配線に弱い）</li>
+</ul>
+<p><strong>1-Wire</strong></p>
+<pre><code>DQ（データ）──→ GPIOピン
+VCC ─────────→ 電源（パラサイトモードでは不要）
+GND ─────────→ GND
+</code></pre>
+<p><strong>観点</strong>:</p>
+<ul>
+<li><strong>プルアップ抵抗（4.7kΩ）が必須</strong></li>
+<li>1本の線で複数デバイスを接続可能（各デバイスに固有IDあり）</li>
+</ul>
+<h3 id="3-物理的ノイズ対策の観点">3. 物理的・ノイズ対策の観点</h3>
+<p><strong>GNDの取り方（グラウンドループ対策）</strong></p>
+<p>複数のセンサやアクチュエータを接続する場合、GNDの取り方が重要です。</p>
+<ul>
+<li><strong>スター接地</strong>: 各デバイスのGNDを1点（マイコンのGND）にまとめる。最も基本的で安定</li>
+<li><strong>デイジーチェーン</strong>: GNDを順番に繋ぐ。電流が大きいデバイス（モータ等）の影響が小さいデバイスに伝わるリスクあり</li>
+</ul>
+<p><strong>ノイズ対策</strong></p>
+<table>
+<thead>
+<tr>
+<th>対策</th>
+<th>方法</th>
+<th>適用場面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>デカップリングコンデンサ</strong></td>
+<td>電源ピンの近くに0.1µFセラミックコンデンサを並列に入れる</td>
+<td>全てのIC・センサに推奨</td>
+</tr>
+<tr>
+<td><strong>シールドケーブル</strong></td>
+<td>信号線をシールドで覆う</td>
+<td>長距離配線、ノイズ環境</td>
+</tr>
+<tr>
+<td><strong>ツイストペア配線</strong></td>
+<td>信号線とGNDをツイストペアケーブルで送る</td>
+<td>I2CやUARTの長距離配線</td>
+</tr>
+<tr>
+<td><strong>フィルタ回路</strong></td>
+<td>信号線にRCフィルタ（抵抗＋コンデンサ）を入れる</td>
+<td>アナログセンサのノイズ除去</td>
+</tr>
+<tr>
+<td><strong>配線の分離</strong></td>
+<td>電源線（大電流）と信号線を離す</td>
+<td>モーター等とセンサを同時使用する場合</td>
+</tr>
+</tbody>
+</table>
+<p><strong>配線長の制限</strong></p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>推奨最大配線長</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I2C</td>
+<td>約1m（標準モード100kbps）</td>
+<td>オープンドレイン＋プルアップのため立ち上がりが遅い</td>
+</tr>
+<tr>
+<td>SPI</td>
+<td>約10cm〜30cm</td>
+<td>高速で配線長による信号劣化が大きい</td>
+</tr>
+<tr>
+<td>UART</td>
+<td>約15m（低速時）</td>
+<td>RS-232レベル変換すれば数十mも可能</td>
+</tr>
+<tr>
+<td>1-Wire</td>
+<td>約30m</td>
+<td>プルアップと配線容量に依存</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-実装作業の観点">4. 実装作業の観点</h3>
+<p><strong>ブレッドボードでの配線</strong></p>
+<ul>
+<li><strong>電源レール（＋/-）の使い方</strong>: 縦方向のレールに5V/3.3VとGNDを分配し、各センサからそこに引く</li>
+<li><strong>ジャンパーワイヤーの色分け</strong>: 赤（電源）、黒（GND）、黄・緑・青（信号）など色分けすると配線ミスが減る</li>
+<li><strong>配線の整理</strong>: 信号線が電源線の上を横切るとノイズが誘導される場合がある</li>
+</ul>
+<p><strong>ピンアサインの計画</strong></p>
+<p>マイコンのピンは限られているため、事前に以下を確認します。</p>
+<pre><code>使用するピンを一覧化:
+- アナログ入力: A0, A1...
+- I2C: SDA, SCL（固定ピン）
+- SPI: MOSI, MISO, SCK, CSxN...
+- UART: TX, RX（固定ピン）
+- PWM出力: ~印のあるデジタルピン
+- デジタル入出力: 残りのピン
+</code></pre>
+<p><strong>データシートの確認項目</strong></p>
+<p>センサを接続する前に、データシートで以下を確認してください。</p>
+<ul>
+<li><strong>動作電圧範囲</strong>（VCCの最小・最大）</li>
+<li><strong>出力タイプ</strong>（アナログ / デジタル / オープンドレイン / プッシュプル）</li>
+<li><strong>消費電流</strong>（マイコンの電源容量を超えていないか）</li>
+<li><strong>ピン配置（Pinout）</strong>（VCC/GND/OUTの順序）</li>
+<li><strong>推奨プルアップ/プルダウン抵抗値</strong></li>
+</ul>
+<h3 id="5-配線前のチェックリスト">5. 配線前のチェックリスト</h3>
+<table>
+<thead>
+<tr>
+<th>確認項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>電圧一致</strong></td>
+<td>マイコンとセンサの動作電圧は同じか？違うならレベルシフターが必要</td>
+</tr>
+<tr>
+<td><strong>GND共有</strong></td>
+<td>全てのデバイスのGNDは共通に接続されているか？</td>
+</tr>
+<tr>
+<td><strong>ピン機能</strong></td>
+<td>使用するピンは通信やPWMなどの機能に対応しているか？</td>
+</tr>
+<tr>
+<td><strong>プルアップ/ダウン</strong></td>
+<td>I2Cや1-Wireなど、プルアップ抵抗が必要な場合は入っているか？</td>
+</tr>
+<tr>
+<td><strong>電流容量</strong></td>
+<td>マイコンからの電源供給で消費電流を賄えるか？</td>
+</tr>
+<tr>
+<td><strong>配線長</strong></td>
+<td>通信プロトコルの制限内か？</td>
+</tr>
+<tr>
+<td><strong>データシート</strong></td>
+<td>ピン配置と電気的特性を確認したか？</td>
+</tr>
+</tbody>
+</table>
+<h2 id="まとめ">まとめ</h2>
+<blockquote>
+<p><strong>マイコンとセンサの配線は、「電気的特性の整合」「通信プロトコルのルール」「ノイズ対策」「物理的な実装」の4つを同時に満たす作業です。</strong></p>
+<p>特に <strong>GNDの共有</strong> と <strong>電圧レベルの一致</strong> は、動作不良の9割を防ぐ最重要項目です。</p>
+</blockquote>
+<p>Wokwiなどのシミュレータでは配線ミスによる破損リスクがないため、まずは仮想環境で配線パターンに慣れてから実物に移るのが安全で効率的です。</p>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/nvJTScoa5aE?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
