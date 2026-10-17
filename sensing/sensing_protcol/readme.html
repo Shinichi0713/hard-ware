@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x30bb;&#x30f3;&#x30b5;&#x5206;&#x91ce;&#x30d7;&#x30ed;&#x30c8;&#x30b3;&#x30eb;&#x5927;&#x5225;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>ロボット制御のための<a href="https://yoshishinnze.hatenablog.com/entry/2026/11/13/043000">センシング</a>を設計する場合の勘所について理解しておきたいと思い、要点を調べました。</p>
+<blockquote>
+<p>本日はセンシング設計時のノウハウについて説明していきます。</p>
+</blockquote>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="センサ分野プロトコル大別">センサ分野プロトコル大別</h2>
+<p>センサ分野の通信プロトコルは、<strong>接続する対象・環境・要求性能</strong>によって大きく分かれます。以下、分野ごとに整理して説明します。</p>
+<h3 id="1-マイコンfpga接続汎用組み込み">1. マイコン・FPGA接続（汎用組み込み）</h3>
+<p><strong>特徴</strong>: 基板上やデバイス間の短距離通信。最も身近な分野です。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I2C</strong></td>
+<td>温度・湿度・気圧・加速度センサ等。省配線が魅力</td>
+</tr>
+<tr>
+<td><strong>SPI</strong></td>
+<td>高速IMU、ADC、SDカード。帯域が必要なセンサ</td>
+</tr>
+<tr>
+<td><strong>UART</strong></td>
+<td>GPS、Bluetooth、超音波センサ。非同期でシンプル</td>
+</tr>
+<tr>
+<td><strong>1-Wire</strong></td>
+<td>温度センサ（DS18B20）。配線最小化</td>
+</tr>
+<tr>
+<td><strong>PWM入力</strong></td>
+<td>超音波距離センサ等。パルス幅でデータを受け取る</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-自動車車載ネットワーク">2. 自動車（車載ネットワーク）</h3>
+<p><strong>特徴</strong>: ノイズに強く、信頼性が最優先。長距離配線にも対応。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CAN</strong></td>
+<td>エンジン制御、ブレーキ、温度・圧力センサ等。車載の標準</td>
+</tr>
+<tr>
+<td><strong>CAN FD</strong></td>
+<td>CANの後継。より高速・大容量</td>
+</tr>
+<tr>
+<td><strong>LIN</strong></td>
+<td>ドア・シート・ライト周辺の低価格センサ。単線通信</td>
+</tr>
+<tr>
+<td><strong>FlexRay</strong></td>
+<td>ブレーキ・ステアリング等、高速リアルタイム制御が必要な部分</td>
+</tr>
+<tr>
+<td><strong>Automotive Ethernet</strong></td>
+<td>ADASカメラ・LiDAR等、超高速データ転送が必要なセンサ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-産業工場自動化fa--産業用">3. 産業・工場自動化（FA / 産業用）</h3>
+<p><strong>特徴</strong>: 長距離・高ノイズ環境。PLC（シーケンサ）との接続が中心。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Modbus (RTU/ASCII/TCP)</strong></td>
+<td>温度・圧力・流量センサ等。産業用の事実標準</td>
+</tr>
+<tr>
+<td><strong>RS-485</strong></td>
+<td>物理層規格。数百mの長距離通信に対応</td>
+</tr>
+<tr>
+<td><strong>PROFIBUS</strong></td>
+<td>ドイツ発の産業用ネットワーク。工場設備間通信</td>
+</tr>
+<tr>
+<td><strong>PROFINET</strong></td>
+<td>PROFIBUSのEthernet版。より高速</td>
+</tr>
+<tr>
+<td><strong>EtherCAT</strong></td>
+<td>超高速リアルタイム通信。モーション制御や高精度センサ</td>
+</tr>
+<tr>
+<td><strong>IO-Link</strong></td>
+<td>低価格センサ・アクチュエータの標準化接続。3線式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-航空宇宙軍事鉄道">4. 航空・宇宙・軍事・鉄道</h3>
+<p><strong>特徴</strong>: 極めて高い信頼性・耐環境性が要求される。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MIL-STD-1553</strong></td>
+<td>米軍規格。航空機・宇宙船のセンサ・制御系バス</td>
+</tr>
+<tr>
+<td><strong>ARINC 429</strong></td>
+<td>民間航空機のセンサ・計器通信</td>
+</tr>
+<tr>
+<td><strong>ARINC 664 (AFDX)</strong></td>
+<td>航空機用Ethernet。ボーイング787、エアバスA380等</td>
+</tr>
+<tr>
+<td><strong>CANaerospace</strong></td>
+<td>航空機用に拡張したCAN</td>
+</tr>
+<tr>
+<td><strong>MVB / WTBus</strong></td>
+<td>鉄道車両のセンサ・制御通信</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-医療機器">5. 医療機器</h3>
+<p><strong>特徴</strong>: 患者安全性・電気的絶縁・小型化が重要。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I2C / SPI</strong></td>
+<td>組み込みセンサ（体温・SpO2・心電等）</td>
+</tr>
+<tr>
+<td><strong>USB (HID/CDC)</strong></td>
+<td>外来用計測機器のPC接続</td>
+</tr>
+<tr>
+<td><strong>Bluetooth (BLE)</strong></td>
+<td>ウェアラブルデバイス（心拍・血圧モニタ等）</td>
+</tr>
+<tr>
+<td><strong>ANT+</strong></td>
+<td>フィットネス機器・医療ウェアラブル向け無線</td>
+</tr>
+<tr>
+<td><strong>Zigbee</strong></td>
+<td>在宅医療センサーネットワーク</td>
+</tr>
+<tr>
+<td><strong>専用アナログ</strong></td>
+<td>心電図・脳波等、高精度アナログセンサ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-iotスマートホーム無線">6. IoT・スマートホーム・無線</h3>
+<p><strong>特徴</strong>: 配線不要。低消費電力が重要。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bluetooth Low Energy (BLE)</strong></td>
+<td>スマホ連携センサ、ビーコン</td>
+</tr>
+<tr>
+<td><strong>Zigbee</strong></td>
+<td>スマートホームセンサーネットワーク</td>
+</tr>
+<tr>
+<td><strong>Z-Wave</strong></td>
+<td>スマートホーム（欧米向け）</td>
+</tr>
+<tr>
+<td><strong>LoRa / LoRaWAN</strong></td>
+<td>数kmの長距離無線。農業・環境モニタリング</td>
+</tr>
+<tr>
+<td><strong>NB-IoT / LTE-M</strong></td>
+<td>携帯回線を使った広域IoTセンサ</td>
+</tr>
+<tr>
+<td><strong>Wi-Fi</strong></td>
+<td>カメラ・高帯域センサ</td>
+</tr>
+<tr>
+<td><strong>Thread / Matter</strong></td>
+<td>スマートホームの新標準規格</td>
+</tr>
+<tr>
+<td><strong>NFC / RFID</strong></td>
+<td>近接センサ・タグ読み取り</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-pc--サーバー--データセンター">7. PC / サーバー / データセンター</h3>
+<p><strong>特徴</strong>: 内部監視・管理用。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SMBus</strong></td>
+<td>バッテリ・温度・電圧監視（I2Cベース）</td>
+</tr>
+<tr>
+<td><strong>PMBus</strong></td>
+<td>電源装置のデジタル管理（SMBus拡張）</td>
+</tr>
+<tr>
+<td><strong>Intel DDIO / PCIe</strong></td>
+<td>高速NIC・加速カード直結</td>
+</tr>
+<tr>
+<td><strong>USB</strong></td>
+<td>外付けセンサ・計測機器</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-音響映像画像センサ">8. 音響・映像・画像センサ</h3>
+<p><strong>特徴</strong>: 連続的な高速データストリームが必要。</p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I2S (Inter-IC Sound)</strong></td>
+<td>マイク・オーディオDAC等の音声データ</td>
+</tr>
+<tr>
+<td><strong>TDM (Time Division Multiplexing)</strong></td>
+<td>複数チャンネル音声の時分割多重</td>
+</tr>
+<tr>
+<td><strong>MIPI CSI-2</strong></td>
+<td>スマホ・組み込みカメラモジュール接続</td>
+</tr>
+<tr>
+<td><strong>MIPI DSI</strong></td>
+<td>ディスプレイ接続</td>
+</tr>
+<tr>
+<td><strong>HDMI / DisplayPort</strong></td>
+<td>高解像度映像センサ・モニタ</td>
+</tr>
+<tr>
+<td><strong>SLVS-EC / FPD-Link</strong></td>
+<td>産業用・車載カメラの高速映像伝送</td>
+</tr>
+</tbody>
+</table>
+<h3 id="なぜこんなに種類があるのか">なぜこんなに種類があるのか？</h3>
+<p>一言で言えば、<strong>「速度・距離・信頼性・コスト・配線本数」のトレードオフ</strong>です。</p>
+<ul>
+<li>基板上の1cm先のセンサ → SPI/I2C（高速・安価）</li>
+<li>車のエンジンルームからコクピットへ → CAN（ノイズに強い）</li>
+<li>工場の反対側のセンサ → RS-485/Modbus（長距離）</li>
+<li>農地に置いたセンサ → LoRa（無線・数km）</li>
+</ul>
+<h2 id="マイコンfpga接続用通信プロトコル">マイコン・FPGA接続用通信プロトコル</h2>
+<p>マイコン・FPGA接続用の通信プロトコルはどんな分野でも使うことになる重要度の高い分野と言えます。
+本節では、センサ通信プロトコルについて、実用的な観点から整理して説明いたします。</p>
+<h3 id="1-全体像">1. 全体像</h3>
+<p>センサとマイコン/FPGAをつなぐ通信プロトコルは、<strong>「何本の線を使うか」と「誰が通信の主導権を持つか」</strong> の違いで大きく分かれます。</p>
+<p>簡単なアナロジーで言うと：</p>
+<ul>
+<li><strong>UART</strong>: 2人が直接電話で話す（1対1、専用線）</li>
+<li><strong>I2C</strong>: 先生が複数の生徒に順番に話しかける（1本の配線で複数デバイス）</li>
+<li><strong>SPI</strong>: 司令塔が複数の部下に同時に指示を出す（高速、1対多）</li>
+<li><strong>1-Wire</strong>: 1本の線で電源もデータも送る（極端に省配線）</li>
+</ul>
+<h3 id="2-各プロトコルの仕組み">2. 各プロトコルの仕組み</h3>
+<p><strong>UART (Universal Asynchronous Receiver Transmitter)</strong></p>
+<p><strong>配線</strong>: TX（送信）・RX（受信）の2本 + GND</p>
+<p><strong>特徴</strong>:</p>
+<ul>
+<li>非同期通信（クロック線が不要）</li>
+<li>通信速度（ボーレート）を送受信双方で事前に合わせる必要がある</li>
+<li>1対1通信のみ</li>
+</ul>
+<p><strong>センサ例</strong>: GPSモジュール、距離センサ（LiDAR）、Bluetoothモジュール</p>
+<p><strong>イメージ</strong>: 両者が「1秒に何文字送るか」を事前に約束して、タイミングを合わせて読む。</p>
+<p><strong>I2C (Inter-Integrated Circuit)</strong></p>
+<p><strong>配線</strong>: SDA（データ）・SCL（クロック）の2本 + GND</p>
+<p><strong>特徴</strong>:</p>
+<ul>
+<li>同期通信（クロック線でタイミングを共有）</li>
+<li>1本のバスに複数のデバイスを接続可能（各デバイスに7bitアドレスが割り当てられる）</li>
+<li>マスター（マイコン）が通信の主導権を持つ</li>
+</ul>
+<p><strong>センサ例</strong>: 温度・湿度センサ（SHT系）、加速度センサ（MPU6050）、気圧センサ、EEPROM</p>
+<p><strong>通信の流れ</strong>:</p>
+<ol>
+<li>マスターが「START」信号を出す</li>
+<li>7bitのアドレス + 読み書き方向（1bit）を送信</li>
+<li>該当デバイスがACK（応答）を返す</li>
+<li>データを送受信</li>
+<li>「STOP」信号で終了</li>
+</ol>
+<p><strong>SPI (Serial Peripheral Interface)</strong></p>
+<p><strong>配線</strong>: MOSI（マスター出・スレーブ受）・MISO（スレーブ出・マスター受）・SCLK（クロック）・CS（チップセレクト）+ GND</p>
+<p><strong>特徴</strong>:</p>
+<ul>
+<li>同期通信、フルデュプレックス（送受信同時）</li>
+<li>高速通信に強い（I2Cより数倍〜数十倍速い）</li>
+<li>CS線を増やすことで複数デバイスに対応（1デバイスあたり1本のCS線が必要）</li>
+<li>配線本数はI2Cより多い</li>
+</ul>
+<p><strong>センサ例</strong>: IMU（ICM-20948など高精度品）、SDカード、TFTディスプレイ、高速ADC</p>
+<p><strong>通信の流れ</strong>:</p>
+<ol>
+<li>CS線をLOWにして対象デバイスを選択</li>
+<li>SCLKに同期してMOSI/MISOでデータ転送</li>
+<li>CS線をHIGHにして通信終了</li>
+</ol>
+<p><strong>1-Wire</strong></p>
+<p><strong>配線</strong>: DQ（データ）1本 + GND（電源もDQ線から供給できるパラサイトモードあり）</p>
+<p><strong>特徴</strong>:</p>
+<ul>
+<li>極端に配線を減らせる（1本で通信と電源供給）</li>
+<li>通信速度は低速</li>
+<li>各デバイスに64bitの固有IDが焼き込まれている</li>
+</ul>
+<p><strong>センサ例</strong>: 温度センサ（DS18B20）、iButton</p>
+<h3 id="3-比較表">3. 比較表</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>UART</th>
+<th>I2C</th>
+<th>SPI</th>
+<th>1-Wire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>配線本数</strong></td>
+<td>2本</td>
+<td>2本</td>
+<td>4本+</td>
+<td>1本</td>
+</tr>
+<tr>
+<td><strong>同期/非同期</strong></td>
+<td>非同期</td>
+<td>同期</td>
+<td>同期</td>
+<td>非同期</td>
+</tr>
+<tr>
+<td><strong>通信速度</strong></td>
+<td>中速</td>
+<td>低速〜中速</td>
+<td>高速</td>
+<td>低速</td>
+</tr>
+<tr>
+<td><strong>接続デバイス数</strong></td>
+<td>1対1</td>
+<td>複数（アドレス方式）</td>
+<td>複数（CS線方式）</td>
+<td>複数（ID方式）</td>
+</tr>
+<tr>
+<td><strong>主導権</strong></td>
+<td>対等</td>
+<td>マスター主導</td>
+<td>マスター主導</td>
+<td>マスター主導</td>
+</tr>
+<tr>
+<td><strong>強み</strong></td>
+<td>シンプル、長距離</td>
+<td>省配線・複数接続</td>
+<td>高速・シンプル制御</td>
+<td>極限の省配線</td>
+</tr>
+<tr>
+<td><strong>弱み</strong></td>
+<td>1対1のみ</td>
+<td>速度・バス競合</td>
+<td>配線本数多い</td>
+<td>低速・特殊</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-センサ選定時の使い分け">4. センサ選定時の使い分け</h3>
+<ul>
+<li><strong>複数の温度センサを少ない配線で接続したい</strong> → I2C または 1-Wire</li>
+<li><strong>IMUの高速サンプリングデータを取りたい</strong> → SPI</li>
+<li><strong>GPSモジュールと通信したい</strong> → UART</li>
+<li><strong>配線を極限まで減らしたい</strong> → 1-Wire</li>
+</ul>
+<h2 id="設計検討">設計検討</h2>
+<p>通信プロトコルを実装する際には、<strong>「物理層の配線」から「アプリケーションレイヤのデータ解釈」まで、階層ごとに考慮事項があります</strong>。以下、実装の流れに沿って整理します。</p>
+<h3 id="1-実装前に決めること設計フェーズ">1. 実装前に決めること（設計フェーズ）</h3>
+<p><strong>ハードウェア層の確認</strong></p>
+<table>
+<thead>
+<tr>
+<th>確認項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>電圧レベル</strong></td>
+<td>3.3V / 1.8V / 5V 対応。レベルシフタが必要か</td>
+</tr>
+<tr>
+<td><strong>プルアップ/プルダウン抵抗</strong></td>
+<td>I2CにはSDA/SCLのプルアップ必須。値（4.7kΩ等）も重要</td>
+</tr>
+<tr>
+<td><strong>配線長・トポロジー</strong></td>
+<td>基板上（数cm）か、ケーブル経由（数m以上）か</td>
+</tr>
+<tr>
+<td><strong>端子の多重度</strong></td>
+<td>SPIならCS線がデバイス数分必要。GPIOピン数を確認</td>
+</tr>
+<tr>
+<td><strong>クロック速度の上限</strong></td>
+<td>デバイスとマイコン/FPGAの双方の上限を確認</td>
+</tr>
+</tbody>
+</table>
+<p><strong>レベルシフタ（Level Shifter）</strong></p>
+<p><strong>何か</strong>: 電圧レベルを変換する回路です。</p>
+<p><strong>なぜ必要か</strong>: マイコンが3.3V動作でセンサが1.8V動作、といったように両者の電圧が異なる場合、直接接続するとセンサが壊れたり誤動作したりします。レベルシフタは両者の間で電圧を翻訳します。</p>
+<p><strong>例</strong>: 3.3Vの信号を5Vに上げる、あるいは5Vを3.3Vに下げる。</p>
+<p><strong>プルアップ（Pull-up）</strong></p>
+<p><strong>何か</strong>: 抵抗を使って信号線を電源電圧（例: 3.3V）側に「引き上げて」おくことです。</p>
+<p><strong>なぜ必要か</strong>: I2Cや1-Wireなどのプロトコルでは、デバイスが信号線をLOWにするだけで、HIGHは「開放（何もしない）」します。プルアップ抵抗がないと、HIGHのときに線が浮いて不安定になります。抵抗が線をHIGHに保ち、デバイスがLOWに引き下げることで通信が成立します。</p>
+<p><strong>例</strong>: I2CのSDA・SCL線に4.7kΩの抵抗を電源に接続する。</p>
+<p><strong>プロトコル仕様の確認</strong></p>
+<ul>
+<li><strong>データシートのタイミング図</strong>: セットアップ時間・ホールド時間・アクセス時間等</li>
+<li><strong>アドレス・レジスタマップ</strong>: 読み書きのコマンド形式、ステータスレジスタの意味</li>
+<li><strong>エラー検出</strong>: チェックサムやCRCの有無</li>
+<li><strong>エンディアン</strong>: データがビッグエンディアンかリトルエンディアンか</li>
+</ul>
+<h3 id="2-実装時の考慮事項コーディングフェーズ">2. 実装時の考慮事項（コーディングフェーズ）</h3>
+<p><strong>状態機械（FSM）の設計</strong></p>
+<p>通信プロトコルはほぼ必ず<strong>状態遷移</strong>で実装します。</p>
+<pre><code>アイドル → スタート → アドレス送信 → ACK待ち → データ送信 → ストップ → アイドル
+</code></pre>
+<ul>
+<li><strong>SystemVerilogの場合</strong>: <code>always_ff</code> + <code>always_comb</code> でFSMを記述</li>
+<li><strong>注意点</strong>: 各状態でのタイムアウト処理を必ず入れる（バスがハングアップするのを防ぐ）</li>
+</ul>
+<p><strong>タイミング制御</strong></p>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>特に注意すべきタイミング</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I2C</strong></td>
+<td>クロックストレッチ（スレーブがSCLをLOWで保持）。FPGA実装時は必ず考慮</td>
+</tr>
+<tr>
+<td><strong>SPI</strong></td>
+<td>CPOL（クロック極性）・CPHA（クロック位相）の組み合わせ。デバイスごとに異なる</td>
+</tr>
+<tr>
+<td><strong>UART</strong></td>
+<td>ボーレートの誤差許容範囲（通常±2%以内が必要）</td>
+</tr>
+<tr>
+<td><strong>1-Wire</strong></td>
+<td>マイクロ秒〜ミリ秒単位の厳密なタイミング。遅延生成が重要</td>
+</tr>
+</tbody>
+</table>
+<p><strong>バッファ・FIFOの設計</strong></p>
+<ul>
+<li><strong>受信データ</strong>: 割り込みまたはポーリングでFIFOに蓄積し、メイン処理が取り出す構成が一般的</li>
+<li><strong>送信データ</strong>: 非同期で送信完了を待つ場合、バッファアンダーランに注意</li>
+<li><strong>FPGAの場合</strong>: 非同期クロックドメイン（センサクロックとシステムクロック）が異なる場合、<strong>CDC（Clock Domain Crossing）回路</strong>が必要</li>
+</ul>
+<p><strong>エラー処理</strong></p>
+<table>
+<thead>
+<tr>
+<th>エラー種別</th>
+<th>対処方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NACK（応答なし）</strong></td>
+<td>再試行（リトライ）回数を設ける。アドレス誤りの可能性も</td>
+</tr>
+<tr>
+<td><strong>タイムアウト</strong></td>
+<td>タイマーで監視。一定時間応答なければバスをリセット</td>
+</tr>
+<tr>
+<td><strong>CRC/チェックサム不一致</strong></td>
+<td>データ破棄＋再要求</td>
+</tr>
+<tr>
+<td><strong>バス競合</strong></td>
+<td>I2CではスレーブがSDAを駆動中にマスターが触らないよう設計</td>
+</tr>
+<tr>
+<td><strong>オーバーラン/アンダーラン</strong></td>
+<td>FIFOの水準監視、フロー制御</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-デバッグ検証フェーズ">3. デバッグ・検証フェーズ</h3>
+<p><strong>検証ツール</strong></p>
+<table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>オシロスコープ</strong></td>
+<td>物理波形確認。セットアップ/ホールド違反、ノイズ、電圧レベル</td>
+</tr>
+<tr>
+<td><strong>ロジックアナライザ</strong></td>
+<td>プロトコルデコード（I2C/SPI/UARTのパケット解析）</td>
+</tr>
+<tr>
+<td><strong>プロトコルアナライザ</strong></td>
+<td>高レベルでの通信フロー確認（PC接続型が多い）</td>
+</tr>
+<tr>
+<td><strong>ILA (Integrated Logic Analyzer)</strong></td>
+<td>FPGA内部信号のリアルタイム観測（Xilinx等）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>検証観点</strong></p>
+<ul>
+<li><strong>境界条件</strong>: 最大/最小クロック速度での動作確認</li>
+<li><strong>ノイズ耐性</strong>: 電源立ち上げ時・電磁ノイズ環境での誤動作確認</li>
+<li><strong>複数デバイス接続</strong>: I2Cの場合、アドレス競合・バス容量（寄生容量）の増大</li>
+<li><strong>温度変動</strong>: オシレータの周波数ドリフトがボーレート誤差に影響（UART等）</li>
+</ul>
+<h3 id="4-プロトコル別の特有の注意点">4. プロトコル別の特有の注意点</h3>
+<p><strong>I2C特有</strong></p>
+<ul>
+<li><strong>プルアップ抵抗の選定</strong>: 抵抗値が大きいと立ち上がりが遅くなり、高速動作不可。小さすぎると電流消費が増える</li>
+<li><strong>クロックストレッチ</strong>: 一部のセンサ（安価な温度センサ等）は処理中にSCLをLOWに保持する。FPGAマスターはこれを検出できる必要がある</li>
+<li><strong>7bit vs 10bitアドレス</strong>: デバイスによって異なる</li>
+</ul>
+<p><strong>SPI特有</strong></p>
+<ul>
+<li><strong>CPOL/CPHAの組み合わせ</strong>: デバイスデータシートを正確に読む。組み合わせは4パターンあり、間違えると全く通信できない</li>
+<li><strong>CS線の制御</strong>: 通信中はLOWを維持。複数バイト連続送信時にHIGHにしないよう注意</li>
+<li><strong>MSB/LSBファースト</strong>: デバイスによって異なる</li>
+</ul>
+<p><strong>UART特有</strong></p>
+<ul>
+<li><strong>ボーレート誤差</strong>: マイコンのクロックが16MHz等、標準ボーレート（115200等）を割り切れない場合、誤差が蓄積して通信エラーになる</li>
+<li><strong>フロー制御（RTS/CTS）</strong>: 高速・連続通信時に必要になることがある</li>
+<li><strong>フレーミングエラー・パリティエラー</strong>: 受信側での検出と処理</li>
+</ul>
+<h3 id="5-実装アプローチの選択">5. 実装アプローチの選択</h3>
+<p><strong>ソフトウェア実装（GPIOビットバンギング）</strong></p>
+<ul>
+<li><strong>メリット</strong>: どのピンでも使用可能。柔軟性が高い</li>
+<li><strong>デメリット</strong>: CPU負荷が高い。高速通信は困難</li>
+<li><strong>向いている場面</strong>: 低速・単発通信。特殊なプロトコルでハードウェアIPがない場合</li>
+</ul>
+<p><strong>ハードウェアIP（MCU/FPGA内蔵ペリフェラル）</strong></p>
+<ul>
+<li><strong>メリット</strong>: CPU負荷が低い。高速・安定した通信</li>
+<li><strong>デメリット</strong>: 固定ピン配置。細かいタイミング制御ができない場合がある</li>
+<li><strong>向いている場面</strong>: ほとんどの標準的な用途</li>
+</ul>
+<p><strong>専用コントローラ（FPGA内に自作）</strong></p>
+<ul>
+<li><strong>メリット</strong>: タイミングを完全に制御可能。複数チャンネル並列処理も可能</li>
+<li><strong>デメリット</strong>: 設計・検証コストが高い</li>
+<li><strong>向いている場面</strong>: 先ほどのスチュアートプラットフォームのような高速制御ループ</li>
+</ul>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\image\readme\1792202058940.png" alt="1792202058940"></p>
+<h2 id="総括">総括</h2>
+<p>センサ通信プロトコルと設計の勘所を、以下の3点に整理して総括します。</p>
+<h3 id="1-プロトコルは速度距離信頼性コスト配線本数のトレードオフで選ぶ">1. プロトコルは「速度・距離・信頼性・コスト・配線本数」のトレードオフで選ぶ</h3>
+<table>
+<thead>
+<tr>
+<th>接続形態</th>
+<th>代表的プロトコル</th>
+<th>選定基準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>マイコン直結</strong></td>
+<td>I2C, SPI, UART, 1-Wire</td>
+<td>基板上の短距離。I2Cは省配線、SPIは高速、UARTはシンプル、1-Wireは極限の省配線</td>
+</tr>
+<tr>
+<td><strong>車載</strong></td>
+<td>CAN, LIN, FlexRay</td>
+<td>ノイズ耐性と信頼性が最優先</td>
+</tr>
+<tr>
+<td><strong>産業・工場</strong></td>
+<td>Modbus, RS-485, EtherCAT</td>
+<td>長距離通信とPLC接続。EtherCATは高速リアルタイム制御向け</td>
+</tr>
+<tr>
+<td><strong>無線・IoT</strong></td>
+<td>BLE, LoRa, Zigbee</td>
+<td>配線不要・低消費電力が重要</td>
+</tr>
+<tr>
+<td><strong>航空・軍事</strong></td>
+<td>MIL-STD-1553, ARINC</td>
+<td>極めて高い信頼性と耐環境性が必須</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-マイコンfpga接続の4大プロトコルの使い分け">2. マイコン/FPGA接続の4大プロトコルの使い分け</h3>
+<table>
+<thead>
+<tr>
+<th>プロトコル</th>
+<th>配線</th>
+<th>同期/非同期</th>
+<th>速度</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UART</strong></td>
+<td>2本</td>
+<td>非同期</td>
+<td>中速</td>
+<td>ボーレート合わせが必要。1対1専用</td>
+</tr>
+<tr>
+<td><strong>I2C</strong></td>
+<td>2本</td>
+<td>同期</td>
+<td>低速〜中速</td>
+<td>プルアップ抵抗必須。アドレスで複数接続</td>
+</tr>
+<tr>
+<td><strong>SPI</strong></td>
+<td>4本+</td>
+<td>同期</td>
+<td>高速</td>
+<td>CPOL/CPHAの組み合わせ確認が必須。CS線で複数接続</td>
+</tr>
+<tr>
+<td><strong>1-Wire</strong></td>
+<td>1本</td>
+<td>非同期</td>
+<td>低速</td>
+<td>電源もデータ線から供給可能。配線最小化</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-実装時の最重要チェック項目">3. 実装時の最重要チェック項目</h3>
+<p><strong>設計前</strong></p>
+<ul>
+<li><strong>電圧レベル</strong>の整合（レベルシフタが必要か）</li>
+<li><strong>プルアップ抵抗</strong>の有無・値（I2C等）</li>
+<li><strong>タイミング図</strong>と<strong>レジスタマップ</strong>のデータシート確認</li>
+<li><strong>エンディアン</strong>と<strong>エラー検出方式</strong>（CRC等）の確認</li>
+</ul>
+<p><strong>コーディング時</strong></p>
+<ul>
+<li><strong>FSM（状態機械）</strong> で実装し、必ず<strong>タイムアウト処理</strong>を入れる</li>
+<li><strong>FIFO/バッファ</strong>設計（受信データの取りこぼし防止）</li>
+<li><strong>CDC（Clock Domain Crossing）</strong> 対策（FPGAで非同期クロック時）</li>
+<li><strong>エラー処理</strong>: NACK再試行、CRC不一致、バス競合の検出</li>
+</ul>
+<p><strong>デバッグ時</strong></p>
+<ul>
+<li><strong>オシロスコープ</strong>で物理波形・電圧レベル確認</li>
+<li><strong>ロジックアナライザ</strong>でプロトコルデコード</li>
+<li><strong>ILA</strong>でFPGA内部信号をリアルタイム観測</li>
+</ul>
+<h3 id="4-実装アプローチの選択基準">4. 実装アプローチの選択基準</h3>
+<table>
+<thead>
+<tr>
+<th>アプローチ</th>
+<th>向いている場面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPIOビットバンギング</strong></td>
+<td>特殊プロトコル・低速・柔軟性重視</td>
+</tr>
+<tr>
+<td><strong>MCU/FPGA内蔵ペリフェラル</strong></td>
+<td>標準的な用途。ほとんどの場合これで十分</td>
+</tr>
+<tr>
+<td><strong>FPGA専用コントローラ自作</strong></td>
+<td>高速制御ループ・厳密なタイミング制御が必要な場合</td>
+</tr>
+</tbody>
+</table>
+<h3 id="一言総括">一言総括</h3>
+<blockquote>
+<p><strong>「センサ通信の設計とは、用途に応じたプロトコル選定と、データシートのタイミング・電気的特性を正確に実装し、エラー処理と検証を怠らないこと」</strong></p>
+</blockquote>
+
+            
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/-W66swluqC8?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
