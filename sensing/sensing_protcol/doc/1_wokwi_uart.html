@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x672c;&#x6f14;&#x7fd2;&#x3067;&#x7406;&#x89e3;&#x3067;&#x304d;&#x308b;&#x3053;&#x3068;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>センシングの設計スキルを取得しようと思えばやはり手を動かして結果を考えるのが一番です。
+本稿ではセンシングのうちUARTを例にとって演習を行い、センシングのスキル取得をはかるパッケージを提供します。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="本演習で理解できること">本演習で理解できること</h2>
+<p>今回の記事の内容で得られるセンシングのスキルについて整理しました。</p>
+<h3 id="1-通信プロトコルの実務的理解">1. 通信プロトコルの実務的理解</h3>
+<table>
+<thead>
+<tr>
+<th>スキル</th>
+<th>演習での対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ボーレート・フレーム構造の理解</strong></td>
+<td>演習1で115200bps設定と文字化け原因を体感</td>
+</tr>
+<tr>
+<td><strong>非同期通信のタイミング管理</strong></td>
+<td><code>delay()</code> と送信周期の関係を確認</td>
+</tr>
+<tr>
+<td><strong>プロトコルパラメータの選定</strong></td>
+<td>データビット・パリティ・ストップビットの設定理由を理解</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-センサデータの構造化と転送">2. センサデータの構造化と転送</h3>
+<table>
+<thead>
+<tr>
+<th>スキル</th>
+<th>演習での対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CSVフォーマットによるデータ構造化</strong></td>
+<td>演習2で <code>DATA,温度,湿度,気圧</code> の形式を実装</td>
+</tr>
+<tr>
+<td><strong>パケット識別子の設計</strong></td>
+<td>先頭に <code>DATA</code> を付けて受信側で判別</td>
+</tr>
+<tr>
+<td><strong>疑似データ生成とノイズ付加</strong></td>
+<td><code>random()</code> でセンサ値を変動させ、実環境を模倣</td>
+</tr>
+<tr>
+<td><strong>浮動小数点の精度管理</strong></td>
+<td><code>Serial.print(value, 2)</code> で小数点以下2桁を制御</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-双方向通信コマンドレスポンスの設計">3. 双方向通信（コマンド/レスポンス）の設計</h3>
+<table>
+<thead>
+<tr>
+<th>スキル</th>
+<th>演習での対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>コマンドパーサの実装</strong></td>
+<td><code>handleCommand()</code> で文字列コマンドを分岐処理</td>
+</tr>
+<tr>
+<td><strong>エラーハンドリング</strong></td>
+<td>不明コマンドに <code>ERR,UNKNOWN</code> を返す</td>
+</tr>
+<tr>
+<td><strong>状態管理</strong></td>
+<td><code>ledState</code>・<code>loopCount</code> でデバイス状態を保持・返信</td>
+</tr>
+<tr>
+<td><strong>受信バッファの扱い</strong></td>
+<td><code>Serial.available()</code> と <code>readStringUntil('\n')</code> の使い方</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-センサインターフェースi2c--uart-パイプライン">4. センサインターフェース（I2C → UART パイプライン）</h3>
+<table>
+<thead>
+<tr>
+<th>スキル</th>
+<th>演習での対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I2Cデバイスの初期化</strong></td>
+<td>MPU6050のスリープ解除（<code>0x6B</code> レジスタ書き込み）</td>
+</tr>
+<tr>
+<td><strong>レジスタアドレスからの読み出し</strong></td>
+<td><code>Wire.write(0x3B)</code> → <code>Wire.requestFrom()</code> の流れ</td>
+</tr>
+<tr>
+<td><strong>16bitデータの復元</strong></td>
+<td><code>(high &lt;&lt; 8) | low</code> で生データを結合</td>
+</tr>
+<tr>
+<td><strong>センサ生値のUART転送</strong></td>
+<td>I2C取得 → フォーマット変換 → UART送信のパイプライン</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-デバッグ検証の手法">5. デバッグ・検証の手法</h3>
+<table>
+<thead>
+<tr>
+<th>スキル</th>
+<th>演習での対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>シリアルモニタによる動作確認</strong></td>
+<td>Wokwi内蔵モニタで送受信をリアルタイム確認</td>
+</tr>
+<tr>
+<td><strong>ボーレート不一致の切り分け</strong></td>
+<td>文字化けが設定ミスであることを体感</td>
+</tr>
+<tr>
+<td><strong>コマンド単体テスト</strong></td>
+<td><code>GET_SENSOR</code>・<code>LED_ON</code> 等を個別に入力して応答確認</td>
+</tr>
+</tbody>
+</table>
+<h2 id="uartの復習">UARTの復習</h2>
+<p>演習に入る前に、UARTの基本フレーム構造を確認します。UARTは<strong>非同期通信</strong>で、スタートビットから始まり、データビット、オプションのパリティ、ストップビットで終わります。
+もしUARTの基本について知りたい場合は<a href="https://zenn.dev/yoshinn/articles/sensing_protcol_uart">こちら</a>も併せてご覧ください。</p>
+<p><strong>UARTフレーム構造</strong></p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image.png" alt="alt text"></p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>本演習での設定値</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ボーレート</td>
+<td>115200 bps</td>
+<td>1秒間に115200ビット転送</td>
+</tr>
+<tr>
+<td>データビット</td>
+<td>8bit</td>
+<td>1バイトを一度に送る</td>
+</tr>
+<tr>
+<td>パリティ</td>
+<td>None</td>
+<td>エラーチェックなし（簡易版）</td>
+</tr>
+<tr>
+<td>ストップビット</td>
+<td>1bit</td>
+<td>1bitでフレーム終了</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>ポイント:</strong> Wokwiではシリアルモニタが内蔵されているため、PCに実機を接続しなくても、ブラウザ上で送信された文字列を直接確認できます。</p>
+</blockquote>
+<p><strong>ポーレートの指定</strong></p>
+<p>ボーレート（Baud Rate）は、「1秒間に何ビット送るか」という通信速度の約束です。UARTが非同期通信であるがゆえに、この約束が必須になります。</p>
+<p>因みにポーレートの指定が必須な理由ですが。
+UARTはクロック線を共有しません。つまり、送信側と受信側は別々の時計（クロック）を持っています。
+双方が同じ間隔でビットを送受信しないと、受信側は「いつ読めばいいか」が分からなくなります。</p>
+<h2 id="演習1-hello-uart単純送信">演習1: Hello UART（単純送信）</h2>
+<p>まずは基本中の基本。マイコン（ESP32/Arduino）からシリアルモニタへ文字列を送信し、通信が成立することを確認します。</p>
+<h3 id="演習内容">演習内容</h3>
+<ul>
+<li>Wokwiで <strong>ESP32 DevKitC</strong> プロジェクトを新規作成</li>
+<li>ボーレート115200で「Hello UART from Wokwi!」を1秒ごとに送信</li>
+<li>シリアルモニタで文字列が表示されることを確認</li>
+</ul>
+<h3 id="解答コードdiagramjson不要sketchinoのみ">解答コード（diagram.json不要、sketch.inoのみ）</h3>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// UART初期化: 115200bps</span>
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>);
+
+  <span class="hljs-comment">// 起動メッセージ（送信側の確認用）</span>
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;=== UART Exercise 1 ===&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Hello UART from Wokwi!&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// 1秒ごとにメッセージ送信</span>
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Hello UART from Wokwi!&quot;</span>);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+}
+</code></pre>
+<h3 id="確認ポイント">確認ポイント</h3>
+<ul>
+<li>シリアルモニタのボーレートが <code>115200</code> に設定されているか</li>
+<li>文字化けした場合はボーレート不一致が最も多い原因</li>
+<li><code>Serial.print()</code> と <code>Serial.println()</code> の違い（改行の有無）を確認</li>
+</ul>
+<p>うまくいくと画面したのコンソール画面に &quot;Hello UART from Wokwi!&quot; が1secごとに表示されます。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image-1.png" alt="alt text"></p>
+<h2 id="演習2-センサデータのフォーマット送信">演習2: センサデータのフォーマット送信</h2>
+<p>ロボット制御では、複数のセンサ値をまとめて送受信することが多いです。ここでは「温度・湿度・気圧」をカンマ区切り（CSV形式）で送信する演習を行います。</p>
+<h3 id="演習内容-1">演習内容</h3>
+<p>今回は仮想のセンサを使った演習→センサをマイコンに配線する必要はありません。</p>
+<ul>
+<li>仮想的な温度・湿度・気圧センサ値を生成（実際のセンサ不要）</li>
+<li><code>DATA,23.50,45.00,1013.25</code> のようなフォーマットで500msごとに送信</li>
+<li>先頭に <code>DATA,</code> を付けることで、受信側でデータパケットを識別できるようにする</li>
+</ul>
+<h3 id="解答コード">解答コード</h3>
+<pre><code class="language-cpp"><span class="hljs-comment">// 仮想的なセンサ値（本来はI2C/SPIでセンサから取得）</span>
+<span class="hljs-type">float</span> temperature = <span class="hljs-number">23.5</span>;    <span class="hljs-comment">// °C</span>
+<span class="hljs-type">float</span> humidity    = <span class="hljs-number">45.0</span>;    <span class="hljs-comment">// %</span>
+<span class="hljs-type">float</span> pressure    = <span class="hljs-number">1013.25</span>; <span class="hljs-comment">// hPa</span>
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;=== UART Exercise 2: Sensor Data ===&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// センサ値をわずかに変動させる（疑似ノイズ）</span>
+  temperature += <span class="hljs-built_in">random</span>(<span class="hljs-number">-10</span>, <span class="hljs-number">11</span>) / <span class="hljs-number">100.0</span>;  <span class="hljs-comment">// ±0.1°C</span>
+  humidity    += <span class="hljs-built_in">random</span>(<span class="hljs-number">-20</span>, <span class="hljs-number">21</span>) / <span class="hljs-number">100.0</span>;  <span class="hljs-comment">// ±0.2%</span>
+  pressure    += <span class="hljs-built_in">random</span>(<span class="hljs-number">-50</span>, <span class="hljs-number">51</span>) / <span class="hljs-number">100.0</span>;  <span class="hljs-comment">// ±0.5hPa</span>
+
+  <span class="hljs-comment">// CSVフォーマットで送信</span>
+  <span class="hljs-comment">// フォーマット: DATA,temperature,humidity,pressure</span>
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;DATA,&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(temperature, <span class="hljs-number">2</span>);  <span class="hljs-comment">// 小数点以下2桁</span>
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(humidity, <span class="hljs-number">2</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(pressure, <span class="hljs-number">2</span>);
+
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">500</span>);
+}
+</code></pre>
+<blockquote>
+<p><strong>なぜ CSV形式か:</strong> 受信側（PythonやProcessing）で <code>line.split(&quot;,&quot;)</code> するだけで数値を復元できるため、プロトコル解析が不要で扱いやすい。ロボットのTelemetry（テレメトリ）送信でも一般的な形式です。</p>
+</blockquote>
+<p>うまくいくとコンソールにカンマ区切りの文字列が表示されます。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image\1_wokwi_uart\1792218012209.png" alt="1792218012209"></p>
+<h2 id="演習3-双方向通信コマンド受信と応答">演習3: 双方向通信（コマンド受信と応答）</h2>
+<p>ロボット制御では、上位PCから「センサ値を送れ」「モーターを止めろ」といった<strong>コマンドを受信</strong>し、それに応答する必要があります。ここでは双方向UART通信を実装します。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image\1_wokwi_uart\1792218254403.png" alt="1792218254403"></p>
+<h3 id="演習内容-2">演習内容</h3>
+<ul>
+<li>シリアルモニタから文字列コマンドを送信（Wokwiのシリアルモニタは双方向対応）</li>
+<li>コマンドに応じた動作を実行し、結果を返信</li>
+</ul>
+<h3 id="コマンド仕様">コマンド仕様</h3>
+<table>
+<thead>
+<tr>
+<th>受信コマンド</th>
+<th>動作</th>
+<th>返信例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET_SENSOR</code></td>
+<td>現在のセンサ値を送信</td>
+<td><code>SENSOR,23.50,45.00,1013.25</code></td>
+</tr>
+<tr>
+<td><code>LED_ON</code></td>
+<td>LED点灯（仮想的）</td>
+<td><code>OK,LED_ON</code></td>
+</tr>
+<tr>
+<td><code>LED_OFF</code></td>
+<td>LED消灯（仮想的）</td>
+<td><code>OK,LED_OFF</code></td>
+</tr>
+<tr>
+<td><code>STATUS</code></td>
+<td>動作状態を返す</td>
+<td><code>STATUS,RUNNING,100</code></td>
+</tr>
+<tr>
+<td>その他</td>
+<td>不明コマンド</td>
+<td><code>ERR,UNKNOWN</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="解答コード-1">解答コード</h3>
+<pre><code class="language-cpp"><span class="hljs-type">float</span> temperature = <span class="hljs-number">23.5</span>;
+<span class="hljs-type">float</span> humidity    = <span class="hljs-number">45.0</span>;
+<span class="hljs-type">float</span> pressure    = <span class="hljs-number">1013.25</span>;
+<span class="hljs-type">bool</span> ledState     = <span class="hljs-literal">false</span>;
+<span class="hljs-type">int</span> loopCount     = <span class="hljs-number">0</span>;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;=== UART Exercise 3: Command/Response ===&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Commands: GET_SENSOR, LED_ON, LED_OFF, STATUS&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// --- 受信処理 ---</span>
+  <span class="hljs-keyword">if</span> (Serial.<span class="hljs-built_in">available</span>() &gt; <span class="hljs-number">0</span>) {
+    String cmd = Serial.<span class="hljs-built_in">readStringUntil</span>(<span class="hljs-string">&#x27;\n&#x27;</span>); <span class="hljs-comment">// 改行まで読み込み</span>
+    cmd.<span class="hljs-built_in">trim</span>();                                 <span class="hljs-comment">// 前後の空白・改行除去</span>
+
+    <span class="hljs-built_in">handleCommand</span>(cmd);
+  }
+
+  <span class="hljs-comment">// --- センサ値の疑似更新 ---</span>
+  temperature += <span class="hljs-built_in">random</span>(<span class="hljs-number">-10</span>, <span class="hljs-number">11</span>) / <span class="hljs-number">100.0</span>;
+  humidity    += <span class="hljs-built_in">random</span>(<span class="hljs-number">-20</span>, <span class="hljs-number">21</span>) / <span class="hljs-number">100.0</span>;
+  pressure    += <span class="hljs-built_in">random</span>(<span class="hljs-number">-50</span>, <span class="hljs-number">51</span>) / <span class="hljs-number">100.0</span>;
+  loopCount++;
+
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">100</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">handleCommand</span><span class="hljs-params">(String cmd)</span> </span>{
+  <span class="hljs-keyword">if</span> (cmd == <span class="hljs-string">&quot;GET_SENSOR&quot;</span>) {
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SENSOR,&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(temperature, <span class="hljs-number">2</span>);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(humidity, <span class="hljs-number">2</span>);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+    Serial.<span class="hljs-built_in">println</span>(pressure, <span class="hljs-number">2</span>);
+  }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cmd == <span class="hljs-string">&quot;LED_ON&quot;</span>) {
+    ledState = <span class="hljs-literal">true</span>;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;OK,LED_ON&quot;</span>);
+  }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cmd == <span class="hljs-string">&quot;LED_OFF&quot;</span>) {
+    ledState = <span class="hljs-literal">false</span>;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;OK,LED_OFF&quot;</span>);
+  }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cmd == <span class="hljs-string">&quot;STATUS&quot;</span>) {
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;STATUS,&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(ledState ? <span class="hljs-string">&quot;LED_ON&quot;</span> : <span class="hljs-string">&quot;LED_OFF&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+    Serial.<span class="hljs-built_in">println</span>(loopCount);
+  }
+  <span class="hljs-keyword">else</span> {
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ERR,UNKNOWN:&quot;</span>);
+    Serial.<span class="hljs-built_in">println</span>(cmd);
+  }
+}
+</code></pre>
+<h3 id="wokwiでの操作方法">Wokwiでの操作方法</h3>
+<ol>
+<li>コードを貼り付けてシミュレーション開始（▶ボタン）</li>
+<li>画面下部の「Serial Monitor」を開く</li>
+<li>入力欄に <code>GET_SENSOR</code> と入力しEnter → センサ値が返信される</li>
+<li><code>LED_ON</code>、<code>STATUS</code> 等も試す</li>
+</ol>
+<blockquote>
+<p><strong>ロボット制御との接続:</strong> の「コマンド受信→応答」の構造は、PCからロボットへ目標位置を送る、もしくはロボットからPCへ現在状態を送る、という実用的なパターンと全く同じです。</p>
+</blockquote>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image\1_wokwi_uart\1792218330020.png" alt="1792218330020"></p>
+<h2 id="発展4-実際のセンサmpu6050を接続する">発展4: 実際のセンサ（MPU6050）を接続する</h2>
+<p>Wokwiには<strong>MPU6050（I2C接続の6軸IMU）</strong> の部品が備わっています。演習3の疑似センサ値を、実際のIMUデータに置き換えることができます。</p>
+<h3 id="wokwiでの配線diagramjson">Wokwiでの配線（diagram.json）</h3>
+<p>この部分を貼り換えてください。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image\1_wokwi_uart\1792218441720.png" alt="1792218441720"></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Your Name&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;editor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;parts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;board-esp32-devkit-c-v4&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;esp&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-mpu6050&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;imu&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-30</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">180</span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;connections&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;esp:3V3&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;imu:VCC&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;h30&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;esp:GND.2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;imu:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;h30&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;esp:21&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;imu:SDA&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;h40&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;esp:22&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;imu:SCL&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;h40&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>するとIMUと接続された状態となります。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image\1_wokwi_uart\1792218476908.png" alt="1792218476908"></p>
+<h3 id="imu値をuart送信するコード一部">IMU値をUART送信するコード（一部）</h3>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Wire.h&gt;</span></span>
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> MPU_ADDR = <span class="hljs-number">0x68</span>;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>);
+  Wire.<span class="hljs-built_in">begin</span>();
+  Wire.<span class="hljs-built_in">beginTransmission</span>(MPU_ADDR);
+  Wire.<span class="hljs-built_in">write</span>(<span class="hljs-number">0x6B</span>);  <span class="hljs-comment">// PWR_MGMT_1</span>
+  Wire.<span class="hljs-built_in">write</span>(<span class="hljs-number">0</span>);     <span class="hljs-comment">// スリープ解除</span>
+  Wire.<span class="hljs-built_in">endTransmission</span>(<span class="hljs-literal">true</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-type">int16_t</span> ax, ay, az, gx, gy, gz;
+
+  Wire.<span class="hljs-built_in">beginTransmission</span>(MPU_ADDR);
+  Wire.<span class="hljs-built_in">write</span>(<span class="hljs-number">0x3B</span>);  <span class="hljs-comment">// ACCEL_XOUT_H</span>
+  Wire.<span class="hljs-built_in">endTransmission</span>(<span class="hljs-literal">false</span>);
+  Wire.<span class="hljs-built_in">requestFrom</span>(MPU_ADDR, <span class="hljs-number">14</span>, <span class="hljs-literal">true</span>);
+
+  ax = (Wire.<span class="hljs-built_in">read</span>() &lt;&lt; <span class="hljs-number">8</span>) | Wire.<span class="hljs-built_in">read</span>();
+  ay = (Wire.<span class="hljs-built_in">read</span>() &lt;&lt; <span class="hljs-number">8</span>) | Wire.<span class="hljs-built_in">read</span>();
+  az = (Wire.<span class="hljs-built_in">read</span>() &lt;&lt; <span class="hljs-number">8</span>) | Wire.<span class="hljs-built_in">read</span>();
+  <span class="hljs-comment">// ...温度、ジャイロも同様に読み出し</span>
+
+  <span class="hljs-comment">// UARTでIMUデータを送信</span>
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;IMU,&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(ax); Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(ay); Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;,&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(az);
+
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">100</span>);
+}
+</code></pre>
+<blockquote>
+<p><strong>ポイント:</strong> これが「I2Cでセンサからデータ取得 → UARTでPCへ転送」という、ロボットのセンシングパイプラインの基本形です。</p>
+</blockquote>
+<p>うまくいくとIMUを操作して、その時の値をシリアル通信により取得、コンソール画面に出力される様子が確認できます。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\sensing_protcol\doc\image\1_wokwi_uart\1792218534804.png" alt="1792218534804"></p>
+<h2 id="総括">総括</h2>
+<p>シリアル通信の本質は、<strong>「1本の道を使って、順番に、しかし確実に、意味のある塊を運ぶ」</strong> ことにあります。</p>
+<h3 id="1-物理的な本質順番に送る">1. 物理的な本質：「順番に送る」</h3>
+<p>パラレル通信（複数線で同時に送る）と異なり、シリアル通信は<strong>1ビットずつ時系列でデータを流します</strong>。これは配線を極限まで減らせる一方で、「何ビット目がどのデータか」を双方で認識し続ける必要があります。</p>
+<h3 id="2-非同期通信の本質約束がタイミングを作る">2. 非同期通信の本質：「約束がタイミングを作る」</h3>
+<p>UARTにクロック線がないのは、<strong>「時間そのものを共有するのではなく、時間の刻み方を事前に約束する」</strong> からです。ボーレートは単なる速度ではなく、<strong>「この間隔でお互いに世界を観測しよう」という合意</strong>です。スタートビットはその合意の合図になります。</p>
+<h3 id="3-データの本質生の値に意味を付ける">3. データの本質：「生の値に意味を付ける」</h3>
+<p>演習2のCSV形式（<code>DATA,23.50,45.00,1013.25</code>）が示す通り、シリアル通信で流れるのは<strong>ただのバイト列</strong>です。それが「温度」なのか「湿度」なのか、どこからどこまでが1つのメッセージなのかは、<strong>送受信双方の約束（プロトコル）が決めます</strong>。通信の本質は電気信号ではなく、<strong>「意味の共有」</strong> にあります。</p>
+<h3 id="4-双方向性の本質話すことと聞くことの分離">4. 双方向性の本質：「話すことと聞くことの分離」</h3>
+<p>TXとRXが別々にあるのは、<strong>「送受信を同時に独立して行える」</strong> ことを意味します（厳密には半二重の場合もありますが）。演習3のコマンド/レスポンスは、<strong>「相手の状態を問いかけ、答えを得る」</strong> という対話の最小単位です。これはセンシングの本質でもあります。</p>
+<h3 id="5-パイプラインの本質世界を数値化し運ぶ">5. パイプラインの本質：「世界を数値化し、運ぶ」</h3>
+<p>演習4のI2C→UARTパイプライン（MPU6050の加速度を読んでPCへ送る）は、<strong>「物理現象 → 電気信号 → デジタル値 → 通信 → 解釈」</strong> というセンシングの連鎖を意味しています。シリアル通信はその連鎖の中で「数値をデバイスを超えて運ぶ役割」を担っています。</p>
+<h3 id="一言まとめ">一言まとめ</h3>
+<blockquote>
+<p><strong>シリアル通信の本質は「時間の約束によって1ビットずつ意味のある塊を運び、送受信双方がその意味を共有することで、物理世界の情報を別の場所・別の時間に再現する」ことにある。</strong></p>
+</blockquote>
+<p></p>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/-W66swluqC8?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
