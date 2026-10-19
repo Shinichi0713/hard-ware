@@ -492,3 +492,174 @@ PCON-CFB-56P-WAI-DV-0-0
 
 ご使用のPLCメーカー・通信規格（CC-Link、DeviceNet、EtherCAT等）をお教えいただければ、より具体的なネットワーク仕様の型式をご案内できます。
 
+型式：PCON-CFB-56P-WAI-CC-0-0
+
+## 制御前提
+
+ラズパイ（Raspberry Pi）で **PCON-CFB（CC-Link仕様）** を制御する場合、**直接的なCC-Link通信は現実的ではありません**。以下に理由と、実現可能な代替案を示します。
+
+---
+
+## 1. なぜ直接CC-Linkは困難か
+
+CC-Linkは三菱電機の専用フィールドバス規格で、以下の課題があります。
+
+| 課題 | 内容 |
+|------|------|
+| **専用通信ICが必要** | CC-Linkスレーブ機能を実現するには、三菱電機認定の通信ASIC（例：MFP3）が必要 |
+| **ラズパイ用スタックが存在しない** | 一般的なオープンソース実装がなく、プロトコル解析から実装する必要がある |
+| **物理層の問題** | CC-LinkはRS-485ベースの独自タイミング通信で、単純なUARTでは対応困難 |
+
+[CC-Link Partner Association - 開発フロー](https://www.cc-link.org/en/development/cclinkie_tsn_flow/index.html)
+
+---
+
+## 2. 実現可能な方法（3つのアプローチ）
+
+### 方法A：ゲートウェイを使う（推奨：既存CC-Link仕様を維持する場合）
+
+CC-Link ↔ Ethernet/Modbus/シリアル 変換ゲートウェイを介してラズパイと接続します。
+
+| ゲートウェイ製品 | 変換仕様 | 概算価格帯 |
+|-----------------|---------|-----------|
+| **Hilscher netTAP 50** | CC-Link Slave ↔ Ethernet または Serial(Modbus) | 約4～5万円 |
+| **Hilscher netTAP 100** | CC-Link ↔ PROFINET/EtherCAT/EtherNet/IP | 約6～8万円 |
+| **Anybus X-gateway** | CC-Link Slave ↔ 各種イーサネット | 約5～7万円 |
+
+**接続構成例：**
+```
+[ラズパイ] ←Ethernet/Modbus RTU→ [netTAP 50] ←CC-Link→ [PCON-CFB-56P-WAI-CC-0-0]
+```
+
+ラズパイ側は **Python + pymodbus** や **ソケット通信** でゲートウェイを制御し、ゲートウェイがCC-Linkプロトコルに変換します。
+
+[Hilscher netTAP 50 CC-Link Gateway](https://www.hilscher.com/products/gateways-switches-for-industrial-communication/gateways-for-industrial-ethernet-fieldbus-serial/nt-50-cc-en)  
+[Hilscher netTAP選定ガイド](https://www.hilscher.com/fileadmin/user_upload/ja/resources/Documents_JA/SelGuide_netTAP_01_2024-JP.pdf)
+
+---
+
+### 方法B：PCONの通信仕様を変更する（推奨：ラズパイとの親和性重視）
+
+CC-Link仕様のPCONを、**ラズパイと直接通信しやすい仕様**に変更します。
+
+#### 案B-1：EtherCAT仕様に変更（最も推奨）
+
+```
+PCON-CFB-56P-WAI-EC-0-0  （EC = EtherCAT）
+```
+
+**メリット：**
+- ラズパイに **CODESYS Runtime** をインストールすれば、EtherCATマスターとして動作可能
+- リアルタイム性が確保でき、6軸同期制御にも適している
+- オープンソースの **SOEM (Simple Open EtherCAT Master)** ライブラリも利用可能
+
+```
+[ラズパイ + CODESYS/SOEM] ←EtherCAT→ [PCON-CFB-56P-WAI-EC-0-0] ×6台
+```
+
+[IAI - EtherCAT Instruction Manual](https://www.iai-automation.com/en/controller-manuals.html?file=files%2Fcontent%2Fdownloads%2Fmanuals%2Finstruction%2FETHERCAT%28ME0273%29.pdf)  
+[CODESYS on Raspberry Pi](https://www.codesys.com/products/codesys-runtime/raspberry-pi-sl.html)
+
+#### 案B-2：DeviceNet仕様に変更
+
+```
+PCON-CFB-56P-WAI-DV-0-0  （DV = DeviceNet）
+```
+
+**メリット：**
+- CANベースのオープン規格で、**ラズパイ + CAN HAT（PiCAN等）** で直接通信可能
+- Python + `python-can` ライブラリで制御プログラムを構築可能
+
+```
+[ラズパイ + PiCAN HAT] ←CAN/DeviceNet→ [PCON-CFB-56P-WAI-DV-0-0] ×6台
+```
+
+[IAI - DeviceNet Quick Start Guide](https://www.iai-robot.co.jp/download/q_start/pdf/Q_START_A_D_PCON_DEVICENET(MJ0437).pdf)
+
+#### 案B-3：シリアル通信仕様（SEタイプ）に変更
+
+```
+PCON-SE-56P-WAI-N-0-0  （SE = Serial RS-232C/RS-485）
+```
+
+**メリット：**
+- ラズパイのUARTポート（RS-232C/RS-485変換）で直接通信
+- IAIの **RCM-101-USB** 設定ツールと同じプロトコルで、位置データの読み書きが可能
+- 最もシンプルで低コスト
+
+```
+[ラズパイ UART] ←RS-232C/RS-485→ [PCON-SE-56P-WAI-N-0-0] ×6台
+```
+
+[IAI - PCONカタログ（SEタイプ）](https://www.iai-robot.co.jp/product/pdf/catarog/ct/PCON-C.pdf)
+
+---
+
+### 方法C：I/O直接制御（最もシンプル）
+
+CC-Link/ネットワーク仕様をやめ、**標準I/O（NPN/PNP）仕様**にして、ラズパイのGPIOで直接制御します。
+
+```
+PCON-CB-56P-WAI-NP-0-0  （NP = NPN I/O）
+```
+
+**接続：**
+- ラズパイGPIO → 光カプラ絶縁 → PCONのI/O端子（CSTR, PC1～PC256, SON等）
+- 位置決めは「ポジショナーモード」で、ポジション番号をバイナリ入力してCSTRでスタート
+
+**メリット：**
+- 通信プロトコル不要で最も確実
+- ラズパイのGPIO + 簡易トランジスタ回路で実現可能
+
+**デメリット：**
+- 配線が多い（6軸分のI/O配線が必要）
+- ポジションデータの書き換えはIA-OS（PCソフト）が必要
+
+[IAI - PCON I/O仕様](https://www.iai-robot.co.jp/product/pdf/catarog/ct/PCON-C.pdf)
+
+---
+
+## 3. スチュアートプラットフォーム用途での推奨構成
+
+スチュアートプラットフォーム（6軸同期制御）の場合、以下の優先順位を推奨します。
+
+| 優先度 | 方式 | 理由 |
+|--------|------|------|
+| **1位** | **EtherCAT（PCON-CFB-EC）+ ラズパイ(CODESYS/SOEM)** | リアルタイム性・同期性が最も高い。6軸同時制御に最適 |
+| **2位** | **DeviceNet（PCON-CFB-DV）+ ラズパイ(PiCAN)** | CANベースで比較的容易。同期精度はEtherCATに劣る |
+| **3位** | **シリアルSEタイプ + ラズパイ(UART)** | シンプルだが6軸同時制御の同期性に課題あり |
+| **4位** | **I/O直接制御（PCON-CB-NP）+ ラズパイ(GPIO)** | 最も簡単だが、配線・柔軟性に課題 |
+| **5位** | **CC-Link + ゲートウェイ** | コスト高・構成複雑。既存設備との統合が必要な場合のみ |
+
+---
+
+## 4. まとめ
+
+**結論：ラズパイでCC-Link仕様のPCONを直接制御することは現実的ではありません。**
+
+| あなたの状況 | 推奨アクション |
+|-------------|--------------|
+| CC-Link仕様のPCONを既に購入済み | **Hilscher netTAP等のゲートウェイ**を追加購入 |
+| これから選定する段階 | **EtherCAT仕様（EC）に変更**し、ラズパイ+CODESYSで制御 |
+| 最も低コスト・簡単に実現したい | **I/O直接制御（NP仕様）** または **SEシリアル仕様** に変更 |
+
+EtherCAT仕様に変更する場合の型式例：
+```
+PCON-CFB-56P-WAI-EC-0-0
+```
+
+ご使用のラズパイのモデル（Pi 4/Pi 5等）と、リアルタイム性の要求レベルをお教えいただければ、より具体的な接続構成（CODESYS vs SOEM vs Python-can等）をご案内できます。
+
+
+1. 一番制御が楽：
+
+EtherCAT仕様（EC）に変更し、ラズパイ+CODESYS(パッケージ)で制御
+
+納期が5カ月かかりそう。
+
+2. 2番手：
+
+DeviceNet（PCON-CFB-DV）+ ラズパイ(PiCAN)
+
+こちらは納期なんとかなりそう。
+
