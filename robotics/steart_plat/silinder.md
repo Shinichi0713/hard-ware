@@ -293,14 +293,6 @@ DC 24V駆動が可能なシリーズとコントローラーは以下の通り�
 
 ## ドライバ
 
-かしこまりました。今後、ウェブソースを引用する際は `[キーワード](URL)` の表記を使用いたします。
-
-先ほどの RCP6 対応コントローラーに関する回答を、改めてこの形式でまとめ直します。
-
----
-
-## RCP6（ロッドタイプ）を駆動可能なコントローラー（ドライバー）一覧
-
 ### 1軸用 ポジショナー型
 
 **PCON-CB / CFB**
@@ -310,7 +302,6 @@ DC 24V駆動が可能なシリーズとコントローラーは以下の通り�
 - 対応ネットワーク：DeviceNet、CC-Link、PROFIBUS、CANopen、MECHATROLINK、EtherCAT、EtherNet/IP 等
 - 特徴：RCP6の標準的な1軸コントローラー。バッテリーレスアブソリュートエンコーダーに対応 [IAI RCP6Sコントローラー](https://www.iai-robot.co.jp/product/pdf/catarog/ct/RCM-P6_C.pdf)
 
----
 
 ### プログラム型コントローラー（SEL言語による多軸制御）
 
@@ -326,8 +317,6 @@ DC 24V駆動が可能なシリーズとコントローラーは以下の通り�
 - 制御方法：プログラム運転（SEL言語）
 - 特徴：1台で最大4軸（機種による）まで統合制御可能 [IAI コントローラーシリーズ一覧](https://www.iai-robot.co.jp/product/series/control.html)
 
----
-
 ### モジュール型・分散制御システム
 
 **R-unit システム（RCON / RSEL / REC）**
@@ -336,15 +325,11 @@ DC 24V駆動が可能なシリーズとコントローラーは以下の通り�
 - 電源：制御用 DC 24V、モーター駆動用は機種による
 - 特徴：必要軸数だけドライバーユニットを連結するモジュール型。省配線・省スペース化を実現 [IAI コントローラーシリーズ一覧](https://www.iai-robot.co.jp/product/series/control.html)
 
----
-
 ### 内蔵コントローラータイプ
 
 **RCP6S（コントローラー内蔵型アクチュエーター）**
 - 特徴：アクチュエーター本体にコントローラーが内蔵済み。外部コントローラー不要。
 - 制御方法：PCON-CB/CFBと同じ制御が可能 [IAI RCP6Sコントローラー](https://www.iai-robot.co.jp/product/pdf/catarog/ct/RCM-P6_C.pdf)
-
----
 
 ## スチュアートプラットフォーム向け選定ガイド
 
@@ -354,14 +339,12 @@ DC 24V駆動が可能なシリーズとコントローラーは以下の通り�
 | IAIコントローラー内でプログラム制御を行いたい | **MSEL または R-unit（RSEL）** | 1台で複数軸を統合制御。ただし6軸全てを1台で制御するには軸数が不足する場合があり、2台以上の構成が必要。 |
 | 省配線・省スペースを最重視 | **RCP6S（内蔵コントローラー）× 6台** | 各脚にコントローラーが内蔵されているため、配線が最小限に。 |
 
----
 
 ## 重要な注意点
 
 - **PSEL**：主にRCP2/RCP3シリーズ向けのプログラムコントローラーであり、RCP6のロッドタイプ（RA6C/RA10C等）には対応していません [IAI PSELコントローラー](https://www.iai-robot.co.jp/product/pdf/catarog/ct/PSEL.pdf)
 - **XSEL**：200Vサーボモーター（RCS2シリーズ等）を主対象とした多軸プログラムコントローラーであり、RCP6（24Vパルスモーター）との組み合わせは非対応です
 
----
 
 ## まとめ
 
@@ -375,4 +358,137 @@ DC 24V駆動が可能なシリーズとコントローラーは以下の通り�
 
 スチュアートプラットフォームで6軸をリアルタイムに同期制御するには、**PCON-CB/CFBを6台使用し、EtherCATやMECHATROLINKなどのフィールドネットワークで上位PLCに接続する構成**が最も一般的で確実です。
 
+![1792442337955](image/silinder/1792442337955.png)
+
+## ロッドの選定
+
+寸法が40角程度のもの
+
+RCP6-RA4C
+
+https://www.iai-robot.co.jp/product/details/RCP6_RCP6S-RA4C/index.html
+
+
+## コントローラ
+
+PCON-CBベース
+
+https://www.iai-robot.co.jp/product/pdf/catarog/ct/PCON-C.pdf
+
+PCONを使って **RCP6-RA4C** を制御する場合の適切なドライバ型式は以下の通りです。
+
+---
+
+## RCP6-RA4C の仕様確認
+
+まず、アクチュエータ側の仕様を確認します。
+
+| 項目 | RCP6-RA4C |
+|------|-----------|
+| シリーズ | RCP6（ロッドタイプ） |
+| モーター | 56角パルスモーター（**56P**） |
+| エンコーダー | バッテリーレスアブソリュート（**WAI**） |
+| 電源電圧 | DC 24V |
+
+[IAI - RCP6-RA4C](https://www.iai-robot.co.jp/product/details/RCP6_RCP6S-RA4C/index.html)
+
+---
+
+## PCON-CB/CFB の型式体系
+
+PCON-CB/CFB の型式は以下の構成となります。
+
+```
+PCON-□-□□-□□□-□□-□-□
+```
+
+| 項目 | 記号 | 説明 |
+|------|------|------|
+| **タイプ** | CB / CFB / CGB / CGFB | CB＝標準、CFB＝フィールドネットワーク対応、CGB/CGFB＝安全カテゴリ対応 |
+| **モーター種類** | 56P | 56角パルスモーター（RCP6-RA4C対応） |
+| **エンコーダー種類** | WAI | バッテリーレスアブソリュートエンコーダー |
+| **I/O種類** | NP / PN / CC / DV 等 | NP＝NPN、PN＝PNP、CC＝CC-Link、DV＝DeviceNet 等 |
+| **I/Oケーブル長さ** | 0 / 2 / 3 / 5 | 0＝ケーブルなし、2＝2m、3＝3m、5＝5m |
+| **電源電圧** | 0 | 0＝DC24V |
+
+[IAI - PCONカタログ](https://www.iai-robot.co.jp/product/pdf/catarog/ct/PCON-C.pdf)  
+[IAI - PCON-CB/CFB First Step Guide](https://www.shopos.vn/medias/items/files/2025/03/Catalog_PCON-CA_CFA(ME0303-7A)%20IAI.pdf)
+
+---
+
+## 推奨型式
+
+### 基本型（NPN I/O仕様）
+
+```
+PCON-CB-56P-WAI-NP-0-0
+```
+
+| 要素 | 内容 |
+|------|------|
+| PCON-CB | 標準ポジショナータイプ |
+| 56P | 56角パルスモーター対応 |
+| WAI | バッテリーレスアブソリュートエンコーダー |
+| NP | NPN I/O仕様 |
+| 0 | I/Oケーブルなし |
+| 0 | DC24V |
+
+### PNP I/O仕様の場合
+
+```
+PCON-CB-56P-WAI-PN-0-0
+```
+
+### フィールドネットワーク対応（CC-Link）の場合
+
+```
+PCON-CFB-56P-WAI-CC-0-0
+```
+
+### フィールドネットワーク対応（DeviceNet）の場合
+
+```
+PCON-CFB-56P-WAI-DV-0-0
+```
+
+---
+
+## スチュアートプラットフォーム用途での選定ポイント
+
+スチュアートプラットフォームで6軸を上位PLCと連携する場合は、**フィールドネットワーク対応の PCON-CFB** が推奨されます。
+
+| 用途 | 推奨型式例 |
+|------|-----------|
+| 上位PLC（三菱電機）とCC-Linkで接続 | `PCON-CFB-56P-WAI-CC-0-0` |
+| 上位PLC（オムロン等）とDeviceNetで接続 | `PCON-CFB-56P-WAI-DV-0-0` |
+| EtherCAT対応PLCと接続 | `PCON-CFB-56P-WAI-EC-0-0` |
+| 汎用I/O（NPN）でPLCと接続 | `PCON-CB-56P-WAI-NP-2-0` |
+
+---
+
+## 注意点
+
+1. **PCON-CA/CFAは受注中止**：PCON-CA/CFAは2024年9月をもって受注中止となり、**PCON-CB/CFB** への置換えが必要です。フィールドバスモジュールが50pinから60pinに変更になっています。  
+   [IAI - PCON-CA/CFA→CB/CFB置換え](https://www.iai-robot.co.jp/product/pdf/54_PCON-CA_CFA%E3%81%8B%E3%82%89CB_CFB.pdf)
+
+2. **ケーブルは別途必要**：型式末尾が `0-0`（ケーブルなし）の場合、以下のケーブルを別途ご注文ください。
+   - モーターケーブル：`CB-RCP2-MA***`（標準1m/3m/5m）
+   - エンコーダケーブル：`CB-RFA-PA***`（標準1m/3m/5m）  
+   [IAI - PCONカタログ](https://www.iai-robot.co.jp/product/pdf/catarog/ct/PCON-C.pdf)
+
+3. **I/Oケーブル**：PCON-CBの場合、I/Oケーブル `CB-PAC-PIO020`（標準2m）がコントローラに付属します。ケーブル長さを `2` にすると2mケーブル付属の仕様となります。
+
+---
+
+## まとめ
+
+| 項目 | 内容 |
+|------|------|
+| **最も基本的な型式** | `PCON-CB-56P-WAI-NP-0-0` |
+| **スチュアートプラットフォーム推奨** | `PCON-CFB-56P-WAI-CC-0-0`（CC-Link例） |
+| **モーター** | 56P（56角パルスモーター） |
+| **エンコーダー** | WAI（バッテリーレスアブソリュート） |
+| **電源** | DC24V |
+
+ご使用のPLCメーカー・通信規格（CC-Link、DeviceNet、EtherCAT等）をお教えいただければ、より具体的なネットワーク仕様の型式をご案内できます。
 
