@@ -663,3 +663,238 @@ DeviceNet（PCON-CFB-DV）+ ラズパイ(PiCAN)
 
 こちらは納期なんとかなりそう。
 
+
+## 制御
+
+**PCON-CFB-DV（DeviceNet仕様）＋ラズパイ（PiCAN）**による制御構成について、理論上の方法と実際の課題を含めて説明します。
+
+---
+
+## 1. 構成の全体像
+
+```
+[Raspberry Pi + PiCAN HAT] ←CAN bus→ [PCON-CFB-56P-WAI-DV-0-0] ×6台
+```
+
+| 機器 | 型式例 | 役割 |
+|------|--------|------|
+| ラズパイ | Raspberry Pi 4/5 | 制御マスター |
+| PiCAN HAT | PiCAN 2 または PiCAN 3 | CAN物理層インターフェース |
+| PCON | `PCON-CFB-56P-WAI-DV-0-0` | DeviceNetスレーブ（各軸） |
+| 終端抵抗 | 121Ω 1/2W | バス両端に必須 |
+| DC24V電源 | `PSA-24` 等 | コントローラ・モーター電源 |
+| DeviceNetケーブル | 5芯（V+, V-, CAN_H, CAN_L, シールド） | 通信＋電源 |
+
+[PiCAN 2 User Guide](https://raspberry-valley.azurewebsites.net/ref/Raspberry-Pi-PICAN2-Hat-User-Guide.pdf)  
+[IAI - DeviceNet Quick Start Guide](https://www.iai-robot.co.jp/download/q_start/pdf/Q_START_A_D_PCON_DEVICENET(MJ0437).pdf)
+
+---
+
+## 2. ハードウェア接続
+
+### 2-1. PiCAN HAT の装着
+
+| 項目 | 内容 |
+|------|------|
+| 対応機種 | Raspberry Pi 4 / Pi 5 / Pi 3B+ |
+| インターフェース | MCP2515 CANコントローラ + CANトランシーバ |
+| コネクタ | DB9 または スクリューターミナル |
+| 終端抵抗 | 基板上に120Ω（ジャンパーでON/OFF可能） |
+
+### 2-2. DeviceNetバス配線
+
+DeviceNetはCAN_H / CAN_Lの差動信号で通信します。バス型配線で、両端に**121Ωの終端抵抗**が必要です。
+
+```
+[ラズパイ+PiCAN]──┬──[PCON #1]──┬──[PCON #2]──┬── ... ──┬──[PCON #6]──[終端抵抗]
+                  │            │            │         │
+                (121Ω)                                                    (121Ω)
+```
+
+**DeviceNetケーブル芯線接続：**
+
+| 色 | 信号 | 内容 |
+|----|------|------|
+| 赤 | V+ | DC24V電源（通信電源） |
+| 黒 | V- | 0V（通信電源） |
+| 白 | CAN_H | CAN High |
+| 青 | CAN_L | CAN Low |
+| 灰 | Shield | シールド（片端接地） |
+
+[IAI - DeviceNet配線マニュアル](https://www.iai-robot.co.jp/download/q_start/pdf/Q_START_A_D_PCON_DEVICENET(MJ0437).pdf)
+
+---
+
+## 3. ラズパイのソフトウェア設定
+
+### 3-1. OS準備（SocketCAN有効化）
+
+```bash
+# config.txt に追記
+sudo nano /boot/firmware/config.txt  # (Pi 4/5の場合)
+# または /boot/config.txt (Pi 3の場合)
+
+# 以下を追加
+dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi-bcm2835
+```
+
+### 3-2. CANインターフェースの起動
+
+```bash
+# CAN0インターフェースを500kbpsで起動（DeviceNet標準ボーレート）
+sudo ip link set can0 up type can bitrate 500000
+
+# 確認
+ip link show can0
+ifconfig can0
+```
+
+[SK Pang - Installing Python-CAN for Raspberry Pi](https://www.skptechnology.co.uk/installing-pythoncan-for-raspberry-pi)
+
+### 3-3. Pythonライブラリのインストール
+
+```bash
+sudo apt update
+sudo apt install can-utils
+
+# python-can のインストール
+pip3 install python-can
+
+# DeviceNet用ライブラリ（存在は確認済みだが開発初期段階）
+pip3 install devicenet-py  # 注意：2026年現在、v0.0.1と非常に初期段階
+```
+
+[python-can ドキュメント](https://python-can.readthedocs.io/en/stable/)  
+[devicenet-py PyPI](https://pypi.org/project/devicenet-py/)
+
+---
+
+## 4. 制御プログラムの実装
+
+### 4-1. 基本的なCANフレーム送受信（python-can）
+
+```python
+import can
+import time
+
+# CANバス初期化
+bus = can.Bus(channel='can0', interface='socketcan')
+
+# DeviceNetのCAN ID構造：
+# - マスター→スレーブ（ポーリング）: 0x000～0x3FF
+# - スレーブ→マスター（応答）: 0x400～0x7FF
+# 実際のIDはノードアドレスと機能コードで決まる
+
+# 例：ノードアドレス1のPCONにポーリング
+# DeviceNet Group2 Onlyスレーブの場合：
+# マスター→スレーブ: 0x06A (ノードID=10の場合など)
+
+# CANフレーム送信
+msg = can.Message(
+    arbitration_id=0x06A,  # マスター→スレーブポーリング
+    data=[0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+    is_extended_id=False
+)
+bus.send(msg)
+
+# 受信
+recv_msg = bus.recv(timeout=1.0)
+if recv_msg:
+    print(f"受信ID: {hex(recv_msg.arbitration_id)}, データ: {recv_msg.data.hex()}")
+
+bus.shutdown()
+```
+
+[python-can GitHub](https://github.com/hardbyte/python-can)
+
+---
+
+## 5. PCON-CFB-DV の設定（事前にIA-OSで行う必要あり）
+
+PCONをDeviceNetで制御する前に、**Windows PC + IA-OS** で以下のパラメータを設定する必要があります。
+
+| パラメータ | 設定内容 |
+|-----------|----------|
+| **No.84: フィールドバス動作モード** | `0`=リモートI/O、`2`=ポジション/簡易直値 等 |
+| **No.85: DeviceNetノードアドレス** | 各軸ごとに異なるアドレス（1～63） |
+| **No.86: DeviceNetボーレート** | `0`=500kbps（標準）、`1`=250kbps、`2`=125kbps |
+
+[IAI - DeviceNet Quick Start Guide](https://www.iai-robot.co.jp/download/q_start/pdf/Q_START_A_D_PCON_DEVICENET(MJ0437).pdf)
+
+---
+
+## 6. 重要な注意点・課題
+
+### 6-1. DeviceNetマスター実装の難易度
+
+| 課題 | 内容 |
+|------|------|
+| **CIPプロトコル** | DeviceNetはCANの上にCIP（Common Industrial Protocol）が乗る。単純なCAN送受信では不十分 |
+| **接続確立** | マスターはスレーブとの「接続（Connection）」を確立し、ポーリングサイクルを管理する必要がある |
+| **EDSファイル** | PCONのEDSファイルを読み込み、オブジェクト辞書を理解する必要がある |
+| **I/Oデータマッピング** | コマンドワード/ステータスワードのビット配置を正しく解釈する必要がある |
+
+### 6-2. 現実的な判断
+
+**結論から申し上げますと、ラズパイをDeviceNetマスターとして実装することは「技術的には可能だが、工数的に非常に困難」です。**
+
+| 方法 | 難易度 | 現実性 |
+|------|--------|--------|
+| python-canだけで自作 | 非常に高い | 非推奨（CIP実装が必要） |
+| devicenet-pyを使用 | 高い | 2026年現在v0.0.1で未完成 |
+| OpENer-libを移植 | 高い | C言語ライブラリのラズパイ移植が必要 |
+| **EtherCAT仕様に変更** | **低い** | **最も推奨** |
+| **I/O直接制御に変更** | **最低** | **最も確実** |
+
+[OpENer-lib GitHub](https://github.com/Gabrielcarvfer/OpENer-lib)  
+[devicenet-py PyPI](https://pypi.org/project/devicenet-py/)
+
+---
+
+## 7. 代替案（推奨）
+
+### 案A：EtherCAT仕様に変更（最も推奨）
+
+```
+PCON-CFB-56P-WAI-EC-0-0  （EC = EtherCAT）
+```
+
+- ラズパイに **CODESYS Runtime**（無料ライセンスあり）をインストール
+- CODESYSがEtherCATマスターとして動作
+- 6軸同期制御が比較的容易に実現可能
+
+```
+[Raspberry Pi + CODESYS] ←EtherCAT→ [PCON-CFB-EC] ×6
+```
+
+[CODESYS Raspberry Pi](https://www.codesys.com/products/codesys-runtime/raspberry-pi-sl.html)
+
+### 案B：I/O直接制御に変更（最も確実）
+
+```
+PCON-CB-56P-WAI-NP-0-0  （NP = NPN I/O）
+```
+
+- ラズパイGPIO → 光カプラ絶縁 → PCONのI/O端子
+- ポジショナーモードで「ポジション番号をバイナリ入力 → CSTRでスタート」
+- 通信プロトコル不要で最も確実
+
+```
+[Raspberry Pi GPIO] ←I/O配線→ [PCON-CB-NP] ×6
+```
+
+---
+
+## 8. まとめ
+
+| 項目 | 内容 |
+|------|------|
+| **結論** | PCON-CFB-DV + PiCAN + ラズパイは**理論上可能**だが、DeviceNetマスター実装の工数が非常に大きい |
+| **主要な課題** | CIPプロトコル実装、接続管理、ポーリングサイクル制御 |
+| **推奨する代替案** | **EtherCAT仕様（EC）に変更**し、CODESYSで制御するか、**I/O直接制御（NP）**に変更 |
+| **どうしてもDeviceNetを使いたい場合** | オムロン・三菱等のDeviceNetマスターユニット（PLC）を間に入れるか、Hilscher netTAP等のゲートウェイを使用 |
+
+DeviceNetを使う強い理由（既存設備との統合等）がない限り、**EtherCAT仕様への変更**を強く推奨いたします。CODESYS + EtherCATなら、ラズパイで6軸のスチュアートプラットフォーム制御が現実的な工数で実現できます。
+
