@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>ICSim&#x3068;&#x306f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>本日はWindows環境下でCAN開発の演習を行う環境構築第2段です。
+前回はWSL下にCANの通信環境を提供する<a href="https://yoshishinnze.hatenablog.com/entry/2026/10/21/043000">vcan</a>を導入しました。
+今回は自動車の仮想シミュレータであるICSimを導入して、実際のCANによる通信を体感できるようにしていきます。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="icsimとは">ICSimとは</h2>
+<p>ICSim（Instrument Cluster Simulator）は、<strong>自動車の計器盤（メーターパネル）とその操作をシミュレートするオープンソースの学習ツール</strong>です。</p>
+<h3 id="名前の意味">名前の意味</h3>
+<ul>
+<li><strong>I</strong>nstrument <strong>C</strong>luster <strong>Sim</strong>ulator</li>
+<li>「Instrument Cluster」とは、運転席の前にある<strong>スピードメーター・タコメーター・燃料計などが並んだ計器盤</strong>のことです。</li>
+</ul>
+<h3 id="どんなものか">どんなものか</h3>
+<p>ICSim は <strong>Linux 上で動作する 2 つの画面</strong>から構成されています。</p>
+<table>
+<thead>
+<tr>
+<th>プログラム</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>icsim</code></td>
+<td><strong>計器盤の表示</strong>。vcan0 上の CAN メッセージを受け取り、スピードメーターやウインカー、ドアロックのランプなどを動かします。</td>
+</tr>
+<tr>
+<td><code>controls</code></td>
+<td><strong>コントローラー</strong>。キーボード操作を CAN メッセージに変換して vcan0 に送信します。</td>
+</tr>
+</tbody>
+</table>
+<p>つまり、<strong>コントローラーで「アクセルを踏む」と、それに対応する CAN メッセージが vcan0 に流れ、計器盤のスピードメーターの針が動く</strong>、という仕組みです。</p>
+<h3 id="何ができるのか">何ができるのか</h3>
+<p>実際の車では計器盤の中身はブラックボックスですが、ICSim では <strong>CAN バス（vcan0）上のメッセージがすべて見える</strong>ため、以下のような学習ができます。</p>
+<ul>
+<li><strong>CAN メッセージの観測</strong>：<code>candump</code> や <code>cansniffer</code> で、どの操作がどの CAN ID・データに対応するか調べる</li>
+<li><strong>メッセージの特定</strong>：「左ウインカーを出すと ID <code>188</code> に <code>01</code> が入る」などの対応関係を解析する</li>
+<li><strong>リプレイ攻撃</strong>：記録したメッセージを <code>canplayer</code> で再生し、同じ動作を再現する</li>
+<li><strong>なりすまし攻撃</strong>：<code>cansend</code> や Python スクリプトで偽の CAN メッセージを送信し、計器盤を意図的に動かす</li>
+<li><strong>DoS 攻撃の体験</strong>：大量の CAN メッセージを流してシステムにどう影響するか確認する</li>
+</ul>
+<h3 id="なぜ便利なのか">なぜ便利なのか</h3>
+<p>実際の自動車を用意しなくても、<strong>1 台の PC（Linux）だけで「車載ネットワークのセキュリティ演習」ができる</strong>点が最大の魅力です。</p>
+<ul>
+<li>実車がなくても CAN プロトコルの挙動を体験できる</li>
+<li>間違えて壊しても大丈夫（仮想環境なので）</li>
+<li>パケットの内容がすべて見えるため、解析の練習に最適</li>
+</ul>
+<h2 id="環境構築">環境構築</h2>
+<p>以下に、Windows + WSL2 環境で vcan 対応カーネルを使い、ICSim を構築してメーターを表示するまでの流れをまとめます。</p>
+<h3 id="wsl2--vcan-カーネルで-icsim-環境を構築しメーターを表示するまで">WSL2 + vcan カーネルで ICSim 環境を構築しメーターを表示するまで</h3>
+<p><strong>1. 前提条件</strong></p>
+<ul>
+<li>Windows 上に <strong>WSL2（Windows Subsystem for Linux 2）</strong> と <strong>Ubuntu</strong> がインストール済み</li>
+<li>WSL2 は独自の Linux カーネルを使用するため、<strong>Microsoft のデフォルトカーネルでは CAN 機能が無効</strong>になっている</li>
+<li>WSL2上にvcanの環境が構築されている(環境構築の手順は<a href="https://yoshishinnze.hatenablog.com/entry/2026/10/21/043000">こちら</a>をご参考頂ければと思います。)</li>
+</ul>
+<p><strong>2. 問題①：デフォルト WSL2 カーネルは CAN（vcan）に非対応</strong></p>
+<p>導入時にコケる問題でコマンドに <code>modprobe vcan</code> を打ってもエラーになることがあります。</p>
+<p><strong>不具合の内容：</strong>
+WSL2 のデフォルトカーネルには SocketCAN や vcan（Virtual CAN）のモジュールが含まれていないため、<code>modprobe vcan</code> が失敗し、仮想 CAN バスを作成できない。</p>
+<p><strong>解決策：</strong>
+<strong>CAN 機能を有効化したカスタムカーネル</strong>に差し替える。</p>
+<ul>
+<li>カーネルを自分でビルドするか、コミュニティが配布している <strong>プリビルドカーネル（bzImage）</strong> を利用する</li>
+<li>Windows ユーザーホームディレクトリに <code>.wslconfig</code> ファイルを作成し、カーネルパスを指定して WSL2 を再起動</li>
+</ul>
+<p><strong>3. vcan0（仮想 CAN バス）の作成</strong></p>
+<p>カーネル差し替え後、以下のコマンドで vcan0 を作成・有効化する。</p>
+<pre><code class="language-bash">sudo modprobe vcan
+sudo ip <span class="hljs-built_in">link</span> add dev vcan0 <span class="hljs-built_in">type</span> vcan
+sudo ip <span class="hljs-built_in">link</span> <span class="hljs-built_in">set</span> up vcan0
+ip <span class="hljs-built_in">link</span> show vcan0
+</code></pre>
+<p><strong>各コマンドの意味：</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>modprobe vcan</code></td>
+<td>カーネルに vcan 機能を読み込む</td>
+</tr>
+<tr>
+<td><code>ip link add dev vcan0 type vcan</code></td>
+<td>vcan0 という仮想 CAN インターフェースを作成</td>
+</tr>
+<tr>
+<td><code>ip link set up vcan0</code></td>
+<td>vcan0 を通信可能な状態（UP）にする</td>
+</tr>
+<tr>
+<td><code>ip link show vcan0</code></td>
+<td>vcan0 の状態を確認</td>
+</tr>
+</tbody>
+</table>
+<p><strong>確認ポイント：</strong> <code>ip link show vcan0</code> の出力に <code>&lt;NOARP,UP,LOWER_UP&gt;</code> と含まれていれば成功。</p>
+<p><strong>4. ICSim のインストールとビルド</strong></p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install -y libsdl2-dev libsdl2-image-dev can-utils git make gcc
+git <span class="hljs-built_in">clone</span> https://github.com/zombieCraig/ICSim.git
+<span class="hljs-built_in">cd</span> ICSim
+make
+</code></pre>
+<p><strong>5. 問題②：<code>./icsim vcan0</code> 実行時に <code>Couldn't create raw socket</code> エラー</strong></p>
+<p><strong>不具合の内容：</strong>
+ビルド後、<code>./icsim vcan0</code> を実行すると以下のエラーが発生。</p>
+<pre><code>Couldn't create raw socket
+Usage: icsim [options] &lt;can&gt;
+</code></pre>
+<p><strong>試行した解決策と結果：</strong></p>
+<ul>
+<li><code>sudo ./icsim vcan0</code> で実行しても同じエラーが継続</li>
+</ul>
+<p><strong>原因の切り分け：</strong></p>
+<ul>
+<li><code>wsl -l -v</code> で確認したところ <strong>VERSION は 2（WSL2）</strong> だったため、WSL1 ではない</li>
+<li><code>zcat /proc/config.gz | grep CONFIG_CAN</code> でカーネル設定を確認したところ、CAN 関連機能は <code>=m</code>（モジュール）として有効化されていた</li>
+</ul>
+<pre><code>CONFIG_CAN=m
+CONFIG_CAN_RAW=m
+CONFIG_CAN_BCM=m
+CONFIG_CAN_DEV=m
+CONFIG_CAN_VCAN=m
+</code></pre>
+<p><strong>根本的な原因：</strong>
+<code>vcan</code> モジュールは <code>modprobe vcan</code> で読み込まれていたが、<strong>CAN ソケット通信に必要な <code>can</code> 本体と <code>can_raw</code> モジュールが自動読み込みされず、不足していた</strong>。</p>
+<p><strong>6. 解決策：必要な CAN モジュールを明示的に読み込む</strong></p>
+<p>以下のコマンドを実行し、不足していたモジュールを手動で読み込む。</p>
+<pre><code class="language-bash">sudo modprobe can
+sudo modprobe can_raw
+</code></pre>
+<p><strong>モジュールの役割：</strong></p>
+<table>
+<thead>
+<tr>
+<th>モジュール</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vcan</code></td>
+<td>仮想 CAN デバイス（vcan0）を作成する</td>
+</tr>
+<tr>
+<td><code>can</code></td>
+<td>CAN プロトコルファミリー（PF_CAN）を提供する</td>
+</tr>
+<tr>
+<td><code>can_raw</code></td>
+<td>Raw CAN ソケット（SOCK_RAW）を提供する</td>
+</tr>
+</tbody>
+</table>
+<p>読み込み確認：</p>
+<pre><code class="language-bash">lsmod | grep can
+</code></pre>
+<p>以下のように表示されれば OK。</p>
+<pre><code>vcan                   16384  0
+can_raw                20480  0
+can                    36864  1 can_raw
+</code></pre>
+<p><strong>7. ICSim の起動</strong></p>
+<p>モジュール読み込み後、以下のコマンドで ICSim を起動。</p>
+<pre><code class="language-bash">sudo ./icsim vcan0
+</code></pre>
+<p>結果：メーター（計器盤）のウィンドウが正常に表示されればICSimの環境構築完了です。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\can\can_sim\image\experiment\1792540164586.png" alt="1792540164586"></p>
+<h3 id="全体の流れまとめ">全体の流れまとめ</h3>
+<pre><code>Windows + WSL2
+    ↓
+デフォルトカーネル → CAN 非対応 ❌
+    ↓
+カスタムカーネル（CAN モジュール有効）に差し替え
+    ↓
+vcan0 を作成・有効化（modprobe vcan + ip link add/set up）
+    ↓
+ICSim を clone &amp; make でビルド
+    ↓
+実行 → Couldn't create raw socket ❌
+    ↓
+原因：can / can_raw モジュールが未読み込み
+    ↓
+sudo modprobe can / sudo modprobe can_raw で解決
+    ↓
+sudo ./icsim vcan0 → メーター表示 ✅
+</code></pre>
+<h3 id="今後の演習の進め方">今後の演習の進め方</h3>
+<p>メーターが表示されたら、別ターミナルで以下を実行することで CAN 通信の例題を始められます。</p>
+<pre><code class="language-bash"><span class="hljs-comment"># コントローラー（操作盤）の起動</span>
+sudo ./controls vcan0
+
+<span class="hljs-comment"># CAN メッセージの観測</span>
+candump vcan0
+</code></pre>
+<p>これで、キーボード操作に対応する CAN メッセージの流れをリアルタイムで確認できます。</p>
+<h2 id="少しお試し">少しお試し</h2>
+<p>早速導入した ICSim を使った CAN 通信の体験をしてみます。<br>
+別々のターミナルを 3 つ開くか、<code>tmux</code> で画面を分割して同時に確認すると効果的です。</p>
+<h3 id="準備">準備</h3>
+<p>まず <code>tmux</code> が入っていなければインストールしておくと便利です。</p>
+<pre><code class="language-bash">sudo apt install -y tmux can-utils
+</code></pre>
+<p>vcan0 が有効になっていることを確認します。</p>
+<pre><code class="language-bash">ip <span class="hljs-built_in">link</span> show vcan0 | grep UP
+</code></pre>
+<p><code>UP</code> と表示されれば OK です。</p>
+<h3 id="ステップ-1icsim-計器盤を起動する">ステップ 1：ICSim 計器盤を起動する</h3>
+<p><strong>ターミナル 1</strong> で実行します。</p>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> ~/ICSim
+sudo ./icsim vcan0
+</code></pre>
+<p>車のメーターパネル（スピードメーター・ウインカー・ドアロックのランプなど）が表示されたら成功です。</p>
+<h3 id="ステップ-2コントローラーを起動する">ステップ 2：コントローラーを起動する</h3>
+<p><strong>ターミナル 2</strong> で実行します。</p>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> ~/ICSim
+sudo ./controls vcan0
+</code></pre>
+<p>操作盤のウィンドウが表示されます。<strong>このウィンドウをクリックしてアクティブにした状態で</strong>、以下のキーを押します。</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>キー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左ウインカー</td>
+<td><code>←</code>（左カーソル）</td>
+</tr>
+<tr>
+<td>右ウインカー</td>
+<td><code>→</code>（右カーソル）</td>
+</tr>
+<tr>
+<td>アクセル</td>
+<td><code>↑</code>（上カーソル）</td>
+</tr>
+<tr>
+<td>全ドアロック解除</td>
+<td><code>Left Shift</code> + <code>Right Shift</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ステップ-3can-メッセージを観測する">ステップ 3：CAN メッセージを観測する</h3>
+<p><strong>ターミナル 3</strong> で実行します。</p>
+<pre><code class="language-bash">candump vcan0
+</code></pre>
+<p>この状態で <strong>ターミナル 2（controls）</strong> に戻り、<code>←</code> や <code>↑</code> を押してみてください。<br>
+ターミナル 3 に以下のようなメッセージが流れ始めます。</p>
+<pre><code>  vcan0  188   [1]  01
+  vcan0  188   [1]  00
+  vcan0  244   [8]  00 00 00 00 00 00 00 00
+</code></pre>
+<p>これが <strong>CAN 通信の生のデータ</strong>です。</p>
+<ul>
+<li><code>vcan0</code>：通信が流れたバス名</li>
+<li><code>188</code> / <code>244</code>：CAN ID（どの機器・操作に対応するかの識別子）</li>
+<li><code>[1]</code> / <code>[8]</code>：データ長（バイト数）</li>
+<li><code>01</code> / <code>00 ...</code>：実際のデータ（ペイロード）</li>
+</ul>
+<h3 id="ステップ-4変化するメッセージだけを抽出する">ステップ 4：変化するメッセージだけを抽出する</h3>
+<p><code>candump</code> ではメッセージが多すぎて見づらいため、<strong>変化したメッセージだけをハイライト表示</strong>する <code>cansniffer</code> を使います。</p>
+<p>ターミナル 3 で <code>Ctrl + C</code> で <code>candump</code> を止め、以下を実行します。</p>
+<pre><code class="language-bash">cansniffer -c vcan0
+</code></pre>
+<p><code>-c</code> は変化したバイトの色を変えるオプションです。</p>
+<p>この状態で controls に戻り、<strong><code>←</code>（左ウインカー）を押してすぐ離す</strong>と、特定の CAN ID の特定のバイトだけが赤く変化します。<br>
+これが「<strong>左ウインカーに対応する CAN メッセージ</strong>」です。</p>
+<p>同様に <code>→</code> や <code>↑</code> を試し、どの ID・どのバイトがどの操作に対応するか観察してみてください。</p>
+<p>こんな感じで画面右下の画面にデータが出力されるようになります。
+これがcanで送信されているメッセージです。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\hard-ware\sensing\can\can_sim\image\experiment\1792541776303.png" alt="1792541776303"></p>
+<h2 id="受信したデータ">受信したデータ</h2>
+<p>お試しで出したメッセージについて説明します。</p>
+<h3 id="出力の構造">出力の構造</h3>
+<p>各データの1行が <strong>1 つの CAN メッセージ（1 フレーム）</strong> に対応します。</p>
+<pre><code>vcan0  244   [5]  00 00 00 01 AC
+│      │     │    └─ データ（ペイロード）：16 進数で 1 バイトずつ表示
+│      │     └────── データ長（DLC）：このメッセージは 5 バイト
+│      └─────────── CAN ID：メッセージの種類を示す識別子（16 進数）
+└────────────────── インターフェース：vcan0（仮想 CAN バス）
+</code></pre>
+<h3 id="各フィールドの意味">各フィールドの意味</h3>
+<p><strong>CAN ID（例：<code>244</code>, <code>095</code>, <code>17C</code> など）</strong></p>
+<ul>
+<li><strong>どの機器や機能に関するメッセージか</strong>を示す識別子です。</li>
+<li>CAN プロトコルでは「送信先アドレス」ではなく「<strong>メッセージの種類</strong>」を表します。バス上の全 ECU がこの ID を見て、自分に関係あるメッセージだけを受け取ります。</li>
+<li>ICSim では、ウインカー、アクセル、ドアロックなど、それぞれ異なる CAN ID が割り当てられています。</li>
+</ul>
+<p><strong>DLC（例：<code>[5]</code>, <code>[4]</code>, <code>[8]</code>）</strong></p>
+<ul>
+<li><strong>Data Length Code</strong> の略で、ペイロードのバイト数（0～8）を示します。</li>
+<li>例えば <code>[8]</code> ならデータ部は 8 バイト、<code>[4]</code> なら 4 バイトです。</li>
+</ul>
+<p><strong>データ（例：<code>00 00 00 01 AC</code>）</strong></p>
+<ul>
+<li><strong>実際に送られている値</strong>です。スイッチの ON/OFF、速度、温度、舵角などの情報がここに入ります。</li>
+<li>1 つのメッセージに複数の情報が詰め込まれていることもあります。</li>
+</ul>
+<h3 id="このメッセージ群は何をしているのか">このメッセージ群は何をしているのか</h3>
+<p>ICSim の環境では、これらのメッセージは <strong>「車の各種状態を表す信号」</strong> として vcan0 上に流れています。</p>
+<p>例えば、以下のようなイメージです。</p>
+<table>
+<thead>
+<tr>
+<th>CAN ID</th>
+<th>想定される役割（ICSim 内の一例）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>244</code></td>
+<td>スロットル（アクセル）関連</td>
+</tr>
+<tr>
+<td><code>095</code></td>
+<td>車速や計器表示関連</td>
+</tr>
+<tr>
+<td><code>17C</code></td>
+<td>ライト・ウインカー・警告灯の状態</td>
+</tr>
+<tr>
+<td><code>158</code>, <code>161</code> など</td>
+<td>その他の計器やセンサー情報</td>
+</tr>
+</tbody>
+</table>
+<p>ただし、<strong>ICSim では起動時のシード値によって CAN ID とデータの対応関係が変わることがあります。</strong> そのため「この ID は必ずウインカー」という固定の解説ではなく、<strong><code>cansniffer</code> などで変化を観察しながら自分で特定する</strong>のが演習の基本になります。</p>
+<h2 id="総括">総括</h2>
+<p>今回の記事の内容を簡潔に総括します。</p>
+<p><strong>概要：</strong> WSL2 上の vcan 環境に、車載ネットワーク学習ツール「ICSim」を導入し、CAN 通信の観測・解析を体験する。</p>
+<p><strong>ICSim とは：</strong> 自動車の計器盤（<code>icsim</code>）とコントローラー（<code>controls</code>）の 2 画面からなるシミュレータ。キーボード操作を CAN メッセージに変換し、計器盤に反映する仕組み。</p>
+<p><strong>構築の流れと障害：</strong></p>
+<ul>
+<li>WSL2 のデフォルトカーネルは CAN 非対応のため、<strong>CAN 対応カスタムカーネル</strong>への差し替えが必要</li>
+<li><code>vcan0</code> を作成・有効化（<code>modprobe vcan</code> → <code>ip link add/set up</code>）</li>
+<li>ICSim を clone し <code>make</code> でビルド</li>
+<li>実行時に <code>Couldn't create raw socket</code> エラーが発生 → 原因は <strong><code>can</code> / <code>can_raw</code> カーネルモジュールが未読み込み</strong> → <code>sudo modprobe can can_raw</code> で解決</li>
+<li><code>sudo ./icsim vcan0</code> で計器盤表示成功</li>
+</ul>
+<p><strong>演習内容：</strong></p>
+<ul>
+<li><code>controls</code> で操作（方向キー等）し、<code>candump vcan0</code> で生の CAN メッセージを観測</li>
+<li><code>cansniffer -c vcan0</code> で変化したバイトをハイライト表示し、操作と CAN ID の対応関係を特定</li>
+</ul>
+<p><strong>CAN メッセージの構造：</strong></p>
+<ul>
+<li><strong>CAN ID</strong>（例：<code>244</code>）：メッセージの種類を示す識別子</li>
+<li><strong>DLC</strong>（例：<code>[5]</code>）：データ長（バイト数）</li>
+<li><strong>データ</strong>（例：<code>00 00 00 01 AC</code>）：実際の状態値（ペイロード）</li>
+</ul>
+<p><strong>結論：</strong> WSL2 + カスタムカーネル + vcan0 + ICSim で、実車なしに CAN 通信のキャプチャ・解析・攻撃体験が可能になった。</p>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/-W66swluqC8?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
