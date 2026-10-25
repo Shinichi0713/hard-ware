@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x30d5;&#x30a3;&#x30eb;&#x30bf;&#x3068;&#x306f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+            <h2 id="フィルタとは">フィルタとは</h2>
+<p>フィルタは、センサから得られた信号の中から <strong>「本当に知りたい変化」だけを残し、「不要なノイズ（揺らぎ）」を取り除くための装置・回路・計算処理</strong>です。</p>
+<h3 id="1-直感的なアナロジー味噌汁のこし">1. 直感的なアナロジー：味噌汁の「こし」</h3>
+<p>味噌汁を鍋から椀に注ぐとき、だしこしや味噌の粒が入らないように「こし器」を使います。</p>
+<ul>
+<li><strong>味噌汁全体</strong>: 生のセンサ信号（本当の温度＋ノイズ＋ドリフト）</li>
+<li><strong>こし器</strong>: フィルタ</li>
+<li><strong>椀に入る透明な汁</strong>: ノイズを除去した「信頼できる測定値」</li>
+<li><strong>こし器に残る粒</strong>: 除去されたノイズ</li>
+</ul>
+<p>センサの生データは、測りたい物理量の情報と、電気的な揺らぎ・環境ノイズ・機械的な振動などが混ざった「にごった汁」のようなものです。フィルタはそれを「こして」澄ます作業です。</p>
+<h3 id="2-なぜノイズが入るのか">2. なぜノイズが入るのか</h3>
+<p>センサ信号にノイズが乗る主な原因は以下の通りです。</p>
+<ul>
+<li><strong>電気的ノイズ</strong>: 電源の揺らぎ、周囲の機器からの電磁波</li>
+<li><strong>量子化誤差</strong>: ADCで電圧を数字に変換する際の丸め誤差</li>
+<li><strong>機械的振動</strong>: 加速度センサや圧力センサに不要な振動が乗る</li>
+<li><strong>温度ドリフト</strong>: 回路自体が温まることで特性が変化する</li>
+</ul>
+<p>このノイズをそのまま使うと、<strong>「温度が実際には変わっていないのに値がガタガタする」</strong>、あるいは <strong>「急な変化を見逃す」</strong> といった問題が起こります。</p>
+<h3 id="3-フィルタの種類と役割">3. フィルタの種類と役割</h3>
+<p><strong>ローパスフィルタ（Low-Pass Filter / LPF）</strong></p>
+<p><strong>ゆっくり変化する信号だけを通し、急激な変化（高周波ノイズ）を遮ります。</strong></p>
+<p>例: 温度センサの値が0.1秒ごとにランダムに±0.5度揺れる → LPFで滑らかな温度変化だけを抽出</p>
+<p><strong>ハイパスフィルタ（High-Pass Filter / HPF）</strong></p>
+<p><strong>急に変化する信号だけを通し、ゆっくりした変化（ドリフトやオフセット）を除去します。</strong></p>
+<p>例: 加速度センサに時間経過で増えていく温度ドリフトが乗る → HPFでドリフト成分を除去し、振動成分だけを抽出</p>
+<p><strong>移動平均フィルタ（Moving Average）</strong></p>
+<p><strong>直近の複数の測定値を平均化して、ランダムなノイズを打ち消します。</strong></p>
+<p>例: 直近5個のADC値を平均する。ノイズはプラスとマイナスが打ち消し合い、真値に近づく</p>
+<h3 id="4-フィルタの限界注意点">4. フィルタの限界・注意点</h3>
+<p>フィルタは「万能のノイズ除去剤」ではありません。</p>
+<p><strong>① 必要な信号も一緒に削ることがある</strong></p>
+<p>LPFを強くかけすぎると、<strong>本当に急いで変化している温度</strong>まで滑らかにされて、変化のタイミングが遅れて見えます。</p>
+<p><strong>② フィルタの種類を間違えると逆効果</strong></p>
+<p>温度のドリフトを除去したいのにHPFを使うと、<strong>定常的な温度値そのものが消えてしまいます</strong>。何を取り除きたいノイズなのかを把握してから選ぶ必要があります。</p>
+<p><strong>③ フィルタは「情報を作る」ものではない</strong></p>
+<p>ノイズに埋もれた微小な信号をフィルタで「見えやすく」はできますが、<strong>元のデータに全く含まれていない情報は生み出せません</strong>。</p>
+<h3 id="一言で言うと">一言で言うと</h3>
+<p>フィルタは、センサ信号に混じった不要な成分（ノイズ・ドリフト・揺らぎ）を取り除き、「本当に知りたい物理量の変化」だけを抽出するための信号処理です。LPF・HPF・移動平均など、取り除きたいノイズの性質に応じて使い分けます。</p>
+<h2 id="フィルタの種類">フィルタの種類</h2>
+<p>フィルタは、<strong>「どの速さ（周波数）の変化を通して、どの速さの変化を遮るか」</strong> で分類されます。</p>
+<h3 id="1-基本概念">1. 基本概念</h3>
+<p>センサ信号の変化には「速さ」があります。</p>
+<ul>
+<li><strong>ゆっくり変化</strong>: 室温の変化、体重の変化、バッテリーの電圧低下</li>
+<li><strong>中程度の変化</strong>: 人間の歩行の加速度、機械の振動</li>
+<li><strong>急激な変化</strong>: 電気ノイズ、スイッチのチャタリング、通信干渉</li>
+</ul>
+<p>フィルタはこの「速さ」の境界を決めて、<strong>通したい変化だけを残す</strong>仕組みです。</p>
+<h3 id="2-直感的なアナロジーふるい">2. 直感的なアナロジー：ふるい</h3>
+<table>
+<thead>
+<tr>
+<th>フィルタ</th>
+<th>ふるいのイメージ</th>
+<th>通すもの</th>
+<th>遮るもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ローパス</strong></td>
+<td>細かい目のふるい</td>
+<td>大きな粒子（ゆっくり変化）</td>
+<td>小さな粒子（急激な変化）</td>
+</tr>
+<tr>
+<td><strong>ハイパス</strong></td>
+<td>粗い目のふるい</td>
+<td>小さな粒子（急激な変化）</td>
+<td>大きな粒子（ゆっくり変化）</td>
+</tr>
+<tr>
+<td><strong>バンドパス</strong></td>
+<td>特定の大きさだけ通すふるい</td>
+<td>決まった大きさの粒子だけ</td>
+<td>それ以外全部</td>
+</tr>
+<tr>
+<td><strong>バンドストップ</strong></td>
+<td>特定の大きさだけ引っかけるふるい</td>
+<td>決まった大きさ以外全部</td>
+<td>特定の大きさの粒子だけ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-フィルタの種類">3. フィルタの種類</h3>
+<p><strong>ローパスフィルタ（LPF / Low-Pass Filter）</strong></p>
+<p><strong>ゆっくり変化する信号を通し、急激な変化（高周波ノイズ）を遮ります。</strong></p>
+<ul>
+<li>用途例: 温度センサのノイズ除去、ジャイロのドリフト補正</li>
+<li>センサ例: TMP36の値がランダムにガタガタ揺れる → LPFで滑らかに</li>
+<li>コード例（移動平均）:<pre><code class="language-cpp"><span class="hljs-type">float</span> filtered = <span class="hljs-number">0.9</span> * prevValue + <span class="hljs-number">0.1</span> * newValue;  <span class="hljs-comment">// 直前値を90%＋新値を10%</span>
+</code></pre>
+</li>
+</ul>
+<p><strong>ハイパスフィルタ（HPF / High-Pass Filter）</strong></p>
+<p><strong>急激な変化を通し、ゆっくりした変化（ドリフト・オフセット）を遮ります。</strong></p>
+<ul>
+<li>用途例: 加速度センサから重力（DC成分）を除去して振動だけを取り出す</li>
+<li>センサ例: MPU6050の加速度から、重力の影響を除いて動的加速度だけを抽出</li>
+<li>注意: 定常値（温度の絶対値など）も消えるので、使い方を間違えると情報が失われる</li>
+</ul>
+<p><strong>バンドパスフィルタ（BPF / Band-Pass Filter）</strong></p>
+<p><strong>特定の周波数帯域だけを通し、それより低い・高い周波数を両方遮ります。</strong></p>
+<ul>
+<li>用途例: 心電図（ECG）で心拍の周波数帯域（0.5〜40Hz）だけを抽出</li>
+<li>センサ例: 振動センサで、回転機械の特定の回転数に対応する振動だけを取り出す</li>
+<li>応用: 音声認識、生体信号処理</li>
+</ul>
+<p><strong>バンドストップフィルタ（BSF / Band-Stop Filter）/ ノッチフィルタ</strong></p>
+<p><strong>特定の周波数だけを遮り、それ以外は通します。「ノッチフィルタ」とも呼ばれます。</strong></p>
+<ul>
+<li>用途例: 電源の50Hz/60Hz商用電源ノイズ（ハムノイズ）を除去</li>
+<li>センサ例: 生体信号計測で、電源周波数が信号に乗るのを除去</li>
+<li>特徴: 特定の「敵」だけを精密に除去できる</li>
+</ul>
+<p><strong>オールパスフィルタ（All-Pass Filter）</strong></p>
+<p><strong>すべての周波数を通しますが、位相（タイミング）だけをずらします。</strong></p>
+<ul>
+<li>用途例: 信号のタイミング調整、位相補正</li>
+<li>センサ例: 複数センサの信号を時間的に揃える処理</li>
+</ul>
+<h3 id="4-実装方法による分類">4. 実装方法による分類</h3>
+<p>同じ「ローパスフィルタ」でも、作り方は2種類あります。</p>
+<p><strong>アナログフィルタ（回路で実現）</strong></p>
+<p>抵抗（R）とコンデンサ（C）だけで作れる<strong>RCフィルタ</strong>が代表的です。</p>
+<pre><code>【RCローパスフィルタ】
+入力 ──[R]──┬── 出力
+            │
+           [C]
+            │
+           GND
+</code></pre>
+<ul>
+<li>カットオフ周波数 fc = 1 / (2πRC)</li>
+<li>センサの直後に入れて、ノイズをADC変換前に除去する</li>
+</ul>
+<p><strong>デジタルフィルタ（ソフトウェアで実現）</strong></p>
+<p>ADC変換後の数字に対して計算処理を行います。</p>
+<table>
+<thead>
+<tr>
+<th>デジタルフィルタ</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>移動平均</strong></td>
+<td>直近N個を平均。シンプルだが遅延が生じる</td>
+</tr>
+<tr>
+<td><strong>指数平滑</strong></td>
+<td>前回値と新値を重み付け。メモリ効率が良い</td>
+</tr>
+<tr>
+<td><strong>FIRフィルタ</strong></td>
+<td>有限インパルス応答。安定で位相特性が良い</td>
+</tr>
+<tr>
+<td><strong>IIRフィルタ</strong></td>
+<td>無限インパルス応答。FIRより少ない次数で鋭い特性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-センサ用途別のフィルタ使い分け">5. センサ用途別のフィルタ使い分け</h3>
+<table>
+<thead>
+<tr>
+<th>センサ・用途</th>
+<th>おすすめフィルタ</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>温度センサ</strong></td>
+<td>LPF（移動平均 or 指数平滑）</td>
+<td>温度はゆっくり変化するので、急激なノイズを除去</td>
+</tr>
+<tr>
+<td><strong>加速度センサ（姿勢推定）</strong></td>
+<td>LPF（重力成分）＋HPF（動的加速度）</td>
+<td>重力と動的加速度を分離</td>
+</tr>
+<tr>
+<td><strong>心電図・脈波</strong></td>
+<td>BPF（0.5〜40Hz）</td>
+<td>心拍成分だけを抽出</td>
+</tr>
+<tr>
+<td><strong>電源ノイズ除去</strong></td>
+<td>ノッチフィルタ（50/60Hz）</td>
+<td>商用電源周波数だけを精密に除去</td>
+</tr>
+<tr>
+<td><strong>超音波距離センサ</strong></td>
+<td>medianフィルタ（中央値）</td>
+<td>スパイクノイズ（外れ値）を除去</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-補足移動平均は本当にフィルタなのか">6. 補足：移動平均は本当に「フィルタ」なのか</h3>
+<p>移動平均は直感的で使いやすいですが、<strong>周波数特性があまり鋭くありません</strong>。急に遮る境界がぼやけていて、ノイズと本物の信号の区別が曖昧になりやすいです。</p>
+<p>より高性能なフィルタ（バターワース、チェビシェフ、ガウシアンなど）は、<strong>遮る周波数と通す周波数の境界を鋭く</strong>できます。ただし、計算量が増えたり、信号に遅延（位相遅れ）が生じたりします。</p>
+<h2 id="実験">実験</h2>
+<p>実際にフィルタをPythonで動作させてみます。</p>
+<h3 id="実験の設定">実験の設定</h3>
+<p><strong>真の信号</strong>: 5Hz の正弦波（振幅2.0）</p>
+<p><strong>ノイズ</strong>:</p>
+<ul>
+<li>50Hz の高周波ノイズ（電源ノイズを模倣）</li>
+<li>120Hz の高周波ノイズ（機械振動を模倣）</li>
+<li>ホワイトノイズ（ランダムな微小ノイズ）</li>
+</ul>
+<p><strong>フィルタ条件</strong>（両方ともローパス、カットオフ20Hz）:</p>
+<ul>
+<li><strong>FIR</strong>: 101タップ、Hamming窓</li>
+<li><strong>IIR</strong>: 4次、Butterworth</li>
+</ul>
+<h3 id="実装">実装</h3>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> japanize_matplotlib
+<span class="hljs-string">&quot;&quot;&quot;
+FIRフィルタ vs IIRフィルタ 比較実験
+====================================
+真の信号（5Hz正弦波）にノイズ（50Hz, 120Hz, ホワイトノイズ）を加え、
+FIRフィルタとIIRフィルタでノイズ除去の効果を比較する。
+
+必要条件:
+    pip install numpy matplotlib scipy
+&quot;&quot;&quot;</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> signal
+
+
+<span class="hljs-comment"># ============================================================</span>
+<span class="hljs-comment"># 1. 実験パラメータの設定</span>
+<span class="hljs-comment"># ============================================================</span>
+
+fs = <span class="hljs-number">1000</span>           <span class="hljs-comment"># サンプリング周波数 [Hz]</span>
+T = <span class="hljs-number">2.0</span>             <span class="hljs-comment"># 信号の長さ [秒]</span>
+t = np.arange(<span class="hljs-number">0</span>, T, <span class="hljs-number">1</span>/fs)  <span class="hljs-comment"># 時間軸</span>
+N = <span class="hljs-built_in">len</span>(t)          <span class="hljs-comment"># サンプル数</span>
+
+<span class="hljs-comment"># 真の信号: 5Hz の正弦波（振幅2.0）</span>
+f_signal = <span class="hljs-number">5</span>
+signal_true = <span class="hljs-number">2.0</span> * np.sin(<span class="hljs-number">2</span> * np.pi * f_signal * t)
+
+<span class="hljs-comment"># ノイズ1: 50Hz の高周波ノイズ（電源ノイズを模倣）</span>
+f_noise1 = <span class="hljs-number">50</span>
+noise1 = <span class="hljs-number">0.8</span> * np.sin(<span class="hljs-number">2</span> * np.pi * f_noise1 * t)
+
+<span class="hljs-comment"># ノイズ2: 120Hz の高周波ノイズ（機械振動を模倣）</span>
+f_noise2 = <span class="hljs-number">120</span>
+noise2 = <span class="hljs-number">0.5</span> * np.sin(<span class="hljs-number">2</span> * np.pi * f_noise2 * t)
+
+<span class="hljs-comment"># ノイズ3: ホワイトノイズ（ランダムな微小ノイズ）</span>
+np.random.seed(<span class="hljs-number">42</span>)
+noise3 = <span class="hljs-number">0.3</span> * np.random.randn(N)
+
+<span class="hljs-comment"># 観測信号: 真の信号 + 全ノイズ</span>
+observed = signal_true + noise1 + noise2 + noise3
+
+
+<span class="hljs-comment"># ============================================================</span>
+<span class="hljs-comment"># 2. FIRフィルタの設計と適用</span>
+<span class="hljs-comment"># ============================================================</span>
+
+fc = <span class="hljs-number">20</span>             <span class="hljs-comment"># カットオフ周波数 [Hz]</span>
+numtaps = <span class="hljs-number">101</span>       <span class="hljs-comment"># FIRフィルタのタップ数（次数）</span>
+
+<span class="hljs-comment"># Hamming窓を使ったローパスFIRフィルタの係数を設計</span>
+fir_coeff = signal.firwin(numtaps, cutoff=fc, fs=fs, window=<span class="hljs-string">&#x27;hamming&#x27;</span>)
+
+<span class="hljs-comment"># FIRフィルタを観測信号に適用</span>
+fir_filtered = signal.lfilter(fir_coeff, <span class="hljs-number">1.0</span>, observed)
+
+<span class="hljs-comment"># FIRフィルタのグループ遅延（線形位相なので一定）</span>
+fir_delay_samples = (numtaps - <span class="hljs-number">1</span>) // <span class="hljs-number">2</span>
+fir_delay_sec = fir_delay_samples / fs
+
+
+<span class="hljs-comment"># ============================================================</span>
+<span class="hljs-comment"># 3. IIRフィルタの設計と適用</span>
+<span class="hljs-comment"># ============================================================</span>
+
+order = <span class="hljs-number">4</span>           <span class="hljs-comment"># IIRフィルタの次数</span>
+
+<span class="hljs-comment"># バターワース ローパスIIRフィルタの係数を設計</span>
+b_iir, a_iir = signal.butter(order, fc, fs=fs, btype=<span class="hljs-string">&#x27;low&#x27;</span>)
+
+<span class="hljs-comment"># IIRフィルタを観測信号に適用</span>
+iir_filtered = signal.lfilter(b_iir, a_iir, observed)
+
+
+<span class="hljs-comment"># ============================================================</span>
+<span class="hljs-comment"># 4. 定量的な評価（遅延補正後）</span>
+<span class="hljs-comment"># ============================================================</span>
+
+<span class="hljs-comment"># FIRは線形位相なので一定の遅延が生じる。評価時は真の信号を遅延させて比較</span>
+signal_delayed_fir = np.zeros_like(signal_true)
+signal_delayed_fir[fir_delay_samples:] = signal_true[:-fir_delay_samples]
+
+<span class="hljs-comment"># IIRの遅延は概算（位相が非線形なので完全補正は困難）</span>
+iir_delay_samples = <span class="hljs-number">10</span>
+signal_delayed_iir = np.zeros_like(signal_true)
+signal_delayed_iir[iir_delay_samples:] = signal_true[:-iir_delay_samples]
+
+<span class="hljs-comment"># 評価開始位置（過渡応答が落ち着いた後）</span>
+start_eval = <span class="hljs-number">600</span>
+
+<span class="hljs-comment"># RMSE（平均二乗誤差の平方根）を計算</span>
+rmse_observed = np.sqrt(np.mean((observed[start_eval:] - signal_true[start_eval:])**<span class="hljs-number">2</span>))
+rmse_fir = np.sqrt(np.mean((fir_filtered[start_eval:] - signal_delayed_fir[start_eval:])**<span class="hljs-number">2</span>))
+rmse_iir = np.sqrt(np.mean((iir_filtered[start_eval:] - signal_delayed_iir[start_eval:])**<span class="hljs-number">2</span>))
+
+<span class="hljs-comment"># SNR（信号対雑音比）を計算</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_snr</span>(<span class="hljs-params">sig, noise</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-number">10</span> * np.log10(np.mean(sig**<span class="hljs-number">2</span>) / np.mean(noise**<span class="hljs-number">2</span>))
+
+noise_obs = observed[start_eval:] - signal_true[start_eval:]
+noise_fir = fir_filtered[start_eval:] - signal_delayed_fir[start_eval:]
+noise_iir = iir_filtered[start_eval:] - signal_delayed_iir[start_eval:]
+
+snr_observed = compute_snr(signal_true[start_eval:], noise_obs)
+snr_fir = compute_snr(signal_delayed_fir[start_eval:], noise_fir)
+snr_iir = compute_snr(signal_delayed_iir[start_eval:], noise_iir)
+
+
+<span class="hljs-comment"># ============================================================</span>
+<span class="hljs-comment"># 5. 結果の表示（コンソール出力）</span>
+<span class="hljs-comment"># ============================================================</span>
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">60</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;【FIRフィルタ vs IIRフィルタ 比較実験結果】&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">60</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n【実験条件】&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  サンプリング周波数: <span class="hljs-subst">{fs}</span> Hz&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  信号長: <span class="hljs-subst">{T}</span> 秒&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  真の信号: <span class="hljs-subst">{f_signal}</span> Hz 正弦波（振幅2.0）&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  ノイズ: <span class="hljs-subst">{f_noise1}</span>Hz + <span class="hljs-subst">{f_noise2}</span>Hz + ホワイトノイズ&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  フィルタ: ローパス, カットオフ <span class="hljs-subst">{fc}</span> Hz&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  FIR: <span class="hljs-subst">{numtaps}</span>タップ, Hamming窓&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  IIR: <span class="hljs-subst">{order}</span>次, Butterworth&quot;</span>)
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n【遅延情報】&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  FIRグループ遅延: <span class="hljs-subst">{fir_delay_samples}</span> サンプル = <span class="hljs-subst">{fir_delay_sec*<span class="hljs-number">1000</span>:<span class="hljs-number">.1</span>f}</span> ms&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  IIR概算遅延: <span class="hljs-subst">{iir_delay_samples}</span> サンプル = <span class="hljs-subst">{iir_delay_samples/fs*<span class="hljs-number">1000</span>:<span class="hljs-number">.1</span>f}</span> ms&quot;</span>)
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n【定量的評価（遅延補正後）】&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  <span class="hljs-subst">{<span class="hljs-string">&#x27;項目&#x27;</span>:&lt;<span class="hljs-number">20</span>}</span> <span class="hljs-subst">{<span class="hljs-string">&#x27;観測信号&#x27;</span>:&gt;<span class="hljs-number">12</span>}</span> <span class="hljs-subst">{<span class="hljs-string">&#x27;FIR後&#x27;</span>:&gt;<span class="hljs-number">12</span>}</span> <span class="hljs-subst">{<span class="hljs-string">&#x27;IIR後&#x27;</span>:&gt;<span class="hljs-number">12</span>}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  <span class="hljs-subst">{<span class="hljs-string">&#x27;-&#x27;</span>*<span class="hljs-number">56</span>}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  <span class="hljs-subst">{<span class="hljs-string">&#x27;RMSE (誤差)&#x27;</span>:&lt;<span class="hljs-number">20</span>}</span> <span class="hljs-subst">{rmse_observed:&gt;<span class="hljs-number">12.4</span>f}</span> <span class="hljs-subst">{rmse_fir:&gt;<span class="hljs-number">12.4</span>f}</span> <span class="hljs-subst">{rmse_iir:&gt;<span class="hljs-number">12.4</span>f}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  <span class="hljs-subst">{<span class="hljs-string">&#x27;SNR (dB)&#x27;</span>:&lt;<span class="hljs-number">20</span>}</span> <span class="hljs-subst">{snr_observed:&gt;<span class="hljs-number">12.2</span>f}</span> <span class="hljs-subst">{snr_fir:&gt;<span class="hljs-number">12.2</span>f}</span> <span class="hljs-subst">{snr_iir:&gt;<span class="hljs-number">12.2</span>f}</span>&quot;</span>)
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n【解釈】&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  - FIR: SNR <span class="hljs-subst">{snr_fir - snr_observed:<span class="hljs-number">.1</span>f}</span>dB 向上, RMSE 約 <span class="hljs-subst">{rmse_observed/rmse_fir:<span class="hljs-number">.0</span>f}</span> 分の1&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;  - IIR: SNR <span class="hljs-subst">{snr_iir - snr_observed:<span class="hljs-number">.1</span>f}</span>dB 向上, RMSE 約 <span class="hljs-subst">{rmse_observed/rmse_iir:<span class="hljs-number">.1</span>f}</span> 分の1&quot;</span>)
+
+
+<span class="hljs-comment"># ============================================================</span>
+<span class="hljs-comment"># 6. グラフ描画</span>
+<span class="hljs-comment"># ============================================================</span>
+
+<span class="hljs-comment"># --- 図1: 時域波形の比較 ---</span>
+fig1, axes = plt.subplots(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, figsize=(<span class="hljs-number">14</span>, <span class="hljs-number">12</span>), sharex=<span class="hljs-literal">True</span>)
+
+axes[<span class="hljs-number">0</span>].plot(t, signal_true, <span class="hljs-string">&#x27;g-&#x27;</span>, linewidth=<span class="hljs-number">1.5</span>)
+axes[<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&#x27;Amplitude&#x27;</span>)
+axes[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&#x27;(1) 真の信号（5Hz 正弦波）&#x27;</span>, fontsize=<span class="hljs-number">12</span>)
+axes[<span class="hljs-number">0</span>].set_ylim(-<span class="hljs-number">3.5</span>, <span class="hljs-number">3.5</span>)
+axes[<span class="hljs-number">0</span>].grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+axes[<span class="hljs-number">1</span>].plot(t, observed, <span class="hljs-string">&#x27;r-&#x27;</span>, linewidth=<span class="hljs-number">0.5</span>, alpha=<span class="hljs-number">0.8</span>)
+axes[<span class="hljs-number">1</span>].set_ylabel(<span class="hljs-string">&#x27;Amplitude&#x27;</span>)
+axes[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&#x27;(2) 観測信号（真の信号 + 50Hz + 120Hz + ホワイトノイズ）&#x27;</span>, fontsize=<span class="hljs-number">12</span>)
+axes[<span class="hljs-number">1</span>].set_ylim(-<span class="hljs-number">5</span>, <span class="hljs-number">5</span>)
+axes[<span class="hljs-number">1</span>].grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+axes[<span class="hljs-number">2</span>].plot(t, fir_filtered, <span class="hljs-string">&#x27;b-&#x27;</span>, linewidth=<span class="hljs-number">1.0</span>)
+axes[<span class="hljs-number">2</span>].set_ylabel(<span class="hljs-string">&#x27;Amplitude&#x27;</span>)
+axes[<span class="hljs-number">2</span>].set_title(<span class="hljs-string">f&#x27;(3) FIRフィルタ後（<span class="hljs-subst">{numtaps}</span>タップ, fc=<span class="hljs-subst">{fc}</span>Hz, Hamming窓）&#x27;</span>, fontsize=<span class="hljs-number">12</span>)
+axes[<span class="hljs-number">2</span>].set_ylim(-<span class="hljs-number">3.5</span>, <span class="hljs-number">3.5</span>)
+axes[<span class="hljs-number">2</span>].grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+axes[<span class="hljs-number">3</span>].plot(t, iir_filtered, <span class="hljs-string">&#x27;m-&#x27;</span>, linewidth=<span class="hljs-number">1.0</span>)
+axes[<span class="hljs-number">3</span>].set_ylabel(<span class="hljs-string">&#x27;Amplitude&#x27;</span>)
+axes[<span class="hljs-number">3</span>].set_title(<span class="hljs-string">f&#x27;(4) IIRフィルタ後（<span class="hljs-subst">{order}</span>次, fc=<span class="hljs-subst">{fc}</span>Hz, Butterworth）&#x27;</span>, fontsize=<span class="hljs-number">12</span>)
+axes[<span class="hljs-number">3</span>].set_xlabel(<span class="hljs-string">&#x27;Time [s]&#x27;</span>)
+axes[<span class="hljs-number">3</span>].set_ylim(-<span class="hljs-number">3.5</span>, <span class="hljs-number">3.5</span>)
+axes[<span class="hljs-number">3</span>].grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="hljs-string">&#x27;filter_time_domain.png&#x27;</span>, dpi=<span class="hljs-number">150</span>, bbox_inches=<span class="hljs-string">&#x27;tight&#x27;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n  → filter_time_domain.png を保存しました&quot;</span>)
+
+
+<span class="hljs-comment"># --- 図2: 周波数応答の比較 ---</span>
+fig2, axes = plt.subplots(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">8</span>))
+
+w_fir, h_fir = signal.freqz(fir_coeff, worN=<span class="hljs-number">8192</span>, fs=fs)
+axes[<span class="hljs-number">0</span>].plot(w_fir, <span class="hljs-number">20</span> * np.log10(np.<span class="hljs-built_in">abs</span>(h_fir) + <span class="hljs-number">1e-10</span>), <span class="hljs-string">&#x27;b-&#x27;</span>, linewidth=<span class="hljs-number">1.5</span>)
+axes[<span class="hljs-number">0</span>].axvline(fc, color=<span class="hljs-string">&#x27;r&#x27;</span>, linestyle=<span class="hljs-string">&#x27;--&#x27;</span>, alpha=<span class="hljs-number">0.7</span>, label=<span class="hljs-string">f&#x27;Cutoff fc=<span class="hljs-subst">{fc}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">0</span>].axvline(f_signal, color=<span class="hljs-string">&#x27;g&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.8</span>, label=<span class="hljs-string">f&#x27;Signal f=<span class="hljs-subst">{f_signal}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">0</span>].axvline(f_noise1, color=<span class="hljs-string">&#x27;orange&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.8</span>, label=<span class="hljs-string">f&#x27;Noise f=<span class="hljs-subst">{f_noise1}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">0</span>].axvline(f_noise2, color=<span class="hljs-string">&#x27;purple&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.8</span>, label=<span class="hljs-string">f&#x27;Noise f=<span class="hljs-subst">{f_noise2}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">0</span>].axhline(-<span class="hljs-number">3</span>, color=<span class="hljs-string">&#x27;gray&#x27;</span>, linestyle=<span class="hljs-string">&#x27;--&#x27;</span>, alpha=<span class="hljs-number">0.5</span>)
+axes[<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">&#x27;Gain [dB]&#x27;</span>)
+axes[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">f&#x27;FIRフィルタの周波数応答（<span class="hljs-subst">{numtaps}</span>タップ, Hamming窓, fc=<span class="hljs-subst">{fc}</span>Hz）&#x27;</span>, fontsize=<span class="hljs-number">12</span>)
+axes[<span class="hljs-number">0</span>].set_xlim(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>)
+axes[<span class="hljs-number">0</span>].set_ylim(-<span class="hljs-number">80</span>, <span class="hljs-number">5</span>)
+axes[<span class="hljs-number">0</span>].legend(loc=<span class="hljs-string">&#x27;upper right&#x27;</span>, fontsize=<span class="hljs-number">8</span>)
+axes[<span class="hljs-number">0</span>].grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+w_iir, h_iir = signal.freqz(b_iir, a_iir, worN=<span class="hljs-number">8192</span>, fs=fs)
+axes[<span class="hljs-number">1</span>].plot(w_iir, <span class="hljs-number">20</span> * np.log10(np.<span class="hljs-built_in">abs</span>(h_iir) + <span class="hljs-number">1e-10</span>), <span class="hljs-string">&#x27;m-&#x27;</span>, linewidth=<span class="hljs-number">1.5</span>)
+axes[<span class="hljs-number">1</span>].axvline(fc, color=<span class="hljs-string">&#x27;r&#x27;</span>, linestyle=<span class="hljs-string">&#x27;--&#x27;</span>, alpha=<span class="hljs-number">0.7</span>, label=<span class="hljs-string">f&#x27;Cutoff fc=<span class="hljs-subst">{fc}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">1</span>].axvline(f_signal, color=<span class="hljs-string">&#x27;g&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.8</span>, label=<span class="hljs-string">f&#x27;Signal f=<span class="hljs-subst">{f_signal}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">1</span>].axvline(f_noise1, color=<span class="hljs-string">&#x27;orange&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.8</span>, label=<span class="hljs-string">f&#x27;Noise f=<span class="hljs-subst">{f_noise1}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">1</span>].axvline(f_noise2, color=<span class="hljs-string">&#x27;purple&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.8</span>, label=<span class="hljs-string">f&#x27;Noise f=<span class="hljs-subst">{f_noise2}</span>Hz&#x27;</span>)
+axes[<span class="hljs-number">1</span>].axhline(-<span class="hljs-number">3</span>, color=<span class="hljs-string">&#x27;gray&#x27;</span>, linestyle=<span class="hljs-string">&#x27;--&#x27;</span>, alpha=<span class="hljs-number">0.5</span>)
+axes[<span class="hljs-number">1</span>].set_ylabel(<span class="hljs-string">&#x27;Gain [dB]&#x27;</span>)
+axes[<span class="hljs-number">1</span>].set_xlabel(<span class="hljs-string">&#x27;Frequency [Hz]&#x27;</span>)
+axes[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">f&#x27;IIRフィルタの周波数応答（<span class="hljs-subst">{order}</span>次, Butterworth, fc=<span class="hljs-subst">{fc}</span>Hz）&#x27;</span>, fontsize=<span class="hljs-number">12</span>)
+axes[<span class="hljs-number">1</span>].set_xlim(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>)
+axes[<span class="hljs-number">1</span>].set_ylim(-<span class="hljs-number">80</span>, <span class="hljs-number">5</span>)
+axes[<span class="hljs-number">1</span>].legend(loc=<span class="hljs-string">&#x27;upper right&#x27;</span>, fontsize=<span class="hljs-number">8</span>)
+axes[<span class="hljs-number">1</span>].grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="hljs-string">&#x27;filter_frequency_response.png&#x27;</span>, dpi=<span class="hljs-number">150</span>, bbox_inches=<span class="hljs-string">&#x27;tight&#x27;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;  → filter_frequency_response.png を保存しました&quot;</span>)
+
+
+<span class="hljs-comment"># --- 図3: スペクトル比較 ---</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_spectrum</span>(<span class="hljs-params">x, fs</span>):
+    <span class="hljs-string">&quot;&quot;&quot;FFTで片側スペクトルを計算&quot;&quot;&quot;</span>
+    N = <span class="hljs-built_in">len</span>(x)
+    fft_vals = np.fft.rfft(x)
+    freqs = np.fft.rfftfreq(N, <span class="hljs-number">1</span>/fs)
+    magnitude = np.<span class="hljs-built_in">abs</span>(fft_vals) / N
+    magnitude[<span class="hljs-number">1</span>:] *= <span class="hljs-number">2</span>  <span class="hljs-comment"># DC以外は2倍</span>
+    <span class="hljs-keyword">return</span> freqs, magnitude
+
+fig3, axes = plt.subplots(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">14</span>, <span class="hljs-number">10</span>))
+
+signals = [
+    (<span class="hljs-string">&#x27;True Signal&#x27;</span>, signal_true, <span class="hljs-string">&#x27;g&#x27;</span>),
+    (<span class="hljs-string">&#x27;Observed (Noisy)&#x27;</span>, observed, <span class="hljs-string">&#x27;r&#x27;</span>),
+    (<span class="hljs-string">&#x27;FIR Filtered&#x27;</span>, fir_filtered, <span class="hljs-string">&#x27;b&#x27;</span>),
+    (<span class="hljs-string">&#x27;IIR Filtered&#x27;</span>, iir_filtered, <span class="hljs-string">&#x27;m&#x27;</span>),
+]
+
+<span class="hljs-keyword">for</span> idx, (name, sig, color) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(signals):
+    ax = axes[idx // <span class="hljs-number">2</span>, idx % <span class="hljs-number">2</span>]
+    freqs, mag = compute_spectrum(sig, fs)
+    ax.semilogy(freqs, mag + <span class="hljs-number">1e-10</span>, color=color, linewidth=<span class="hljs-number">1.0</span>)
+    ax.axvline(f_signal, color=<span class="hljs-string">&#x27;g&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.7</span>, label=<span class="hljs-string">f&#x27;Signal <span class="hljs-subst">{f_signal}</span>Hz&#x27;</span>)
+    ax.axvline(f_noise1, color=<span class="hljs-string">&#x27;orange&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.7</span>, label=<span class="hljs-string">f&#x27;Noise <span class="hljs-subst">{f_noise1}</span>Hz&#x27;</span>)
+    ax.axvline(f_noise2, color=<span class="hljs-string">&#x27;purple&#x27;</span>, linestyle=<span class="hljs-string">&#x27;:&#x27;</span>, alpha=<span class="hljs-number">0.7</span>, label=<span class="hljs-string">f&#x27;Noise <span class="hljs-subst">{f_noise2}</span>Hz&#x27;</span>)
+    ax.axvline(fc, color=<span class="hljs-string">&#x27;gray&#x27;</span>, linestyle=<span class="hljs-string">&#x27;--&#x27;</span>, alpha=<span class="hljs-number">0.5</span>, label=<span class="hljs-string">f&#x27;Cutoff <span class="hljs-subst">{fc}</span>Hz&#x27;</span>)
+    ax.set_xlim(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>)
+    ax.set_ylim(<span class="hljs-number">1e-4</span>, <span class="hljs-number">3</span>)
+    ax.set_xlabel(<span class="hljs-string">&#x27;Frequency [Hz]&#x27;</span>)
+    ax.set_ylabel(<span class="hljs-string">&#x27;Magnitude&#x27;</span>)
+    ax.set_title(<span class="hljs-string">f&#x27;Spectrum: <span class="hljs-subst">{name}</span>&#x27;</span>, fontsize=<span class="hljs-number">11</span>)
+    ax.legend(loc=<span class="hljs-string">&#x27;upper right&#x27;</span>, fontsize=<span class="hljs-number">7</span>)
+    ax.grid(<span class="hljs-literal">True</span>, alpha=<span class="hljs-number">0.3</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="hljs-string">&#x27;filter_spectrum.png&#x27;</span>, dpi=<span class="hljs-number">150</span>, bbox_inches=<span class="hljs-string">&#x27;tight&#x27;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;  → filter_spectrum.png を保存しました&quot;</span>)
+
+plt.show()
+</code></pre>
+<h3 id="結果1時域波形の比較">結果1：時域波形の比較</h3>
+<p>グラフを上から順に見ると:</p>
+<ol>
+<li><strong>真の信号（5Hz正弦波）</strong>: きれいな正弦波</li>
+<li><strong>観測信号（ノイズ混入）</strong>: 5Hzの正弦波が完全にノイズに埋もれている</li>
+<li><strong>FIRフィルタ後</strong>: ノイズがほぼ除去され、真の信号に非常に近い波形が復元されている</li>
+<li><strong>IIRフィルタ後</strong>: ノイズは減少しているが、FIRよりやや残存している</li>
+</ol>
+<img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\filtering\doc\image\filtering\filter_time_domain.png">
+<h3 id="結果2フィルタの周波数応答">結果2：フィルタの周波数応答</h3>
+<p><strong>FIRフィルタ（101タップ）</strong>:</p>
+<ul>
+<li>カットオフ20Hz付近で徐々に減衰</li>
+<li>20Hzより低い領域（5Hzの信号）はほぼ通過（0dB付近）</li>
+<li>50Hz・120Hzのノイズは大きく減衰（-40dB以下）</li>
+<li>遷移帯域がやや緩やか（タップ数を増やせば鋭くなる）</li>
+</ul>
+<p><strong>IIRフィルタ（4次Butterworth）</strong>:</p>
+<ul>
+<li>カットオフ20Hz付近でより急峻に減衰</li>
+<li>低域の平坦性が高い（通過域の歪みが少ない）</li>
+<li>高域の減衰もFIRと同等以上</li>
+</ul>
+<img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\filtering\doc\image\filtering\filter_frequency_response.png">
+<h3 id="結果3スペクトル比較filter_spectrumpng">結果3：スペクトル比較（filter_spectrum.png）</h3>
+<p>FFTスペクトルで確認すると:</p>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>5Hz成分</th>
+<th>50Hzノイズ</th>
+<th>120Hzノイズ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>観測信号</strong></td>
+<td>大きなピーク</td>
+<td>大きなピーク</td>
+<td>大きなピーク</td>
+</tr>
+<tr>
+<td><strong>FIR後</strong></td>
+<td>大きなピーク</td>
+<td>ほぼ消失</td>
+<td>ほぼ消失</td>
+</tr>
+<tr>
+<td><strong>IIR後</strong></td>
+<td>大きなピーク</td>
+<td>大幅減衰</td>
+<td>大幅減衰</td>
+</tr>
+</tbody>
+</table>
+<img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\filtering\doc\image\filtering\filter_spectrum.png">
+<h3 id="定量的な比較遅延補正後">定量的な比較（遅延補正後）</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>観測信号</th>
+<th>FIR後</th>
+<th>IIR後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RMSE（誤差）</strong></td>
+<td>0.7256</td>
+<td><strong>0.0534</strong></td>
+<td>0.4969</td>
+</tr>
+<tr>
+<td><strong>SNR（dB）</strong></td>
+<td>5.80</td>
+<td><strong>28.46</strong></td>
+<td>9.08</td>
+</tr>
+</tbody>
+</table>
+<h3 id="解釈">解釈</h3>
+<ul>
+<li><strong>FIRフィルタ</strong>: SNRが 5.80dB → 28.46dB に向上。RMSEが約1/13に減少。<strong>ノイズをほぼ完全に除去</strong>し、真の信号を高精度に復元</li>
+<li><strong>IIRフィルタ</strong>: SNRが 5.80dB → 9.08dB に向上。ノイズは減少したが、FIRほどではない</li>
+</ul>
+<h3 id="fir-vs-iir-の違いがわかるポイント">FIR vs IIR の違いがわかるポイント</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>FIR（101タップ）</th>
+<th>IIR（4次）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ノイズ除去性能</strong></td>
+<td>非常に高い</td>
+<td>中程度</td>
+</tr>
+<tr>
+<td><strong>位相特性</strong></td>
+<td>線形位相（全周波数で同じ遅延）</td>
+<td>非線形位相（周波数によって遅延が異なる）</td>
+</tr>
+<tr>
+<td><strong>遅延</strong></td>
+<td>50ms（大きい）</td>
+<td>約10ms（小さい）</td>
+</tr>
+<tr>
+<td><strong>計算量</strong></td>
+<td>多い（101回の乗算/サンプル）</td>
+<td>少ない（4〜5回の乗算/サンプル）</td>
+</tr>
+<tr>
+<td><strong>安定性</strong></td>
+<td>常に安定</td>
+<td>設計次第（不安定になりうる）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="実験からわかること">実験からわかること</h3>
+<p>FIRフィルタは、次数（タップ数）を増やせば高いノイズ除去性能と線形位相特性を得られるが、遅延が大きく計算量も多い。IIRフィルタは少ない次数で鋭いカットオフ特性を得られるが、位相特性に歪みがあり、ノイズ除去性能はタップ数が少ない場合に劣る。</p>
+<p>センサ信号処理では、<strong>温度や圧力など遅延が許容される用途</strong>にはFIRが適しており、<strong>リアルタイム制御など遅延が問題になる用途</strong>には低次のIIRが選ばれることが多いです。</p>
+<h2 id="総括">総括</h2>
+<p>今回話をまとめていきます。</p>
+<h3 id="フィルタの本質">フィルタの本質</h3>
+<blockquote>
+<p><strong>センサ信号に混じった「不要な変化（ノイズ）」を取り除き、「本当に知りたい物理量の変化」だけを残す信号処理。</strong></p>
+</blockquote>
+<h3 id="ノイズが入る理由">ノイズが入る理由</h3>
+<ul>
+<li>電気的ノイズ（電源揺らぎ、電磁波）</li>
+<li>ADCの量子化誤差</li>
+<li>機械的振動</li>
+<li>温度ドリフト</li>
+</ul>
+<h3 id="フィルタの種類通す変化の速さで分類">フィルタの種類（通す変化の速さで分類）</h3>
+<table>
+<thead>
+<tr>
+<th>フィルタ</th>
+<th>通すもの</th>
+<th>遮るもの</th>
+<th>用途例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LPF</strong></td>
+<td>ゆっくり変化</td>
+<td>急激な変化</td>
+<td>温度センサのノイズ除去</td>
+</tr>
+<tr>
+<td><strong>HPF</strong></td>
+<td>急激な変化</td>
+<td>ゆっくり変化</td>
+<td>加速度センサのドリフト除去</td>
+</tr>
+<tr>
+<td><strong>BPF</strong></td>
+<td>特定の速さだけ</td>
+<td>それ以外全部</td>
+<td>心電図の心拍成分抽出</td>
+</tr>
+<tr>
+<td><strong>ノッチ</strong></td>
+<td>特定の速さ以外</td>
+<td>特定の速さだけ</td>
+<td>50/60Hz電源ノイズ除去</td>
+</tr>
+</tbody>
+</table>
+<h3 id="実装方法">実装方法</h3>
+<ul>
+<li><strong>アナログフィルタ</strong>: 抵抗・コンデンサなどの回路で実現（ADC変換前にノイズ除去）</li>
+<li><strong>デジタルフィルタ</strong>: ADC後の数字に計算処理を適用（ソフトウェアで実現）</li>
+</ul>
+<h3 id="fir-vs-iirデジタルフィルタの2大方式">FIR vs IIR（デジタルフィルタの2大方式）</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FIR</th>
+<th>IIR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>性能</strong></td>
+<td>タップ数を増やせば高精度</td>
+<td>少ない次数で鋭い特性</td>
+</tr>
+<tr>
+<td><strong>位相特性</strong></td>
+<td>線形位相（全周波数で同じ遅延）</td>
+<td>非線形位相（遅延が周波数依存）</td>
+</tr>
+<tr>
+<td><strong>遅延</strong></td>
+<td>大きい</td>
+<td>小さい</td>
+</tr>
+<tr>
+<td><strong>計算量</strong></td>
+<td>多い</td>
+<td>少ない</td>
+</tr>
+<tr>
+<td><strong>安定性</strong></td>
+<td>常に安定</td>
+<td>設計次第で不安定になりうる</td>
+</tr>
+</tbody>
+</table>
+<h3 id="実験から得られた結論">実験から得られた結論</h3>
+<ul>
+<li><strong>FIR（101タップ）</strong>: SNR 5.8dB → 28.5dB に向上。ノイズをほぼ完全に除去できるが、遅延50ms</li>
+<li><strong>IIR（4次）</strong>: SNR 5.8dB → 9.1dB に向上。遅延は小さいが、同じカットオフでもノイズ除去性能はFIRに劣る</li>
+</ul>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/8vCFnSNz0E4?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
