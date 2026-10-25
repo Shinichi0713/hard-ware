@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>vcan&#x3068;&#x306f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>ロボットの制御を扱う制御屋さんは<a href="https://yoshishinnze.hatenablog.com/entry/2026/10/18/043000">CAN</a>を使う機会が非常に多くなります。</p>
+<p>そして日本のエンジニアの多くは基本Windowsを持っていることが多いです。
+ですのでWindows上でCANのシミュレーションができる環境が欲しいと思いました。</p>
+<p>本日はWindows上でCANのシミュレーションを行うVirtual CAN(以下 <code>vcan</code> と呼びます)の導入について説明していきます。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="vcanとは">vcanとは</h2>
+<p><strong>vcan（Virtual CAN）</strong> は、物理的なCANハードウェアなしに、ソフトウェアだけでCANバスを再現するLinuxカーネルの仮想デバイスです。</p>
+<h3 id="要点">要点</h3>
+<ul>
+<li><strong>CANバスをメモリ上でエミュレート</strong>するため、CANインターフェースカードが不要です</li>
+<li><strong>SocketCAN</strong> と連携し、<code>cansend</code> や <code>candump</code> などの標準ツールがそのまま使えます</li>
+<li>複数のvcanインターフェース（<code>vcan0</code>, <code>vcan1</code> など）を作成でき、<strong>複数バスの通信シミュレーション</strong>も可能です</li>
+<li>物理層（ビットレート、ノイズなど）の制約がないため、アプリケーションレイヤーの開発・テストに最適です</li>
+</ul>
+<h3 id="1コマンドで作成">1コマンドで作成</h3>
+<pre><code class="language-bash">sudo ip <span class="hljs-built_in">link</span> add dev vcan0 <span class="hljs-built_in">type</span> vcan
+sudo ip <span class="hljs-built_in">link</span> <span class="hljs-built_in">set</span> up vcan0
+</code></pre>
+<p>これだけで、実機と同じようにCANフレームの送受信ができます。</p>
+<h2 id="vcanで出来ること">vcanで出来ること</h2>
+<p>WSL2上で構築したvcan環境では、<strong>物理的なCANデバイスなしに、CAN通信の全てをソフトウェア上で再現</strong>できます。</p>
+<h3 id="1-canフレームの送受信">1. CANフレームの送受信</h3>
+<p><code>can-utils</code> を使って、実際のCANバスと同じコマンドで通信できます。</p>
+<pre><code class="language-bash"><span class="hljs-comment"># ターミナル1: 受信モニタ</span>
+candump vcan0
+
+<span class="hljs-comment"># ターミナル2: フレーム送信</span>
+cansend vcan0 123<span class="hljs-comment">#1122334455667788</span>
+</code></pre>
+<p><code>candump</code> にリアルタイムでフレームが表示されます。これは実機のCANインターフェースと全く同じ操作感です。</p>
+<h3 id="2-canログの再生解析">2. CANログの再生・解析</h3>
+<p>実車でキャプチャしたCANログ（.asc, .log, .csvなど）を <code>canplayer</code> で再生できます。</p>
+<pre><code class="language-bash"><span class="hljs-comment"># 保存したログをvcan0に再生</span>
+canplayer -I drive_log.log
+
+<span class="hljs-comment"># 別ターミナルで受信確認</span>
+candump vcan0
+</code></pre>
+<p>車載ネットワークの通信パターンを、実車なしで解析・学習できます。</p>
+<h3 id="3-pythonでcanアプリケーションの開発">3. PythonでCANアプリケーションの開発</h3>
+<p><code>python-can</code> を使って、自分でCAN送受信プログラムを書けます。</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> can
+
+bus = can.interface.Bus(channel=<span class="hljs-string">&#x27;vcan0&#x27;</span>, bustype=<span class="hljs-string">&#x27;socketcan&#x27;</span>)
+
+<span class="hljs-comment"># 送信</span>
+msg = can.Message(arbitration_id=<span class="hljs-number">0x123</span>, data=[<span class="hljs-number">0x11</span>, <span class="hljs-number">0x22</span>, <span class="hljs-number">0x33</span>])
+bus.send(msg)
+
+<span class="hljs-comment"># 受信</span>
+received = bus.recv(timeout=<span class="hljs-number">1.0</span>)
+<span class="hljs-built_in">print</span>(received)
+</code></pre>
+<p>このコードは、後に実機のCANインターフェース（SocketCAN対応USBデバイスなど）に差し替えるだけで、そのまま動作します。</p>
+<h3 id="4-ecuシミュレータの自作">4. ECUシミュレータの自作</h3>
+<p>PythonやCで、複数のECUをシミュレートするプログラムを書けます。例えば：</p>
+<ul>
+<li>エンジンRPMを定期的に送信するECU</li>
+<li>アクセル開度に応じてスロットル信号を返すECU</li>
+<li>診断リクエストに応答するECU</li>
+</ul>
+<p>これらを同時に動かして、仮想CANバス上で複数ECUの通信を再現できます。</p>
+<h3 id="5-dbcファイルのパースデコード">5. DBCファイルのパース・デコード</h3>
+<p>車載CANでは、生のフレーム（CAN-ID + 8バイトデータ）を物理量（速度、回転数、温度など）に変換するためにDBCファイル（データベース）を使います。</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> cantools
+
+db = cantools.database.load_file(<span class="hljs-string">&#x27;vehicle.dbc&#x27;</span>)
+msg = db.get_message_by_name(<span class="hljs-string">&#x27;EngineData&#x27;</span>)
+<span class="hljs-built_in">print</span>(msg.signals)  <span class="hljs-comment"># RPM, Temperature などの信号情報</span>
+</code></pre>
+<p>vcan上でフレームを受信し、DBCでデコードする一連の流れを練習できます。</p>
+<h3 id="6-uds診断通信のシミュレーション">6. UDS診断通信のシミュレーション</h3>
+<p>UDS（Unified Diagnostic Services）は、車の診断用プロトコルです。vcan上で以下ができます：</p>
+<ul>
+<li>診断リクエストの送信（例: 故障コードの読み出し）</li>
+<li>診断サーバ（ECU側）のシミュレーション</li>
+<li>ISO-TP（マルチフレーム通信）の練習</li>
+</ul>
+<h3 id="7-icsimなどの既存シミュレータを動かす">7. ICSimなどの既存シミュレータを動かす</h3>
+<p>ICSim（Instrument Cluster Simulator）は、CANフレームを受信してメーターパネルのGUIを動かすシミュレータです。vcan上で動作し、カーハッキングの学習に広く使われています。</p>
+<h3 id="実機との違い">実機との違い</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>vcan</th>
+<th>実機</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理層</td>
+<td>ソフトウェア（メモリ上）</td>
+<td>CANトランシーバ + バス線</td>
+</tr>
+<tr>
+<td>ビットレート</td>
+<td>不要（無限速）</td>
+<td>125Kbps, 500Kbpsなど</td>
+</tr>
+<tr>
+<td>ノイズ</td>
+<td>なし</td>
+<td>実環境のノイズあり</td>
+</tr>
+<tr>
+<td>複数ホスト</td>
+<td>同一マシン内のみ</td>
+<td>ネットワーク越しも可能</td>
+</tr>
+</tbody>
+</table>
+<p>vcanはアプリケーションレイヤーの開発・テストには十分ですが、物理層のノイズ耐性やタイミングの検証には実機が必要です。</p>
+<h2 id="環境構築">環境構築</h2>
+<p>ここまでの流れを、<strong>何をしたのか</strong>と<strong>なぜやったのか</strong>を含めて整理します。</p>
+<h3 id="全体の流れ">全体の流れ</h3>
+<p>WSL2のデフォルトカーネルには <strong>SocketCAN（vcan）が含まれていない</strong> ため、自分でカーネルをビルドして差し替える必要がありました。</p>
+<pre><code>問題発生
+  ↓
+カーネルソースを取得
+  ↓
+設定ファイル（.config）を準備
+  ↓
+CAN/vcan関連の設定を追加
+  ↓
+依存関係を解決（make oldconfig）
+  ↓
+カーネルをビルド（make）
+  ↓
+生成されたカーネルをWindows側に配置
+  ↓
+WSL2にカスタムカーネルを指定して再起動
+  ↓
+vcanが使えることを確認
+</code></pre>
+<h3 id="ステップごとの解説">ステップごとの解説</h3>
+<p><strong>ステップ1: 問題の確認</strong></p>
+<pre><code class="language-bash">sudo modprobe vcan
+</code></pre>
+<p><strong>エラー</strong>: <code>Module vcan not found</code></p>
+<p><strong>理由</strong>: WSL2のデフォルトカーネルにSocketCANモジュールがコンパイルされていなかったため。</p>
+<p><strong>ステップ2: カーネルソースの取得</strong></p>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> ~
+git <span class="hljs-built_in">clone</span> https://github.com/microsoft/WSL2-Linux-Kernel.git
+<span class="hljs-built_in">cd</span> WSL2-Linux-Kernel
+</code></pre>
+<p><strong>理由</strong>: カーネルの設定を変更して再ビルドするには、ソースコードが必要です。</p>
+<p><strong>ステップ3: 現在のカーネル設定をコピー</strong></p>
+<pre><code class="language-bash"><span class="hljs-built_in">cp</span> /proc/config.gz .
+gunzip config.gz
+<span class="hljs-built_in">mv</span> config .config
+</code></pre>
+<p><strong>理由</strong>: 現在動作しているカーネルの設定をベースにすることで、既存の機能を壊さずに必要な項目だけ追加できます。</p>
+<p><strong>トラブル</strong>: <code>.config</code> がディレクトリになってしまった場合は、一度削除またはリネームしてから再度コピーしました。</p>
+<p><strong>ステップ4: CAN/vcan関連の設定を追加</strong></p>
+<pre><code class="language-bash"><span class="hljs-built_in">chmod</span> +w .config
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_NETDEVICES=y&quot;</span> &gt;&gt; .config
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_CAN=m&quot;</span> &gt;&gt; .config
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_CAN_RAW=m&quot;</span> &gt;&gt; .config
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_CAN_BCM=m&quot;</span> &gt;&gt; .config
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_CAN_GW=m&quot;</span> &gt;&gt; .config
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_CAN_VCAN=m&quot;</span> &gt;&gt; .config
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CONFIG_CAN_SLCAN=m&quot;</span> &gt;&gt; .config
+</code></pre>
+<p><strong>理由</strong>: <code>make menuconfig</code> で手動で探しても <code>Network device support</code> が見つからなかったため、設定ファイルに直接追記しました。</p>
+<p><strong>各設定の意味</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>設定</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONFIG_NETDEVICES=y</code></td>
+<td>ネットワークデバイスサポートを有効化</td>
+</tr>
+<tr>
+<td><code>CONFIG_CAN=m</code></td>
+<td>CANバスサブシステムをモジュールとしてビルド</td>
+</tr>
+<tr>
+<td><code>CONFIG_CAN_VCAN=m</code></td>
+<td>仮想CANインターフェース（vcan）をモジュールとしてビルド</td>
+</tr>
+<tr>
+<td><code>CONFIG_CAN_SLCAN=m</code></td>
+<td>SLCANプロトコルをモジュールとしてビルド</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ステップ5: 依存関係の自動解決</strong></p>
+<pre><code class="language-bash">make oldconfig
+</code></pre>
+<p><strong>理由</strong>: 新しく追加した設定が、他の設定と矛盾しないかを自動的にチェック・修正します。質問が表示されたら、基本的に <strong>Enter</strong>（デフォルト値）で進めます。</p>
+<p><strong>ステップ6: 設定の確認</strong></p>
+<pre><code class="language-bash">grep -E <span class="hljs-string">&quot;CONFIG_NETDEVICES|CONFIG_CAN&quot;</span> .config
+</code></pre>
+<p><strong>確認すべき結果</strong>:</p>
+<pre><code>CONFIG_NETDEVICES=y
+CONFIG_CAN=m
+CONFIG_CAN_RAW=m
+CONFIG_CAN_VCAN=m
+CONFIG_CAN_SLCAN=m
+CONFIG_CAN_DEV=m
+</code></pre>
+<p>これらが表示されれば、CAN関連の設定が正しく反映されています。</p>
+<p><strong>ステップ7: カーネルのビルド</strong></p>
+<pre><code class="language-bash">make -j$(<span class="hljs-built_in">nproc</span>)
+</code></pre>
+<p><strong>理由</strong>: ソースコードから実際のカーネルイメージ（<code>bzImage</code>）を生成します。<code>$(nproc)</code> はCPUコア数を自動検出して並列ビルドするため、時間を短縮できます。</p>
+<p><strong>所要時間</strong>: 10分〜30分程度</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\others\can\image\how_to_build_vcan_env\1792314762242.png" alt="1792314762242"></p>
+<p><strong>ステップ8: カーネルイメージをWindows側にコピー</strong></p>
+<pre><code class="language-bash"><span class="hljs-built_in">cp</span> <span class="hljs-built_in">arch</span>/x86/boot/bzImage /mnt/c/Users/<span class="hljs-variable">$USER</span>/bzImage
+</code></pre>
+<p><strong>理由</strong>: WSL2はWindows側の設定ファイル（<code>.wslconfig</code>）からカーネルパスを読み取るため、Windowsのファイルシステム上に配置する必要があります。</p>
+<p><strong>ステップ9: WSL2にカスタムカーネルを指定</strong></p>
+<p>Windows側で <code>%USERPROFILE%\.wslconfig</code> を作成・編集します。</p>
+<pre><code class="language-ini"><span class="hljs-section">[wsl2]</span>
+<span class="hljs-attr">kernel</span>=C:\\Users\\&lt;ユーザー名&gt;\\bzImage
+</code></pre>
+<p><strong>理由</strong>: WSL2が起動時に、デフォルトカーネルではなく、このカスタムカーネルを読み込むように指示します。</p>
+<p><strong>ステップ10: WSL2を再起動</strong></p>
+<pre><code class="language-powershell">wsl <span class="hljs-literal">--shutdown</span>
+</code></pre>
+<p>その後、WSL2に再度入ります。</p>
+<pre><code class="language-bash"><span class="hljs-built_in">uname</span> -r
+</code></pre>
+<p>こんな感じでカスタムカーネルのversionが表示されればカスタムカーネルが読み込まれています。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\others\can\image\how_to_build_vcan_env\1792316645100.png" alt="1792316645100"></p>
+<p><strong>ステップ11: vcanの動作確認</strong></p>
+<pre><code class="language-bash">sudo modprobe vcan
+sudo ip <span class="hljs-built_in">link</span> add dev vcan0 <span class="hljs-built_in">type</span> vcan
+sudo ip <span class="hljs-built_in">link</span> <span class="hljs-built_in">set</span> up vcan0
+ip <span class="hljs-built_in">link</span> show vcan0
+</code></pre>
+<p><strong>成功の確認</strong>: <code>vcan0</code> の情報が表示されればOKです。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\others\can\image\how_to_build_vcan_env\1792317079506.png" alt="1792317079506"></p>
+<h3 id="全体手順">全体手順</h3>
+<p>全体手順はこんな感じとなります。</p>
+<table>
+<thead>
+<tr>
+<th>ステップ</th>
+<th>やったこと</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>vcanのロードを試す</td>
+<td>問題を確認</td>
+</tr>
+<tr>
+<td>2</td>
+<td>カーネルソースを取得</td>
+<td>ビルドの準備</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>.config</code> をコピー</td>
+<td>現在の設定をベースにする</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CAN設定を追加</td>
+<td>vcanを有効化する</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>make oldconfig</code></td>
+<td>依存関係を解決</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>grep</code> で確認</td>
+<td>設定が反映されたか確認</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>make -j$(nproc)</code></td>
+<td>カーネルをビルド</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>bzImage</code> をWindowsにコピー</td>
+<td>WSL2から参照できるようにする</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>.wslconfig</code> を作成</td>
+<td>カスタムカーネルを指定</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>wsl --shutdown</code></td>
+<td>再起動して設定を反映</td>
+</tr>
+<tr>
+<td>11</td>
+<td>vcanの動作確認</td>
+<td>成功したか確認</td>
+</tr>
+</tbody>
+</table>
+<h2 id="例題">例題</h2>
+<p>vcan0 が正常に動作していれば環境構築できています。
+以下に、CAN通信を体感できる簡単な例題を3つ示します。</p>
+<h3 id="例題1-基本的な送受信">例題1: 基本的な送受信</h3>
+<p><strong>ターミナル1（受信側）</strong></p>
+<pre><code class="language-bash">candump vcan0
+</code></pre>
+<p><strong>ターミナル2（送信側）</strong></p>
+<pre><code class="language-bash">cansend vcan0 123<span class="hljs-comment">#DEADBEEF</span>
+</code></pre>
+<p><strong>確認ポイント</strong>: ターミナル1に以下のように表示されれば成功です。</p>
+<p><img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\others\can\image\how_to_build_vcan_env\1792317417992.png" alt="1792317417992"></p>
+<p><code>123</code> はCAN-ID（16進数）、<code>[4]</code> はデータ長（4バイト）、その後がデータです。</p>
+<h3 id="例題2-連続送信とフィルタ">例題2: 連続送信とフィルタ</h3>
+<p><strong>ターミナル1（特定IDのみ受信）</strong></p>
+<pre><code class="language-bash">candump vcan0,123:7FF
+</code></pre>
+<p><code>123:7FF</code> は「CAN-ID <code>0x123</code> のみ受信」というフィルタです。</p>
+<p><strong>ターミナル2（異なるIDで送信）</strong></p>
+<pre><code class="language-bash">cansend vcan0 123<span class="hljs-comment">#11</span>
+cansend vcan0 456<span class="hljs-comment">#22</span>
+cansend vcan0 123<span class="hljs-comment">#33</span>
+</code></pre>
+<p><strong>確認ポイント</strong>: <code>0x123</code> のフレームのみ表示され、<code>0x456</code> は無視されます。</p>
+<h3 id="例題3-pythonで送受信">例題3: Pythonで送受信</h3>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> can
+<span class="hljs-keyword">import</span> threading
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-comment"># 受信側</span>
+bus_rx = can.interface.Bus(channel=<span class="hljs-string">&#x27;vcan0&#x27;</span>, bustype=<span class="hljs-string">&#x27;socketcan&#x27;</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">receive</span>():
+    msg = bus_rx.recv(timeout=<span class="hljs-number">5</span>)
+    <span class="hljs-keyword">if</span> msg:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;受信: ID=0x<span class="hljs-subst">{msg.arbitration_id:03X}</span>, Data=<span class="hljs-subst">{msg.data.<span class="hljs-built_in">hex</span>()}</span>&quot;</span>)
+
+threading.Thread(target=receive).start()
+
+<span class="hljs-comment"># 送信側（別スレッドで少し待って送信）</span>
+bus_tx = can.interface.Bus(channel=<span class="hljs-string">&#x27;vcan0&#x27;</span>, bustype=<span class="hljs-string">&#x27;socketcan&#x27;</span>)
+time.sleep(<span class="hljs-number">0.5</span>)
+msg = can.Message(arbitration_id=<span class="hljs-number">0x123</span>, data=[<span class="hljs-number">0x11</span>, <span class="hljs-number">0x22</span>, <span class="hljs-number">0x33</span>, <span class="hljs-number">0x44</span>])
+bus_tx.send(msg)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;送信完了&quot;</span>)
+</code></pre>
+<p><strong>実行方法</strong>:</p>
+<pre><code class="language-bash">pip install python-can
+python3 can_test.py
+</code></pre>
+<p><strong>確認ポイント</strong>:</p>
+<pre><code>送信完了
+受信: ID=0x123, Data=11223344
+</code></pre>
+<h2 id="総括">総括</h2>
+<p>ということでwindows上でCAN通信を行う環境を構築しました。
+次回以降CANを使った例題を扱っていきます。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/-W66swluqC8?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
