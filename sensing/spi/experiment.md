@@ -96,39 +96,83 @@ TX: 0x02  |  RX: 0x02  |  OK
 ```
 
 
-## パターンB：ESP32（Master + UART）↔ Arduino Uno（SPI Slave）
+## パターンB：ESP32による流し表示
 
-次は実践的な例です。
-ESP32とArduino Unoという2台のマイコンをSPIで実際に繋ぎ、双方向のデータ通信を行い、その結果をUART（シリアルモニター）で確認する実験です。
-一つ目の「自分で自分に送る」自己診断とは異なり、こちらは本番に近い「デバイス間通信」のテンプレートとなります。
-ESP32がSPIでArduino Unoにデータを送り、Unoは受信データに`+1`して返信します。ESP32はUARTで送受信結果をシリアルモニターに表示します。
+次の例題は、**「PCのキーボードで入力した文字を、LEDのドットマトリクス画面に流し表示（スクロール）する」**システムを、1台のESP32で作ってみます。
+
+### 全体の目的（何が起きるのか？）
+
+1. Wokwiの**シリアルモニター**に文字を打ってEnterを押す
+2. その文字が**ESP32に送られる**（UART通信）
+3. ESP32が文字を**LEDの点灯パターン**に変換する
+4. ESP32が**SPI通信**でLEDマトリクス（MAX7219）にデータを送る
+5. 8x8のLEDマトリクス上で、文字が**右から左へ流れて表示**される
+
+
+### 2つの通信を同時に使っている点がポイント
+
+この例題の特徴は、**UARTとSPIという性質の違う通信を、1つのマイコン内で同時に使っている**ことです。
+
+| 通信 | 相手 | 役割 | イメージ |
+|------|------|------|----------|
+| **UART** | PC（シリアルモニター） | 人間が文字を入力するための「受信口」 | お客さんが注文を伝える受話器 |
+| **SPI** | LEDマトリクス（MAX7219） | ドットの点灯データを高速で送る「配線」 | 厨房へ注文内容を一気に伝える専用回線 |
+
+### 具体的な処理の流れ
+
+__① PCから文字を受け取る（UART）__
+```
+人間：「HELLO」とタイプ → シリアルモニター → ESP32（UART受信）
+```
+
+__② 文字をドット絵に変換__
+
+ESP32の中に「H」や「E」などの文字を**5x7ドットのパターン**として定義した表（フォントデータ）があります。  
+「H」なら縦7ドット×横5ドットのビットマップに変換します。
+
+```
+'H' →  0x7F,0x08,0x08,0x08,0x7F  （フォントデータ）
+```
+
+__③ スクロール用の画像を組み立てる__
+
+8x8のLEDマトリクスには1文字しか入りません。複数文字を流したいので、ESP32は **「今は全体の文字列のどの部分を切り出して表示するか」** を計算します。
+
+```
+全体：「HELLO 」
+表示中：「 HE」（8ドット幅に切り出した部分）
+次の瞬間：「HEL」
+…
+```
+
+__④ LEDマトリクスに送る（SPI）__
+
+組み立てた8x8ドットの画像を、**8行（1行=1バイト）×SPI転送**でMAX7219に送ります。
+
+```
+SPI.transfer(レジスタ番号);  // どの行に書くか
+SPI.transfer(点灯パターン);    // その行の8ドットのON/OFF
+```
+
+__⑤ 100msごとに少しずつずらす__
+
+`millis()` で時間を計り、100msごとに表示開始位置を1ドットずつ進めます。これが**スクロール（流し表示）**になります。
+
+### なぜSPIを使うのか？
+
+LEDマトリクス制御IC（MAX7219）は、**「どの行に」「どのパターンを」** という16ビットの命令を受け取ります。この命令を高速に送るのにSPIは最適です。
+
+- クロック同期なので**速くて確実**
+- `CS`（Chip Select）をLOWにしている間に**連続で複数バイト送れる**
+- ソフトウェアで1ビットずつ操作するより**圧倒的に速い**
+
+Wokwi Web版の制約（1プロジェクト1マイコン）を考慮し、**1台のESP32で「SPI（MAX7219 LED Matrix制御）」と「UART（シリアルモニターからの文字列入力）」の両方を使う実用的な例題**を作成しました。
+
+シリアルモニターに文字を入力すると、LEDマトリクス上でその文字がスクロール表示されます。
+
+---
 
 ### 回路構成（diagram.json）
-
-Wokwi上に2台のマイコンを配置し、以下のように役割を分担しています。
-
-1. ESP32（SPI Master / 主）
-
-通信のタイミングを管理し、クロック（SCK）を出力しながらデータを送る側です。同時に、UARTでPCのシリアルモニターに結果を出力します。
-
-2. Arduino Uno（SPI Slave / 従）
-
-ESP32からのクロック信号に合わせてデータを受け取り、割り込み処理で即座に返信データを準備する側です。
-
-__通信内容__
-
-4本の信号線（MOSI, MISO, SCK, SS）で両者を接続し、さらにGNDを共通にすることで、電気信号の基準を合わせています。
-
-SPIは「全二重（フルデュプレックス）」通信なので、 1クロックのタイミングで同時に双方向へデータが流れます。
-
-SPIにはMOSIとMISOという独立した2本のデータ線があります。
-
-- MOSI（Master Out Slave In）: マスター（ESP32）がスレーブ（Uno）へ送る線
-- MISO（Master In Slave Out）: スレーブ（Uno）がマスター（ESP32）へ送る線
-
-この2本が別々にあるため、マスターがデータを送るクロックのタイミングと同じ瞬間に、スレーブもデータを返すことができます。
-
-![1793400676915](image/experiment/1793400676915.png)
 
 ```json
 {
@@ -137,105 +181,289 @@ SPIにはMOSIとMISOという独立した2本のデータ線があります。
   "editor": "wokwi",
   "parts": [
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
-    { "type": "wokwi-arduino-uno", "id": "uno", "top": 0, "left": 300, "attrs": {} }
+    { "type": "wokwi-max7219-matrix", "id": "matrix", "top": -29.25, "left": 189.53, "attrs": { "chain": "1" } }
   ],
   "connections": [
-    [ "esp:GND.2", "uno:GND.1", "black", [ "h0" ] ],
-    [ "esp:23", "uno:11", "green", [ "h20", "v20" ] ],
-    [ "esp:19", "uno:12", "blue", [ "h20", "v20" ] ],
-    [ "esp:18", "uno:13", "orange", [ "h20", "v20" ] ],
-    [ "esp:5", "uno:10", "violet", [ "h20", "v20" ] ]
+    [ "esp:5V", "matrix:VCC", "red", [ "h30", "v-20" ] ],
+    [ "esp:GND.2", "matrix:GND", "black", [ "h30", "v20" ] ],
+    [ "esp:23", "matrix:DIN", "green", [ "h40", "v-10" ] ],
+    [ "esp:18", "matrix:CLK", "orange", [ "h40", "v0" ] ],
+    [ "esp:5", "matrix:CS", "violet", [ "h40", "v10" ] ]
   ]
 }
 ```
 
-### ESP32側コード（SPI Master + UART出力）
+---
+
+### ESP32スケッチ（sketch.ino）
+
 ```cpp
 #include <SPI.h>
 
-#define SS_PIN 5
+// MAX7219 レジスタ定義
+#define REG_NOOP       0x00
+#define REG_DIGIT0     0x01
+#define REG_DIGIT1     0x02
+#define REG_DIGIT2     0x03
+#define REG_DIGIT3     0x04
+#define REG_DIGIT4     0x05
+#define REG_DIGIT5     0x06
+#define REG_DIGIT6     0x07
+#define REG_DIGIT7     0x08
+#define REG_DECODE     0x09
+#define REG_INTENSITY  0x0A
+#define REG_SCANLIMIT  0x0B
+#define REG_SHUTDOWN   0x0C
+#define REG_TEST       0x0F
+
+#define CS_PIN 5
+
+// 5x7 フォント（ASCII 0x20〜0x7F）
+static const uint8_t font5x7[][5] = {
+  {0x00,0x00,0x00,0x00,0x00}, // 0x20 スペース
+  {0x00,0x5E,0x00,0x00,0x00}, // 0x21 !
+  {0x00,0x07,0x00,0x07,0x00}, // 0x22 "
+  {0x14,0x3E,0x14,0x3E,0x14}, // 0x23 #
+  {0x24,0x2A,0x7F,0x2A,0x12}, // 0x24 $
+  {0x23,0x13,0x08,0x64,0x62}, // 0x25 %
+  {0x36,0x49,0x55,0x22,0x50}, // 0x26 &
+  {0x00,0x00,0x07,0x00,0x00}, // 0x27 '
+  {0x00,0x1C,0x22,0x41,0x00}, // 0x28 (
+  {0x00,0x41,0x22,0x1C,0x00}, // 0x29 )
+  {0x2A,0x1C,0x7F,0x1C,0x2A}, // 0x2A *
+  {0x08,0x08,0x3E,0x08,0x08}, // 0x2B +
+  {0x00,0xA0,0x60,0x00,0x00}, // 0x2C ,
+  {0x08,0x08,0x08,0x08,0x08}, // 0x2D -
+  {0x00,0x60,0x60,0x00,0x00}, // 0x2E .
+  {0x20,0x10,0x08,0x04,0x02}, // 0x2F /
+  {0x3E,0x51,0x49,0x45,0x3E}, // 0x30 0
+  {0x00,0x42,0x7F,0x40,0x00}, // 0x31 1
+  {0x62,0x51,0x49,0x49,0x46}, // 0x32 2
+  {0x22,0x41,0x49,0x49,0x36}, // 0x33 3
+  {0x18,0x14,0x12,0x7F,0x10}, // 0x34 4
+  {0x27,0x45,0x45,0x45,0x39}, // 0x35 5
+  {0x3C,0x4A,0x49,0x49,0x30}, // 0x36 6
+  {0x01,0x71,0x09,0x05,0x03}, // 0x37 7
+  {0x36,0x49,0x49,0x49,0x36}, // 0x38 8
+  {0x06,0x49,0x49,0x29,0x1E}, // 0x39 9
+  {0x00,0x36,0x36,0x00,0x00}, // 0x3A :
+  {0x00,0xA6,0x66,0x00,0x00}, // 0x3B ;
+  {0x00,0x1C,0x22,0x41,0x00}, // 0x3C <
+  {0x14,0x14,0x14,0x14,0x14}, // 0x3D =
+  {0x00,0x41,0x22,0x1C,0x00}, // 0x3E >
+  {0x02,0x01,0x59,0x09,0x06}, // 0x3F ?
+  {0x3E,0x41,0x5D,0x55,0x1E}, // 0x40 @
+  {0x7E,0x11,0x11,0x11,0x7E}, // 0x41 A
+  {0x7F,0x49,0x49,0x49,0x36}, // 0x42 B
+  {0x3E,0x41,0x41,0x41,0x22}, // 0x43 C
+  {0x7F,0x41,0x41,0x22,0x1C}, // 0x44 D
+  {0x7F,0x49,0x49,0x49,0x41}, // 0x45 E
+  {0x7F,0x09,0x09,0x09,0x01}, // 0x46 F
+  {0x3E,0x41,0x49,0x49,0x7A}, // 0x47 G
+  {0x7F,0x08,0x08,0x08,0x7F}, // 0x48 H
+  {0x00,0x41,0x7F,0x41,0x00}, // 0x49 I
+  {0x20,0x40,0x41,0x3F,0x01}, // 0x4A J
+  {0x7F,0x08,0x14,0x22,0x41}, // 0x4B K
+  {0x7F,0x40,0x40,0x40,0x40}, // 0x4C L
+  {0x7F,0x02,0x0C,0x02,0x7F}, // 0x4D M
+  {0x7F,0x04,0x08,0x10,0x7F}, // 0x4E N
+  {0x3E,0x41,0x41,0x41,0x3E}, // 0x4F O
+  {0x7F,0x09,0x09,0x09,0x06}, // 0x50 P
+  {0x3E,0x41,0x51,0x21,0x5E}, // 0x51 Q
+  {0x7F,0x09,0x19,0x29,0x46}, // 0x52 R
+  {0x26,0x49,0x49,0x49,0x32}, // 0x53 S
+  {0x01,0x01,0x7F,0x01,0x01}, // 0x54 T
+  {0x3F,0x40,0x40,0x40,0x3F}, // 0x55 U
+  {0x1F,0x20,0x40,0x20,0x1F}, // 0x56 V
+  {0x3F,0x40,0x38,0x40,0x3F}, // 0x57 W
+  {0x63,0x14,0x08,0x14,0x63}, // 0x58 X
+  {0x07,0x08,0x70,0x08,0x07}, // 0x59 Y
+  {0x61,0x51,0x49,0x45,0x43}, // 0x5A Z
+  {0x00,0x7F,0x41,0x41,0x00}, // 0x5B [
+  {0x02,0x04,0x08,0x10,0x20}, // 0x5C \
+  {0x00,0x41,0x41,0x7F,0x00}, // 0x5D ]
+  {0x04,0x02,0x01,0x02,0x04}, // 0x5E ^
+  {0x40,0x40,0x40,0x40,0x40}, // 0x5F _
+  {0x00,0x01,0x02,0x04,0x00}, // 0x60 `
+  {0x20,0x54,0x54,0x54,0x78}, // 0x61 a
+  {0x7F,0x48,0x44,0x44,0x38}, // 0x62 b
+  {0x38,0x44,0x44,0x44,0x28}, // 0x63 c
+  {0x38,0x44,0x44,0x48,0x7F}, // 0x64 d
+  {0x38,0x54,0x54,0x54,0x18}, // 0x65 e
+  {0x08,0x7E,0x09,0x01,0x02}, // 0x66 f
+  {0x18,0xA4,0xA4,0xA4,0x7C}, // 0x67 g
+  {0x7F,0x08,0x04,0x04,0x78}, // 0x68 h
+  {0x00,0x44,0x7D,0x40,0x00}, // 0x69 i
+  {0x20,0x40,0x44,0x3D,0x00}, // 0x6A j
+  {0x7F,0x10,0x28,0x44,0x00}, // 0x6B k
+  {0x00,0x41,0x7F,0x40,0x00}, // 0x6C l
+  {0x7C,0x04,0x78,0x04,0x78}, // 0x6D m
+  {0x7C,0x08,0x04,0x04,0x78}, // 0x6E n
+  {0x38,0x44,0x44,0x44,0x38}, // 0x6F o
+  {0x7C,0x14,0x14,0x14,0x08}, // 0x70 p
+  {0x08,0x14,0x14,0x18,0x7C}, // 0x71 q
+  {0x7C,0x08,0x04,0x04,0x08}, // 0x72 r
+  {0x48,0x54,0x54,0x54,0x24}, // 0x73 s
+  {0x04,0x3F,0x44,0x40,0x20}, // 0x74 t
+  {0x3C,0x40,0x40,0x20,0x7C}, // 0x75 u
+  {0x1C,0x20,0x40,0x20,0x1C}, // 0x76 v
+  {0x3C,0x40,0x30,0x40,0x3C}, // 0x77 w
+  {0x44,0x28,0x10,0x28,0x44}, // 0x78 x
+  {0x0C,0x50,0x50,0x50,0x3C}, // 0x79 y
+  {0x44,0x64,0x54,0x4C,0x44}, // 0x7A z
+  {0x00,0x08,0x36,0x41,0x00}, // 0x7B {
+  {0x00,0x7F,0x00,0x00,0x00}, // 0x7C |
+  {0x00,0x41,0x36,0x08,0x00}, // 0x7D }
+  {0x08,0x08,0x2A,0x1C,0x08}, // 0x7E ~
+};
+
+// スクロール制御用変数
+String scrollText = "HELLO I2C SPI UART! "; // 初期表示文字列
+const int COL_WIDTH = 6; // 5ドット + 1ドットスペース
+const int MAX_TEXT_LEN = 100;
+uint8_t frameBuffer[8];    // MAX7219へ書き込む8行分バッファ
+int scrollOffset = 0;
+unsigned long lastScrollTime = 0;
+const unsigned long SCROLL_DELAY_MS = 100; // スクロール速度
+
+// MAX7219へレジスタ書き込み（SPI使用）
+void max7219Write(uint8_t reg, uint8_t data) {
+  digitalWrite(CS_PIN, LOW);
+  SPI.transfer(reg);
+  SPI.transfer(data);
+  digitalWrite(CS_PIN, HIGH);
+}
+
+// MAX7219初期化
+void max7219Init() {
+  max7219Write(REG_SHUTDOWN,  0x01); // Normal operation
+  max7219Write(REG_TEST,      0x00); // Display test off
+  max7219Write(REG_INTENSITY, 0x03); // 輝度（0x00〜0x0F）
+  max7219Write(REG_SCANLIMIT, 0x07); // 全桁（0〜7）をスキャン
+  max7219Write(REG_DECODE,    0x00); // デコードなし（マトリクス用）
+  clearDisplay();
+}
+
+// 画面クリア
+void clearDisplay() {
+  for (uint8_t i = 0; i < 8; i++) {
+    max7219Write(REG_DIGIT0 + i, 0x00);
+  }
+}
+
+// 文字列をビットマップ列に展開して8列分をframeBufferに取り出す
+void updateFrameBuffer() {
+  int textLen = scrollText.length();
+  if (textLen == 0) return;
+
+  // 各列を計算
+  for (uint8_t row = 0; row < 8; row++) {
+    uint8_t colData = 0x00;
+    
+    for (uint8_t col = 0; col < 8; col++) {
+      int globalCol = scrollOffset + col;
+      
+      // 文字インデックスと文字内の列を計算
+      int charIndex = globalCol / COL_WIDTH;
+      int charCol   = globalCol % COL_WIDTH;
+      
+      // 文字列を繰り返し表示（無限スクロール）
+      charIndex = charIndex % textLen;
+      char c = scrollText[charIndex];
+      
+      uint8_t pixel = 0;
+      if (charCol < 5 && c >= 0x20 && c <= 0x7E) {
+        pixel = (font5x7[c - 0x20][charCol] >> row) & 0x01;
+      }
+      // charCol == 5 はスペース（1ドット空白）
+      
+      colData |= (pixel << (7 - col));
+    }
+    frameBuffer[row] = colData;
+  }
+}
+
+// frameBufferをMAX7219へSPI送信
+void refreshDisplay() {
+  for (uint8_t row = 0; row < 8; row++) {
+    max7219Write(REG_DIGIT0 + row, frameBuffer[row]);
+  }
+}
 
 void setup() {
-  Serial.begin(115200); // UART: デバッグ出力用
+  Serial.begin(115200); // UART: PC（シリアルモニター）との通信
   while (!Serial) { ; }
   
-  SPI.begin(18, 19, 23, SS_PIN); // SCK, MISO, MOSI, SS
-  pinMode(SS_PIN, OUTPUT);
-  digitalWrite(SS_PIN, HIGH);
+  SPI.begin(18, 19, 23, CS_PIN); // SCK=18, MISO=19, MOSI=23, SS=5
+  pinMode(CS_PIN, OUTPUT);
+  digitalWrite(CS_PIN, HIGH);
   
-  Serial.println("=== ESP32 SPI Master + UART Monitor ===");
+  max7219Init();
+  
+  Serial.println("=== ESP32 SPI + UART LED Matrix Example ===");
+  Serial.println("Type text and press ENTER to scroll on MAX7219");
+  Serial.println("Initial text: \"" + scrollText + "\"");
 }
 
 void loop() {
-  static uint8_t count = 0;
-  
-  digitalWrite(SS_PIN, LOW);
-  SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE0));
-  uint8_t reply = SPI.transfer(count); // countを送信し、同時にreplyを受信
-  SPI.endTransaction();
-  digitalWrite(SS_PIN, HIGH);
-  
-  // UARTでPCに結果を出力
-  Serial.printf("Sent: 0x%02X, Received: 0x%02X (expected: 0x%02X)\n", 
-                count, reply, (uint8_t)(count + 1));
-  
-  count++;
-  delay(800);
-}
-```
+  // --- UART入力処理 ---
+  if (Serial.available()) {
+    String input = Serial.readStringUntil('\n');
+    input.trim();
+    if (input.length() > 0 && input.length() <= MAX_TEXT_LEN) {
+      scrollText = input + " "; // 末尾にスペースを追加
+      scrollOffset = 0;         // スクロール位置をリセット
+      Serial.println("New scroll text: \"" + scrollText + "\"");
+    } else if (input.length() > MAX_TEXT_LEN) {
+      Serial.println("Error: Text too long (max 100 chars)");
+    }
+  }
 
-### Arduino Uno側コード（SPI Slave）
-Wokwi上でUnoのスケッチとして設定します。
-
-```cpp
-#include <SPI.h>
-
-volatile uint8_t recvByte = 0;
-volatile uint8_t sendByte = 0xFF;
-volatile bool newData = false;
-
-void setup() {
-  Serial.begin(115200);
-  
-  pinMode(MISO, OUTPUT); // SlaveはMISOを出力に設定
-  SPCR |= _BV(SPE);      // SPI有効化（Slaveモード）
-  SPCR |= _BV(SPIE);     // SPI割り込み有効化
-  
-  Serial.println("Arduino Uno SPI Slave ready");
-}
-
-// SPI転送完了割り込み
-ISR(SPI_STC_vect) {
-  recvByte = SPDR;       // 受信バッファから読み出し
-  sendByte = recvByte + 1; // 次の送信データを準備
-  SPDR = sendByte;       // 次の転送データをセット
-  newData = true;
-}
-
-void loop() {
-  if (newData) {
-    newData = false;
-    // Uno側のUARTにも受信内容を表示（Wokwiでは別タブで確認可能）
-    Serial.print("Slave received: 0x");
-    Serial.println(recvByte, HEX);
+  // --- スクロール表示処理（SPI使用）---
+  unsigned long now = millis();
+  if (now - lastScrollTime >= SCROLL_DELAY_MS) {
+    lastScrollTime = now;
+    
+    updateFrameBuffer();
+    refreshDisplay(); // SPIでMAX7219へ送信
+    
+    scrollOffset++;
+    // 1文字分進んだらループ
+    if (scrollOffset >= (int)scrollText.length() * COL_WIDTH) {
+      scrollOffset = 0;
+    }
   }
 }
 ```
 
-### 動作の流れ
-1. ESP32がUART（115200bps）で初期メッセージをPCに出力
-2. ESP32がSPIで`0x00, 0x01, 0x02...`をArduino Unoへ送信
-3. UnoはSPI割り込みでデータを受け取り、`+1`した値をESP32に返信
-4. ESP32は受信した値（`0x01, 0x02, 0x03...`）をUARTでシリアルモニターに表示
+---
+
+### この例題で学べること
+
+| 要素 | 内容 |
+|------|------|
+| **SPI通信** | `SPI.begin()`, `SPI.transfer()` を使い、MAX7219のレジスタに直接データを書き込む |
+| **UART通信** | `Serial.readStringUntil()` でPCから文字列を受信 |
+| **デバイス制御** | レジスタアドレス指定、初期化シーケンス、画面クリアなどの実装 |
+| **データ変換** | 文字列 → フォントビットマップ → スクロールフレームバッファの生成 |
+| **リアルタイム処理** | `millis()` による非同期スクロールとUART受信の並行処理 |
 
 ---
 
-## Wokwiでの使い方のヒント
+### Wokwiでの実行手順
 
-- **ESP32のUART**：Wokwiでは`Serial.begin(115200)`を使うと、自動的にUSB-UARTブリッジ経由でシリアルモニターに出力されます。シミュレーター下部の「Serial Monitor」タブで確認できます。
-- **SPIのピン番号**：
-  - ESP32 DevKit：`SCK=GPIO18`, `MISO=GPIO19`, `MOSI=GPIO23`
-  - Arduino Uno：`SCK=13`, `MISO=12`, `MOSI=11`, `SS=10`
-- **GND共有**：2台以上のマイコンを接続する場合、必ずGND同士を接続してください（上記`diagram.json`に含まれています）。
+1. **Wokwiで新規プロジェクトを作成**（ESP32 DevKit v1を選択）
+2. **diagram.json** を上記のJSONで上書き
+3. **sketch.ino** を上記のコードで上書き
+4. **シミュレーション開始**
+5. **シリアルモニター**を開き、文字列を入力してEnterを押すと、LEDマトリクスにスクロール表示されます
 
-パターンAはすぐに動作確認できるシンプルな構成、パターンBは実際のマイコン間通信のテンプレートとして使えます。
+---
+
+### 補足：SPIの動作確認ポイント
+
+- `max7219Write()` 内の `SPI.transfer(reg)` と `SPI.transfer(data)` が、**1回のCSアサート期間中に連続して2バイト送信**される典型的なSPIデバイス制御パターンです。
+- MAX7219は「レジスタアドレス + データ」の16ビットフレームを受け取ります。
+- UARTからの入力を受けるたびに `scrollOffset` をリセットしているため、文字列が切り替わる際も自然に先頭から流れ始めます。
+
+![1793402072974](image/experiment/1793402072974.png)
