@@ -1,4 +1,6 @@
 
+
+
 ## I2Cとは
 
 **Inter-Integrated Circuit** の略。フィリップス（現NXP）社が1982年に開発した、**基板上のIC同士を2本の線で接続する同期式シリアル通信規格**です。
@@ -34,8 +36,6 @@
 
 **I2C（Inter-Integrated Circuit）** は、**1980年（実用化は1982年）にPhilips Semiconductors（現NXP）** が開発しました。[Wikipedia](https://en.wikipedia.org/wiki/I2C) [SparkFun](https://learn.sparkfun.com/tutorials/i2c/a-brief-history-of-i2c)
 
----
-
 ## 開発の背景
 
 当時のテレビ・家電製品では、マイコンと周辺IC（チューナー、音量コントローラ、メモリなど）を接続するために、**各ICごとに個別の配線**が必要でした。これにより以下の問題が生じていました。
@@ -46,9 +46,7 @@
 
 Philipsは、**「2本の線だけで基板上の複数のICを繋げられないか」** という課題を解決するためにI2Cを設計しました。[Total Phase](https://www.totalphase.com/support/articles/200349156-i2c-background/) [NXP Application Note](https://assets.nexperia.com/documents/application-note/AN90044.pdf)
 
----
-
-## 設計の狙い
+### 設計の狙い
 
 | 目標 | 内容 |
 |---|---|
@@ -57,18 +55,12 @@ Philipsは、**「2本の線だけで基板上の複数のICを繋げられな�
 | **コスト削減** | 基板面積と部品数を減らし、家電製品を安価に |
 | **設計の標準化** | 自社製品間で共通のバスを使い、設計を効率化 |
 
----
-
-## その後の展開
+### その後の展開
 
 - **1992年**：初の公開仕様が発表され、400kHzのFast-modeと10ビットアドレスが追加
 - 当初はテレビ向けでしたが、**現在はArduino・スマートフォン・PC・車載機器**など、あらゆる電子機器で使われるデファクトスタンダードに
 
----
 
-## まとめ
-
-> **I2Cは、Philipsが「テレビなどの家電製品で、マイコンと周辺ICを2本の線で簡潔に接続し、基板コストを下げたい」という目的で1980年代に開発した。** 配線の最小化と複数デバイス共有を実現し、現在は世界中の電子機器で使われている。
 
 
 
