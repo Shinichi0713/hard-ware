@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x4f8b;&#x984c;A&#xff1a;ESP32&#x5358;&#x4f53; &sol; SPI Loopback &plus; UART&#xff08;&#x624b;&#x8efd;&#x306a;&#x52d5;&#x4f5c;&#x78ba;&#x8a8d;&#x7528;&#xff09;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>本日はSPI通信の例題2です。
+肩慣らしの例題から応用例題を扱います。</p>
+<p>因みに、SPI通信については<a href="https://yoshishinnze.hatenablog.com/entry/2026/12/11/043000">こちらの記事</a>をご覧いただければと思います。</p>
+<p>例題の前に<a href="https://wokwi.com/">Wokwi</a>にログインしてください。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="例題aesp32単体--spi-loopback--uart手軽な動作確認用">例題A：ESP32単体 / SPI Loopback + UART（手軽な動作確認用）</h2>
+<h3 id="問題設定">問題設定</h3>
+<p>通常、SPI通信はマイコンと別のIC（センサーやメモリなど） を繋いでデータのやり取りをします。
+しかし、通信相手を置かず、ESP32の送信端子（MOSI）と受信端子（MISO）を1本のジャンパ線で直結しています。
+これをループバック（折り返し）接続と呼びます。自分が出した信号をそのまま自分で受け取る構造です。</p>
+<p>この構成では、ESP32内部で以下の動作が毎秒1回、繰り返されることになります。</p>
+<ol>
+<li>SPIでデータを送信</li>
+</ol>
+<p>ESP32が0x00、0x01、0x02…という数字を1バイトずつMOSI端子（GPIO23）へ出力します。</p>
+<ol start="2">
+<li>信号を折り返して受信</li>
+</ol>
+<p>回路図でMOSI（GPIO23）とMISO（GPIO19）が接続されているため、出した信号がそのままMISO端子へ入ってきます。</p>
+<ol start="3">
+<li>受信データを確認</li>
+</ol>
+<p>ESP32はSPIの受信バッファからデータを読み出します。</p>
+<ol start="4">
+<li>UARTでPCに報告</li>
+</ol>
+<p>Serial.printf()を使い、「送ったデータ」と「受け取ったデータ」をシリアルモニターに表示します。</p>
+<h3 id="回路構成diagramjson">回路構成（diagram.json）</h3>
+<p>Wokwiのエディタで「ESP32 DevKit v1」を配置し、<code>diagram.json</code>を以下のように設定します。<br>
+（<code>esp:23</code>（MOSI）と<code>esp:19</code>（MISO）を1本の緑線で接続するだけです。）</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;User&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;editor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;parts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;board-esp32-devkit-c-v4&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;esp&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;connections&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;esp:23&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;esp:19&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;h0&quot;</span> <span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="esp32-スケッチmaster--loopback">ESP32 スケッチ（Master &amp; Loopback）</h3>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;SPI.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SS_PIN 5</span>
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>); <span class="hljs-comment">// UART: PC（シリアルモニター）へ出力</span>
+  <span class="hljs-keyword">while</span> (!Serial) { ; }
+  
+  SPI.<span class="hljs-built_in">begin</span>(<span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">23</span>, SS_PIN); <span class="hljs-comment">// SCK=18, MISO=19, MOSI=23, SS=5</span>
+  <span class="hljs-built_in">pinMode</span>(SS_PIN, OUTPUT);
+  <span class="hljs-built_in">digitalWrite</span>(SS_PIN, HIGH);
+  
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;=== ESP32 SPI Loopback + UART Example ===&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;MOSI(GPIO23) &lt;---&gt; MISO(GPIO19)&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-type">static</span> <span class="hljs-type">uint8_t</span> txByte = <span class="hljs-number">0x00</span>;
+  
+  <span class="hljs-comment">// SPI送信開始</span>
+  <span class="hljs-built_in">digitalWrite</span>(SS_PIN, LOW);
+  SPI.<span class="hljs-built_in">beginTransaction</span>(<span class="hljs-built_in">SPISettings</span>(<span class="hljs-number">1000000</span>, MSBFIRST, SPI_MODE0));
+  <span class="hljs-type">uint8_t</span> rxByte = SPI.<span class="hljs-built_in">transfer</span>(txByte); <span class="hljs-comment">// 送信と同時に受信</span>
+  SPI.<span class="hljs-built_in">endTransaction</span>();
+  <span class="hljs-built_in">digitalWrite</span>(SS_PIN, HIGH);
+  
+  <span class="hljs-comment">// UARTで結果を表示</span>
+  Serial.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;TX: 0x%02X  |  RX: 0x%02X  |  %s\n&quot;</span>, 
+                txByte, rxByte, (txByte == rxByte) ? <span class="hljs-string">&quot;OK&quot;</span> : <span class="hljs-string">&quot;MISMATCH&quot;</span>);
+  
+  txByte++;
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+}
+</code></pre>
+<h3 id="期待されるシリアル出力">期待されるシリアル出力</h3>
+<p><img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\spi\image\experiment\1793399027615.png" alt="1793399027615"></p>
+<pre><code>=== ESP32 SPI Loopback + UART Example ===
+MOSI(GPIO23) &lt;---&gt; MISO(GPIO19)
+TX: 0x00  |  RX: 0x00  |  OK
+TX: 0x01  |  RX: 0x01  |  OK
+TX: 0x02  |  RX: 0x02  |  OK
+...
+</code></pre>
+<h2 id="パターンbesp32による流し表示">パターンB：ESP32による流し表示</h2>
+<p>次の例題は、**「PCのキーボードで入力した文字を、LEDのドットマトリクス画面に流し表示（スクロール）する」**システムを、1台のESP32で作ってみます。</p>
+<h3 id="全体の目的何が起きるのか">全体の目的（何が起きるのか？）</h3>
+<ol>
+<li>Wokwiの<strong>シリアルモニター</strong>に文字を打ってEnterを押す</li>
+<li>その文字が<strong>ESP32に送られる</strong>（UART通信）</li>
+<li>ESP32が文字を<strong>LEDの点灯パターン</strong>に変換する</li>
+<li>ESP32が<strong>SPI通信</strong>でLEDマトリクス（MAX7219）にデータを送る</li>
+<li>8x8のLEDマトリクス上で、文字が<strong>右から左へ流れて表示</strong>される</li>
+</ol>
+<h3 id="2つの通信を同時に使っている点がポイント">2つの通信を同時に使っている点がポイント</h3>
+<p>この例題の特徴は、<strong>UARTとSPIという性質の違う通信を、1つのマイコン内で同時に使っている</strong>ことです。</p>
+<table>
+<thead>
+<tr>
+<th>通信</th>
+<th>相手</th>
+<th>役割</th>
+<th>イメージ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UART</strong></td>
+<td>PC（シリアルモニター）</td>
+<td>人間が文字を入力するための「受信口」</td>
+<td>お客さんが注文を伝える受話器</td>
+</tr>
+<tr>
+<td><strong>SPI</strong></td>
+<td>LEDマトリクス（MAX7219）</td>
+<td>ドットの点灯データを高速で送る「配線」</td>
+<td>厨房へ注文内容を一気に伝える専用回線</td>
+</tr>
+</tbody>
+</table>
+<h3 id="具体的な処理の流れ">具体的な処理の流れ</h3>
+<p><strong>① PCから文字を受け取る（UART）</strong></p>
+<pre><code>人間：「HELLO」とタイプ → シリアルモニター → ESP32（UART受信）
+</code></pre>
+<p><strong>② 文字をドット絵に変換</strong></p>
+<p>ESP32の中に「H」や「E」などの文字を<strong>5x7ドットのパターン</strong>として定義した表（フォントデータ）があります。<br>
+「H」なら縦7ドット×横5ドットのビットマップに変換します。</p>
+<pre><code>'H' →  0x7F,0x08,0x08,0x08,0x7F  （フォントデータ）
+</code></pre>
+<p><strong>③ スクロール用の画像を組み立てる</strong></p>
+<p>8x8のLEDマトリクスには1文字しか入りません。複数文字を流したいので、ESP32は <strong>「今は全体の文字列のどの部分を切り出して表示するか」</strong> を計算します。</p>
+<pre><code>全体：「HELLO 」
+表示中：「 HE」（8ドット幅に切り出した部分）
+次の瞬間：「HEL」
+…
+</code></pre>
+<p><strong>④ LEDマトリクスに送る（SPI）</strong></p>
+<p>組み立てた8x8ドットの画像を、<strong>8行（1行=1バイト）×SPI転送</strong>でMAX7219に送ります。</p>
+<pre><code>SPI.transfer(レジスタ番号);  // どの行に書くか
+SPI.transfer(点灯パターン);    // その行の8ドットのON/OFF
+</code></pre>
+<p><strong>⑤ 100msごとに少しずつずらす</strong></p>
+<p><code>millis()</code> で時間を計り、100msごとに表示開始位置を1ドットずつ進めます。これが**スクロール（流し表示）**になります。</p>
+<h3 id="なぜspiを使うのか">なぜSPIを使うのか？</h3>
+<p>LEDマトリクス制御IC（MAX7219）は、<strong>「どの行に」「どのパターンを」</strong> という16ビットの命令を受け取ります。この命令を高速に送るのにSPIは最適です。</p>
+<ul>
+<li>クロック同期なので<strong>速くて確実</strong></li>
+<li><code>CS</code>（Chip Select）をLOWにしている間に<strong>連続で複数バイト送れる</strong></li>
+<li>ソフトウェアで1ビットずつ操作するより<strong>圧倒的に速い</strong></li>
+</ul>
+<h3 id="回路構成diagramjson-1">回路構成（diagram.json）</h3>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;User&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;editor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;parts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;board-esp32-devkit-c-v4&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;esp&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-max7219-matrix&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;matrix&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-29.25</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">189.53</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;chain&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;connections&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;esp:5V&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;matrix:VCC&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;h30&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;v-20&quot;</span> <span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;esp:GND.2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;matrix:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;h30&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;v20&quot;</span> <span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;esp:23&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;matrix:DIN&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;h40&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;v-10&quot;</span> <span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;esp:18&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;matrix:CLK&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;orange&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;h40&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;v0&quot;</span> <span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;esp:5&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;matrix:CS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;violet&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;h40&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;v10&quot;</span> <span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="esp32スケッチsketchino">ESP32スケッチ（sketch.ino）</h3>
+<p>ちょっと長いですが、以下のコードをスケッチに指定下さい。</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;SPI.h&gt;</span></span>
+
+<span class="hljs-comment">// MAX7219 レジスタ定義</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_NOOP       0x00</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT0     0x01</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT1     0x02</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT2     0x03</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT3     0x04</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT4     0x05</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT5     0x06</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT6     0x07</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DIGIT7     0x08</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_DECODE     0x09</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_INTENSITY  0x0A</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_SCANLIMIT  0x0B</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_SHUTDOWN   0x0C</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REG_TEST       0x0F</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> CS_PIN 5</span>
+
+<span class="hljs-comment">// 5x7 フォント（ASCII 0x20〜0x7F）</span>
+<span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">uint8_t</span> font5x7[][<span class="hljs-number">5</span>] = {
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x20 スペース</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x5E</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x21 !</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x07</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x07</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x22 &quot;</span>
+  {<span class="hljs-number">0x14</span>,<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x14</span>}, <span class="hljs-comment">// 0x23 #</span>
+  {<span class="hljs-number">0x24</span>,<span class="hljs-number">0x2A</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x2A</span>,<span class="hljs-number">0x12</span>}, <span class="hljs-comment">// 0x24 $</span>
+  {<span class="hljs-number">0x23</span>,<span class="hljs-number">0x13</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x64</span>,<span class="hljs-number">0x62</span>}, <span class="hljs-comment">// 0x25 %</span>
+  {<span class="hljs-number">0x36</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x55</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x50</span>}, <span class="hljs-comment">// 0x26 &amp;</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x07</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x27 &#x27;</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x28 (</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x29 )</span>
+  {<span class="hljs-number">0x2A</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x2A</span>}, <span class="hljs-comment">// 0x2A *</span>
+  {<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>}, <span class="hljs-comment">// 0x2B +</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0xA0</span>,<span class="hljs-number">0x60</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x2C ,</span>
+  {<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>}, <span class="hljs-comment">// 0x2D -</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x60</span>,<span class="hljs-number">0x60</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x2E .</span>
+  {<span class="hljs-number">0x20</span>,<span class="hljs-number">0x10</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x02</span>}, <span class="hljs-comment">// 0x2F /</span>
+  {<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x51</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x45</span>,<span class="hljs-number">0x3E</span>}, <span class="hljs-comment">// 0x30 0</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x42</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x31 1</span>
+  {<span class="hljs-number">0x62</span>,<span class="hljs-number">0x51</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x46</span>}, <span class="hljs-comment">// 0x32 2</span>
+  {<span class="hljs-number">0x22</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x36</span>}, <span class="hljs-comment">// 0x33 3</span>
+  {<span class="hljs-number">0x18</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x12</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x10</span>}, <span class="hljs-comment">// 0x34 4</span>
+  {<span class="hljs-number">0x27</span>,<span class="hljs-number">0x45</span>,<span class="hljs-number">0x45</span>,<span class="hljs-number">0x45</span>,<span class="hljs-number">0x39</span>}, <span class="hljs-comment">// 0x35 5</span>
+  {<span class="hljs-number">0x3C</span>,<span class="hljs-number">0x4A</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x30</span>}, <span class="hljs-comment">// 0x36 6</span>
+  {<span class="hljs-number">0x01</span>,<span class="hljs-number">0x71</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x05</span>,<span class="hljs-number">0x03</span>}, <span class="hljs-comment">// 0x37 7</span>
+  {<span class="hljs-number">0x36</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x36</span>}, <span class="hljs-comment">// 0x38 8</span>
+  {<span class="hljs-number">0x06</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x29</span>,<span class="hljs-number">0x1E</span>}, <span class="hljs-comment">// 0x39 9</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x36</span>,<span class="hljs-number">0x36</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x3A :</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0xA6</span>,<span class="hljs-number">0x66</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x3B ;</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x3C &lt;</span>
+  {<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>}, <span class="hljs-comment">// 0x3D =</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x3E &gt;</span>
+  {<span class="hljs-number">0x02</span>,<span class="hljs-number">0x01</span>,<span class="hljs-number">0x59</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x06</span>}, <span class="hljs-comment">// 0x3F ?</span>
+  {<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x5D</span>,<span class="hljs-number">0x55</span>,<span class="hljs-number">0x1E</span>}, <span class="hljs-comment">// 0x40 @</span>
+  {<span class="hljs-number">0x7E</span>,<span class="hljs-number">0x11</span>,<span class="hljs-number">0x11</span>,<span class="hljs-number">0x11</span>,<span class="hljs-number">0x7E</span>}, <span class="hljs-comment">// 0x41 A</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x36</span>}, <span class="hljs-comment">// 0x42 B</span>
+  {<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x22</span>}, <span class="hljs-comment">// 0x43 C</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x1C</span>}, <span class="hljs-comment">// 0x44 D</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x41</span>}, <span class="hljs-comment">// 0x45 E</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x01</span>}, <span class="hljs-comment">// 0x46 F</span>
+  {<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x7A</span>}, <span class="hljs-comment">// 0x47 G</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x7F</span>}, <span class="hljs-comment">// 0x48 H</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x49 I</span>
+  {<span class="hljs-number">0x20</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x3F</span>,<span class="hljs-number">0x01</span>}, <span class="hljs-comment">// 0x4A J</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x22</span>,<span class="hljs-number">0x41</span>}, <span class="hljs-comment">// 0x4B K</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>}, <span class="hljs-comment">// 0x4C L</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x02</span>,<span class="hljs-number">0x0C</span>,<span class="hljs-number">0x02</span>,<span class="hljs-number">0x7F</span>}, <span class="hljs-comment">// 0x4D M</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x10</span>,<span class="hljs-number">0x7F</span>}, <span class="hljs-comment">// 0x4E N</span>
+  {<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x3E</span>}, <span class="hljs-comment">// 0x4F O</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x06</span>}, <span class="hljs-comment">// 0x50 P</span>
+  {<span class="hljs-number">0x3E</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x51</span>,<span class="hljs-number">0x21</span>,<span class="hljs-number">0x5E</span>}, <span class="hljs-comment">// 0x51 Q</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x19</span>,<span class="hljs-number">0x29</span>,<span class="hljs-number">0x46</span>}, <span class="hljs-comment">// 0x52 R</span>
+  {<span class="hljs-number">0x26</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x32</span>}, <span class="hljs-comment">// 0x53 S</span>
+  {<span class="hljs-number">0x01</span>,<span class="hljs-number">0x01</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x01</span>,<span class="hljs-number">0x01</span>}, <span class="hljs-comment">// 0x54 T</span>
+  {<span class="hljs-number">0x3F</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x3F</span>}, <span class="hljs-comment">// 0x55 U</span>
+  {<span class="hljs-number">0x1F</span>,<span class="hljs-number">0x20</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x20</span>,<span class="hljs-number">0x1F</span>}, <span class="hljs-comment">// 0x56 V</span>
+  {<span class="hljs-number">0x3F</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x38</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x3F</span>}, <span class="hljs-comment">// 0x57 W</span>
+  {<span class="hljs-number">0x63</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x63</span>}, <span class="hljs-comment">// 0x58 X</span>
+  {<span class="hljs-number">0x07</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x70</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x07</span>}, <span class="hljs-comment">// 0x59 Y</span>
+  {<span class="hljs-number">0x61</span>,<span class="hljs-number">0x51</span>,<span class="hljs-number">0x49</span>,<span class="hljs-number">0x45</span>,<span class="hljs-number">0x43</span>}, <span class="hljs-comment">// 0x5A Z</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x5B [</span>
+  {<span class="hljs-number">0x02</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x10</span>,<span class="hljs-number">0x20</span>}, <span class="hljs-comment">// 0x5C \
+  {0x00,0x41,0x41,0x7F,0x00}, // 0x5D ]</span>
+  {<span class="hljs-number">0x04</span>,<span class="hljs-number">0x02</span>,<span class="hljs-number">0x01</span>,<span class="hljs-number">0x02</span>,<span class="hljs-number">0x04</span>}, <span class="hljs-comment">// 0x5E ^</span>
+  {<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>}, <span class="hljs-comment">// 0x5F _</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x01</span>,<span class="hljs-number">0x02</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x60 `</span>
+  {<span class="hljs-number">0x20</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x78</span>}, <span class="hljs-comment">// 0x61 a</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x38</span>}, <span class="hljs-comment">// 0x62 b</span>
+  {<span class="hljs-number">0x38</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x28</span>}, <span class="hljs-comment">// 0x63 c</span>
+  {<span class="hljs-number">0x38</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x7F</span>}, <span class="hljs-comment">// 0x64 d</span>
+  {<span class="hljs-number">0x38</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x18</span>}, <span class="hljs-comment">// 0x65 e</span>
+  {<span class="hljs-number">0x08</span>,<span class="hljs-number">0x7E</span>,<span class="hljs-number">0x09</span>,<span class="hljs-number">0x01</span>,<span class="hljs-number">0x02</span>}, <span class="hljs-comment">// 0x66 f</span>
+  {<span class="hljs-number">0x18</span>,<span class="hljs-number">0xA4</span>,<span class="hljs-number">0xA4</span>,<span class="hljs-number">0xA4</span>,<span class="hljs-number">0x7C</span>}, <span class="hljs-comment">// 0x67 g</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x78</span>}, <span class="hljs-comment">// 0x68 h</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x7D</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x69 i</span>
+  {<span class="hljs-number">0x20</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x3D</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x6A j</span>
+  {<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x10</span>,<span class="hljs-number">0x28</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x6B k</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x6C l</span>
+  {<span class="hljs-number">0x7C</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x78</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x78</span>}, <span class="hljs-comment">// 0x6D m</span>
+  {<span class="hljs-number">0x7C</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x78</span>}, <span class="hljs-comment">// 0x6E n</span>
+  {<span class="hljs-number">0x38</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x38</span>}, <span class="hljs-comment">// 0x6F o</span>
+  {<span class="hljs-number">0x7C</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x08</span>}, <span class="hljs-comment">// 0x70 p</span>
+  {<span class="hljs-number">0x08</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x14</span>,<span class="hljs-number">0x18</span>,<span class="hljs-number">0x7C</span>}, <span class="hljs-comment">// 0x71 q</span>
+  {<span class="hljs-number">0x7C</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x04</span>,<span class="hljs-number">0x08</span>}, <span class="hljs-comment">// 0x72 r</span>
+  {<span class="hljs-number">0x48</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x24</span>}, <span class="hljs-comment">// 0x73 s</span>
+  {<span class="hljs-number">0x04</span>,<span class="hljs-number">0x3F</span>,<span class="hljs-number">0x44</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x20</span>}, <span class="hljs-comment">// 0x74 t</span>
+  {<span class="hljs-number">0x3C</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x20</span>,<span class="hljs-number">0x7C</span>}, <span class="hljs-comment">// 0x75 u</span>
+  {<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x20</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x20</span>,<span class="hljs-number">0x1C</span>}, <span class="hljs-comment">// 0x76 v</span>
+  {<span class="hljs-number">0x3C</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x30</span>,<span class="hljs-number">0x40</span>,<span class="hljs-number">0x3C</span>}, <span class="hljs-comment">// 0x77 w</span>
+  {<span class="hljs-number">0x44</span>,<span class="hljs-number">0x28</span>,<span class="hljs-number">0x10</span>,<span class="hljs-number">0x28</span>,<span class="hljs-number">0x44</span>}, <span class="hljs-comment">// 0x78 x</span>
+  {<span class="hljs-number">0x0C</span>,<span class="hljs-number">0x50</span>,<span class="hljs-number">0x50</span>,<span class="hljs-number">0x50</span>,<span class="hljs-number">0x3C</span>}, <span class="hljs-comment">// 0x79 y</span>
+  {<span class="hljs-number">0x44</span>,<span class="hljs-number">0x64</span>,<span class="hljs-number">0x54</span>,<span class="hljs-number">0x4C</span>,<span class="hljs-number">0x44</span>}, <span class="hljs-comment">// 0x7A z</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x36</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x7B {</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x7F</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x7C |</span>
+  {<span class="hljs-number">0x00</span>,<span class="hljs-number">0x41</span>,<span class="hljs-number">0x36</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x00</span>}, <span class="hljs-comment">// 0x7D }</span>
+  {<span class="hljs-number">0x08</span>,<span class="hljs-number">0x08</span>,<span class="hljs-number">0x2A</span>,<span class="hljs-number">0x1C</span>,<span class="hljs-number">0x08</span>}, <span class="hljs-comment">// 0x7E ~</span>
+};
+
+<span class="hljs-comment">// スクロール制御用変数</span>
+String scrollText = <span class="hljs-string">&quot;HELLO I2C SPI UART! &quot;</span>; <span class="hljs-comment">// 初期表示文字列</span>
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> COL_WIDTH = <span class="hljs-number">6</span>; <span class="hljs-comment">// 5ドット + 1ドットスペース</span>
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> MAX_TEXT_LEN = <span class="hljs-number">100</span>;
+<span class="hljs-type">uint8_t</span> frameBuffer[<span class="hljs-number">8</span>];    <span class="hljs-comment">// MAX7219へ書き込む8行分バッファ</span>
+<span class="hljs-type">int</span> scrollOffset = <span class="hljs-number">0</span>;
+<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> lastScrollTime = <span class="hljs-number">0</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> SCROLL_DELAY_MS = <span class="hljs-number">100</span>; <span class="hljs-comment">// スクロール速度</span>
+
+<span class="hljs-comment">// MAX7219へレジスタ書き込み（SPI使用）</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">max7219Write</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> reg, <span class="hljs-type">uint8_t</span> data)</span> </span>{
+  <span class="hljs-built_in">digitalWrite</span>(CS_PIN, LOW);
+  SPI.<span class="hljs-built_in">transfer</span>(reg);
+  SPI.<span class="hljs-built_in">transfer</span>(data);
+  <span class="hljs-built_in">digitalWrite</span>(CS_PIN, HIGH);
+}
+
+<span class="hljs-comment">// MAX7219初期化</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">max7219Init</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-built_in">max7219Write</span>(REG_SHUTDOWN,  <span class="hljs-number">0x01</span>); <span class="hljs-comment">// Normal operation</span>
+  <span class="hljs-built_in">max7219Write</span>(REG_TEST,      <span class="hljs-number">0x00</span>); <span class="hljs-comment">// Display test off</span>
+  <span class="hljs-built_in">max7219Write</span>(REG_INTENSITY, <span class="hljs-number">0x03</span>); <span class="hljs-comment">// 輝度（0x00〜0x0F）</span>
+  <span class="hljs-built_in">max7219Write</span>(REG_SCANLIMIT, <span class="hljs-number">0x07</span>); <span class="hljs-comment">// 全桁（0〜7）をスキャン</span>
+  <span class="hljs-built_in">max7219Write</span>(REG_DECODE,    <span class="hljs-number">0x00</span>); <span class="hljs-comment">// デコードなし（マトリクス用）</span>
+  <span class="hljs-built_in">clearDisplay</span>();
+}
+
+<span class="hljs-comment">// 画面クリア</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clearDisplay</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">uint8_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++) {
+    <span class="hljs-built_in">max7219Write</span>(REG_DIGIT0 + i, <span class="hljs-number">0x00</span>);
+  }
+}
+
+<span class="hljs-comment">// 文字列をビットマップ列に展開して8列分をframeBufferに取り出す</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">updateFrameBuffer</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-type">int</span> textLen = scrollText.<span class="hljs-built_in">length</span>();
+  <span class="hljs-keyword">if</span> (textLen == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+
+  <span class="hljs-comment">// 各列を計算</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">uint8_t</span> row = <span class="hljs-number">0</span>; row &lt; <span class="hljs-number">8</span>; row++) {
+    <span class="hljs-type">uint8_t</span> colData = <span class="hljs-number">0x00</span>;
+    
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">uint8_t</span> col = <span class="hljs-number">0</span>; col &lt; <span class="hljs-number">8</span>; col++) {
+      <span class="hljs-type">int</span> globalCol = scrollOffset + col;
+      
+      <span class="hljs-comment">// 文字インデックスと文字内の列を計算</span>
+      <span class="hljs-type">int</span> charIndex = globalCol / COL_WIDTH;
+      <span class="hljs-type">int</span> charCol   = globalCol % COL_WIDTH;
+      
+      <span class="hljs-comment">// 文字列を繰り返し表示（無限スクロール）</span>
+      charIndex = charIndex % textLen;
+      <span class="hljs-type">char</span> c = scrollText[charIndex];
+      
+      <span class="hljs-type">uint8_t</span> pixel = <span class="hljs-number">0</span>;
+      <span class="hljs-keyword">if</span> (charCol &lt; <span class="hljs-number">5</span> &amp;&amp; c &gt;= <span class="hljs-number">0x20</span> &amp;&amp; c &lt;= <span class="hljs-number">0x7E</span>) {
+        pixel = (font5x7[c - <span class="hljs-number">0x20</span>][charCol] &gt;&gt; row) &amp; <span class="hljs-number">0x01</span>;
+      }
+      <span class="hljs-comment">// charCol == 5 はスペース（1ドット空白）</span>
+      
+      colData |= (pixel &lt;&lt; (<span class="hljs-number">7</span> - col));
+    }
+    frameBuffer[row] = colData;
+  }
+}
+
+<span class="hljs-comment">// frameBufferをMAX7219へSPI送信</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">refreshDisplay</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">uint8_t</span> row = <span class="hljs-number">0</span>; row &lt; <span class="hljs-number">8</span>; row++) {
+    <span class="hljs-built_in">max7219Write</span>(REG_DIGIT0 + row, frameBuffer[row]);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>); <span class="hljs-comment">// UART: PC（シリアルモニター）との通信</span>
+  <span class="hljs-keyword">while</span> (!Serial) { ; }
+  
+  SPI.<span class="hljs-built_in">begin</span>(<span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">23</span>, CS_PIN); <span class="hljs-comment">// SCK=18, MISO=19, MOSI=23, SS=5</span>
+  <span class="hljs-built_in">pinMode</span>(CS_PIN, OUTPUT);
+  <span class="hljs-built_in">digitalWrite</span>(CS_PIN, HIGH);
+  
+  <span class="hljs-built_in">max7219Init</span>();
+  
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;=== ESP32 SPI + UART LED Matrix Example ===&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Type text and press ENTER to scroll on MAX7219&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Initial text: \&quot;&quot;</span> + scrollText + <span class="hljs-string">&quot;\&quot;&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// --- UART入力処理 ---</span>
+  <span class="hljs-keyword">if</span> (Serial.<span class="hljs-built_in">available</span>()) {
+    String input = Serial.<span class="hljs-built_in">readStringUntil</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);
+    input.<span class="hljs-built_in">trim</span>();
+    <span class="hljs-keyword">if</span> (input.<span class="hljs-built_in">length</span>() &gt; <span class="hljs-number">0</span> &amp;&amp; input.<span class="hljs-built_in">length</span>() &lt;= MAX_TEXT_LEN) {
+      scrollText = input + <span class="hljs-string">&quot; &quot;</span>; <span class="hljs-comment">// 末尾にスペースを追加</span>
+      scrollOffset = <span class="hljs-number">0</span>;         <span class="hljs-comment">// スクロール位置をリセット</span>
+      Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;New scroll text: \&quot;&quot;</span> + scrollText + <span class="hljs-string">&quot;\&quot;&quot;</span>);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (input.<span class="hljs-built_in">length</span>() &gt; MAX_TEXT_LEN) {
+      Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Error: Text too long (max 100 chars)&quot;</span>);
+    }
+  }
+
+  <span class="hljs-comment">// --- スクロール表示処理（SPI使用）---</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> now = <span class="hljs-built_in">millis</span>();
+  <span class="hljs-keyword">if</span> (now - lastScrollTime &gt;= SCROLL_DELAY_MS) {
+    lastScrollTime = now;
+    
+    <span class="hljs-built_in">updateFrameBuffer</span>();
+    <span class="hljs-built_in">refreshDisplay</span>(); <span class="hljs-comment">// SPIでMAX7219へ送信</span>
+    
+    scrollOffset++;
+    <span class="hljs-comment">// 1文字分進んだらループ</span>
+    <span class="hljs-keyword">if</span> (scrollOffset &gt;= (<span class="hljs-type">int</span>)scrollText.<span class="hljs-built_in">length</span>() * COL_WIDTH) {
+      scrollOffset = <span class="hljs-number">0</span>;
+    }
+  }
+}
+</code></pre>
+<h3 id="実行">実行</h3>
+<ul>
+<li><code>max7219Write()</code> 内の <code>SPI.transfer(reg)</code> と <code>SPI.transfer(data)</code> が、<strong>1回のCSアサート期間中に連続して2バイト送信</strong>される典型的なSPIデバイス制御パターンです。</li>
+<li>MAX7219は「レジスタアドレス + データ」の16ビットフレームを受け取ります。</li>
+<li>UARTからの入力を受けるたびに <code>scrollOffset</code> をリセットしているため、文字列が切り替わる際も自然に先頭から流れ始めます。</li>
+</ul>
+<p><img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\spi\image\experiment\1793402072974.png" alt="1793402072974"></p>
+<h3 id="この例題で学べること">この例題で学べること</h3>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SPI通信</strong></td>
+<td><code>SPI.begin()</code>, <code>SPI.transfer()</code> を使い、MAX7219のレジスタに直接データを書き込む</td>
+</tr>
+<tr>
+<td><strong>UART通信</strong></td>
+<td><code>Serial.readStringUntil()</code> でPCから文字列を受信</td>
+</tr>
+<tr>
+<td><strong>デバイス制御</strong></td>
+<td>レジスタアドレス指定、初期化シーケンス、画面クリアなどの実装</td>
+</tr>
+<tr>
+<td><strong>データ変換</strong></td>
+<td>文字列 → フォントビットマップ → スクロールフレームバッファの生成</td>
+</tr>
+<tr>
+<td><strong>リアルタイム処理</strong></td>
+<td><code>millis()</code> による非同期スクロールとUART受信の並行処理</td>
+</tr>
+</tbody>
+</table>
+<h2 id="総括">総括</h2>
+<p>本日の内容は、<strong>ESP32を使った「SPI通信の基礎確認」と「実用的なデバイス制御」の2本立て</strong>でした。</p>
+<p><strong>例題A：SPI Loopback + UART</strong></p>
+<p>ESP32の<strong>送信端子（MOSI）と受信端子（MISO）を1本の線で直結</strong>し、自分で出したデータを自分で受け取ります。送受信値が一致すればSPIの動作が正常であることが確認でき、その結果を<strong>UART（シリアルモニター）</strong> でPCに表示します。外部パーツ不要で、<strong>SPI通信の動作テスト</strong>として使います。</p>
+<p><strong>例題B：LEDマトリクスの流し表示</strong></p>
+<p>PCから<strong>UARTで文字列</strong>を受け取り、ESP32内部で<strong>5×7ドットのフォント</strong>に変換します。そして<strong>SPI</strong>でLEDマトリクス制御IC（MAX7219）に送信し、文字を右から左へ<strong>スクロール表示</strong>します。</p>
+<h3 id="本質のまとめ">本質のまとめ</h3>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>SPI</th>
+<th>UART</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用途</strong></td>
+<td>LEDマトリクスなどの「機器を速く制御する」</td>
+<td>PCの「人間が見て操作する」入出力</td>
+</tr>
+<tr>
+<td><strong>例題A</strong></td>
+<td>自分宛てにデータを送受信して動作確認</td>
+<td>結果を表示</td>
+</tr>
+<tr>
+<td><strong>例題B</strong></td>
+<td>ドットパターンを高速でLEDに転送</td>
+<td>表示する文字列を入力</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SPIは「機器への高速な指令伝達」、UARTは「人間とのおしゃべり窓口」</strong> という分担です。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/8vCFnSNz0E4?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
