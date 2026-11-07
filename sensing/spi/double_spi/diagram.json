@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "author": "Dual SPI 74HC595 Fixed",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-pi-pico", "id": "pico", "top": 20, "left": 20, "attrs": {} },
+    { "type": "wokwi-74hc595", "id": "sr1", "top": -60, "left": 220, "attrs": {} },
+    { "type": "wokwi-74hc595", "id": "sr2", "top": 100, "left": 220, "attrs": {} },
+    { "type": "wokwi-led", "id": "led1", "top": -140, "left": 380, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led2", "top": -120, "left": 400, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led3", "top": -100, "left": 420, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led4", "top": -80, "left": 440, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led5", "top": 20, "left": 380, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led6", "top": 40, "left": 400, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led7", "top": 60, "left": 420, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led8", "top": 80, "left": 440, "attrs": { "color": "green" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": -110, "left": 460, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": 50, "left": 460, "attrs": { "value": "220" } },
+    { "type": "wokwi-gnd", "id": "gnd", "top": 180, "left": 480, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc", "top": -180, "left": 480, "attrs": {} }
+  ],
+  "connections": [
+    [ "pico:GP18", "sr1:SHCP", "gold", [] ],
+    [ "pico:GP19", "sr1:DS", "blue", [] ],
+    [ "pico:GP17", "sr1:STCP", "orange", [] ],
+    [ "pico:3V3", "sr1:VCC", "red", [] ],
+    [ "pico:GND", "sr1:GND", "black", [] ],
+    [ "vcc:VCC", "sr1:MR", "red", [] ],
+    [ "gnd:GND", "sr1:OE", "black", [] ],
+
+    [ "pico:GP18", "sr2:SHCP", "gold", [] ],
+    [ "pico:GP19", "sr2:DS", "blue", [] ],
+    [ "pico:GP20", "sr2:STCP", "orange", [] ],
+    [ "pico:3V3", "sr2:VCC", "red", [] ],
+    [ "pico:GND", "sr2:GND", "black", [] ],
+    [ "vcc:VCC", "sr2:MR", "red", [] ],
+    [ "gnd:GND", "sr2:OE", "black", [] ],
+
+    [ "sr1:Q0", "led1:A", "red", [] ],
+    [ "sr1:Q1", "led2:A", "red", [] ],
+    [ "sr1:Q2", "led3:A", "red", [] ],
+    [ "sr1:Q3", "led4:A", "red", [] ],
+    [ "led1:C", "r1:1", "black", [] ],
+    [ "led2:C", "r1:1", "black", [] ],
+    [ "led3:C", "r1:1", "black", [] ],
+    [ "led4:C", "r1:1", "black", [] ],
+    [ "r1:2", "gnd:GND", "black", [] ],
+
+    [ "sr2:Q0", "led5:A", "green", [] ],
+    [ "sr2:Q1", "led6:A", "green", [] ],
+    [ "sr2:Q2", "led7:A", "green", [] ],
+    [ "sr2:Q3", "led8:A", "green", [] ],
+    [ "led5:C", "r2:1", "black", [] ],
+    [ "led6:C", "r2:1", "black", [] ],
+    [ "led7:C", "r2:1", "black", [] ],
+    [ "led8:C", "r2:1", "black", [] ],
+    [ "r2:2", "gnd:GND", "black", [] ],
+
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ]
+  ]
+}
