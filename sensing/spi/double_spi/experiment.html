@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>SPI&#x901a;&#x4fe1;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>複数センサと<a href="https://yoshishinnze.hatenablog.com/entry/2026/12/11/043000">SPI通信</a>して制御を行う用途に対して、実践例題を考えて制御法について理解を深めていきたいと思います。</p>
+<p>ということで本日お題は、複数センサとSPI通信して制御です。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="spi通信">SPI通信</h2>
+<p>SPIの通信や、信号線の構成については<a href="https://yoshishinnze.hatenablog.com/entry/2026/12/11/043000">こちらの記事</a>を参考下さい。</p>
+<h2 id="spi通信を複数センサと行う用途">SPI通信を複数センサと行う用途</h2>
+<p>複数の SPI センサーを同じバスに接続して使うケースは、<strong>ロボットの信頼性向上・多軸計測・環境認識の多層化</strong>で頻繁に登場します。以下に代表的な場面を挙げます。</p>
+<h3 id="1-imu-の冗長化フェイルセーフ">1. IMU の冗長化（フェイルセーフ）</h3>
+<p>ドローンや自律移動ロボットでは、<strong>1つの IMU が故障した場合に墜落・暴走するのを防ぐ</strong>ため、2つ以上の IMU を搭載します。</p>
+<table>
+<thead>
+<tr>
+<th>センサー1</th>
+<th>センサー2</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ICM-20948</td>
+<td>ICM-20948</td>
+<td>互いのデータを比較し、異常値を検出</td>
+</tr>
+<tr>
+<td>高帯域 IMU</td>
+<td>低ドリフト IMU</td>
+<td>高帯域で衝撃検出、低ドリフトで長期姿勢安定</td>
+</tr>
+</tbody>
+</table>
+<p>SPI バスは共通、CS ピンだけを分けることで、<strong>同じ配線で冗長計測</strong>が実現できます。</p>
+<h3 id="2-マニピュレータ多関節ロボットアームの各関節エンコーダ">2. マニピュレータ（多関節ロボットアーム）の各関節エンコーダ</h3>
+<p>6軸アームなら<strong>6つのモーター</strong>にそれぞれ磁気エンコーダ（例：AS5048A）を搭載します。各エンコーダは SPI 通信で現在角度を返します。</p>
+<pre><code>SPIバス（SCK/MOSI/MISO共通）
+├── CS1 → 関節1（肩ピッチ）
+├── CS2 → 関節2（肩ロール）
+├── CS3 → 関節3（肘）
+├── CS4 → 関節4（手首ヨー）
+├── CS5 → 関節5（手首ピッチ）
+└── CS6 → 関節6（手首ロール）
+</code></pre>
+<p><strong>1本の SPI バスで 6 つの角度を順番に読み出す</strong>ことで、配線を最小限に抑えられます。</p>
+<h3 id="3-環境センシングの統合slamナビゲーション">3. 環境センシングの統合（SLAM・ナビゲーション）</h3>
+<p>自律移動ロボットやドローンが周囲環境を把握するために、複数の SPI センサーを組み合わせます。</p>
+<table>
+<thead>
+<tr>
+<th>センサー</th>
+<th>測定対象</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BME280</td>
+<td>気圧</td>
+<td>高度推定（ドローンの高度保持）</td>
+</tr>
+<tr>
+<td>ICM-20948</td>
+<td>加速度・ジャイロ・地磁気</td>
+<td>姿勢推定（EKF入力）</td>
+</tr>
+<tr>
+<td>TFmini Plus（LiDAR）</td>
+<td>距離</td>
+<td>障害物検知</td>
+</tr>
+<tr>
+<td>ADXL355</td>
+<td>高分解能加速度</td>
+<td>微細な振動検知</td>
+</tr>
+</tbody>
+</table>
+<p>これらを 1 本の SPI バスに接続し、<strong>CS ピンを切り替えて順次データを取得</strong>します。</p>
+<h3 id="4-四足歩行ロボットの足先センシング">4. 四足歩行ロボットの足先センシング</h3>
+<p>各足に**力覚センサー（SPI接続）**を搭載し、地面反力を計測します。</p>
+<ul>
+<li>4 足 × 3 軸力覚センサー = <strong>12 個の SPI スレーブ</strong></li>
+<li>同じ SPI バスに CS ピンを 12 本割り当てて順次読み出し</li>
+<li>各足の接地状態を把握し、歩行パターン（ZMP制御）を調整</li>
+</ul>
+<h3 id="5-自動運転agv-の周囲監視">5. 自動運転・AGV の周囲監視</h3>
+<p>AGV（無人搬送車）が複数の距離センサーで 360° を監視する場合：</p>
+<pre><code>SPIバス
+├── CS1 → 前方 LiDAR
+├── CS2 → 右方 超音波センサー（SPI接続型）
+├── CS3 → 左方 超音波センサー
+├── CS4 → 後方 ToF センサー
+└── CS5 → 床面検知センサー（段差検知）
+</code></pre>
+<p><strong>1 つのマイコンで複数方向の障害物を同時監視</strong>できます。</p>
+<h3 id="なぜ-spi-が選ばれるのか">なぜ SPI が選ばれるのか</h3>
+<table>
+<thead>
+<tr>
+<th>比較項目</th>
+<th>SPI</th>
+<th>I2C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通信速度</td>
+<td>高速（10MHz 以上）</td>
+<td>中速（400kHz〜3.4MHz）</td>
+</tr>
+<tr>
+<td>デバイス追加</td>
+<td>CS ピンを増やすだけ</td>
+<td>アドレス競合のリスク</td>
+</tr>
+<tr>
+<td>リアルタイム性</td>
+<td>高い（クロック同期）</td>
+<td>やや低い</td>
+</tr>
+<tr>
+<td>配線数</td>
+<td>SCK/MOSI/MISO + CS×n</td>
+<td>SDA/SCL のみ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>高速・リアルタイム・複数接続が必要なロボット制御</strong>では、SPI が有利です。</p>
+<h2 id="例題の全体像">例題の全体像</h2>
+<p>1本の SPI バスに複数のデバイスをつなぎ、それぞれを独立に制御するという動作をwokwiを用いて実現する例題です。</p>
+<h3 id="問題設定">問題設定</h3>
+<p>Raspberry Pi Pico（マイコン）が 2つの 74HC595（シフトレジスタ）を SPI で制御し、それぞれに接続された LED を別々に点灯させる制御を実装してください。</p>
+<pre><code>┌─────────────────┐
+│  Raspberry Pi   │
+│     Pico        │
+│                 │
+│  GP18 ──────────┼──┬──→ 両方の CLK（共通）
+│  GP19 ──────────┼──┬──→ 両方の DS（共通）
+│                 │  │    （データ・クロック線は共用）
+│  GP17 ──────────┼──┘──→ sr1 の STCP（ラッチ）
+│  GP20 ──────────┼─────→ sr2 の STCP（ラッチ）
+│                 │       （ラッチ線だけ別々）
+└─────────────────┘
+       │                  │
+    sr1 (74HC595)      sr2 (74HC595)
+    ├─ 赤LED × 4       ├─ 緑LED × 4
+    │  (led1〜4)       │  (led5〜8)
+</code></pre>
+<h3 id="動作の流れ視覚的に">動作の流れ（視覚的に）</h3>
+<ol>
+<li><strong>赤LED1</strong>が点灯 → <strong>緑LED4</strong>が点灯（逆方向）</li>
+<li><strong>赤LED2</strong>が点灯 → <strong>緑LED3</strong>が点灯</li>
+<li><strong>赤LED3</strong>が点灯 → <strong>緑LED2</strong>が点灯</li>
+<li><strong>赤LED4</strong>が点灯 → <strong>緑LED1</strong>が点灯</li>
+<li><strong>全LED同時点灯</strong> → <strong>全消灯</strong> → 繰り返し</li>
+</ol>
+<p>これにより「1つの SPI バスで、2つのデバイスを完全に独立に制御できている」ことを、LED の動きで一目で確認できます。</p>
+<h3 id="この例題の意義">この例題の意義</h3>
+<p>この構造は、<strong>実機の SPI センサーを複数使う場合と全く同じ</strong>です。</p>
+<table>
+<thead>
+<tr>
+<th>この例題</th>
+<th>実機（Raspberry Pi 5）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>74HC595 × 2</td>
+<td>ICM-20948 × 2（または別種の SPI センサー）</td>
+</tr>
+<tr>
+<td>STCP1 / STCP2</td>
+<td>CS1 / CS2（GPIOピン）</td>
+</tr>
+<tr>
+<td>赤LED / 緑LED</td>
+<td>加速度データ / ジャイロデータ 等</td>
+</tr>
+</tbody>
+</table>
+<p>例えば、Raspberry Pi 5 で 2つの ICM-20948 を SPI で使う場合も：</p>
+<pre><code>Pi 5 GPIO 11 (SCK)  ───┬──→ 両方の SCL
+Pi 5 GPIO 10 (MOSI) ───┬──→ 両方の SDA/SDI
+Pi 5 GPIO 8  (CE0)  ───┘──→ センサー1 の CS
+Pi 5 GPIO 7  (CE1)  ──────→ センサー2 の CS
+</code></pre>
+<p><strong>CS ピンを分けるだけで、同じ SPI バスに複数のセンサーを接続できる</strong>というのが、この例題で学べる最も重要なことです。</p>
+<h2 id="実装法">実装法</h2>
+<h3 id="センサ配置">センサ配置</h3>
+<p>センサ配置は以下の絵のように <code>74HC595</code> × 2 とLEDを配置してください。</p>
+<p><img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\spi\double_spi\image\experiment\1794039417473.png" alt="1794039417473"></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Dual SPI 74HC595 Fixed&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;editor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;parts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-pi-pico&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;pico&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-74hc595&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sr1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-60</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">220</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-74hc595&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sr2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">220</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-140</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">380</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;red&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-120</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">400</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;red&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led3&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-100</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">420</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;red&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led4&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-80</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">440</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;red&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led5&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">380</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;green&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led6&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">40</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">400</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;green&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led7&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">60</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">420</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;green&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-led&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;led8&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">80</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">440</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;green&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-resistor&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;r1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-110</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">460</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;220&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-resistor&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;r2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">460</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;220&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-gnd&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gnd&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">180</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">480</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;wokwi-vcc&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vcc&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;top&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">-180</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;left&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">480</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;connections&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP18&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:SHCP&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;gold&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP19&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:DS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP17&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:STCP&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;orange&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:3V3&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:VCC&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;vcc:VCC&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:MR&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;gnd:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr1:OE&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP18&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:SHCP&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;gold&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP19&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:DS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP20&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:STCP&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;orange&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:3V3&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:VCC&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;vcc:VCC&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:MR&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;gnd:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;sr2:OE&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr1:Q0&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led1:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr1:Q1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led2:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr1:Q2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led3:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr1:Q3&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led4:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led1:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r1:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led2:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r1:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led3:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r1:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led4:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r1:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;r1:2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;gnd:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr2:Q0&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led5:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr2:Q1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led6:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr2:Q2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led7:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;sr2:Q3&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;led8:A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;green&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led5:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r2:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led6:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r2:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led7:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r2:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;led8:C&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;r2:1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;r2:2&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;gnd:GND&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP0&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;$serialMonitor:RX&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">[</span> <span class="hljs-string">&quot;pico:GP1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;$serialMonitor:TX&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="コード">コード</h3>
+<p>sketch.inoに以下コードを記入してください。</p>
+<pre><code class="language-cpp"><span class="hljs-comment">// 74HC595 ダブル SPI スレーブ（ソフト SPI）</span>
+<span class="hljs-comment">// SHCP（クロック）と DS（データ）を共通</span>
+<span class="hljs-comment">// STCP（ラッチ = CS相当）だけを別ピンで制御</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SHCP_PIN  18   <span class="hljs-comment">// シフトレジスタクロック（共通）</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> DS_PIN    19   <span class="hljs-comment">// シリアルデータ（共通）</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> STCP1     17   <span class="hljs-comment">// デバイス1のラッチ</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> STCP2     20   <span class="hljs-comment">// デバイス2のラッチ</span></span>
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">softSpiBegin</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-built_in">pinMode</span>(SHCP_PIN, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(DS_PIN, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(STCP1, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(STCP2, OUTPUT);
+  <span class="hljs-built_in">digitalWrite</span>(SHCP_PIN, LOW);
+  <span class="hljs-built_in">digitalWrite</span>(DS_PIN, LOW);
+  <span class="hljs-built_in">digitalWrite</span>(STCP1, LOW);
+  <span class="hljs-built_in">digitalWrite</span>(STCP2, LOW);
+}
+
+<span class="hljs-comment">// MSB ファーストで 1 バイト送信</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">softSpiTransfer</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> data)</span> </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">7</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+    <span class="hljs-built_in">digitalWrite</span>(DS_PIN, (data &gt;&gt; i) &amp; <span class="hljs-number">0x01</span>);
+    <span class="hljs-built_in">digitalWrite</span>(SHCP_PIN, HIGH);
+    <span class="hljs-built_in">delayMicroseconds</span>(<span class="hljs-number">2</span>);
+    <span class="hljs-built_in">digitalWrite</span>(SHCP_PIN, LOW);
+    <span class="hljs-built_in">delayMicroseconds</span>(<span class="hljs-number">2</span>);
+  }
+}
+
+<span class="hljs-comment">// 指定した STCP ピンのみでデータをラッチ</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sendTo595</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> stcpPin, <span class="hljs-type">uint8_t</span> data)</span> </span>{
+  <span class="hljs-built_in">digitalWrite</span>(stcpPin, LOW);
+  <span class="hljs-built_in">delayMicroseconds</span>(<span class="hljs-number">5</span>);
+  <span class="hljs-built_in">softSpiTransfer</span>(data);
+  <span class="hljs-built_in">delayMicroseconds</span>(<span class="hljs-number">5</span>);
+  <span class="hljs-built_in">digitalWrite</span>(stcpPin, HIGH);
+  <span class="hljs-built_in">delayMicroseconds</span>(<span class="hljs-number">10</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>);
+  <span class="hljs-built_in">softSpiBegin</span>();
+
+  <span class="hljs-comment">// 初期状態：全消灯</span>
+  <span class="hljs-built_in">sendTo595</span>(STCP1, <span class="hljs-number">0x00</span>);
+  <span class="hljs-built_in">sendTo595</span>(STCP2, <span class="hljs-number">0x00</span>);
+
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;[OK] Dual 74HC595 initialized&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// デバイス1：Q0〜Q3 を順番に点灯</span>
+  <span class="hljs-comment">// デバイス2：Q0〜Q3 を逆順に点灯</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+    <span class="hljs-built_in">sendTo595</span>(STCP1, <span class="hljs-number">1</span> &lt;&lt; i);           <span class="hljs-comment">// デバイス1：左から順</span>
+    <span class="hljs-built_in">sendTo595</span>(STCP2, <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">3</span> - i));     <span class="hljs-comment">// デバイス2：右から順</span>
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Dev1=0x&quot;</span>); Serial.<span class="hljs-built_in">print</span>(<span class="hljs-number">1</span> &lt;&lt; i, HEX);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot; Dev2=0x&quot;</span>); Serial.<span class="hljs-built_in">println</span>(<span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">3</span> - i), HEX);
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">500</span>);
+  }
+
+  <span class="hljs-comment">// 両方同時に全点灯</span>
+  <span class="hljs-built_in">sendTo595</span>(STCP1, <span class="hljs-number">0x0F</span>);
+  <span class="hljs-built_in">sendTo595</span>(STCP2, <span class="hljs-number">0x0F</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Both ON&quot;</span>);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+
+  <span class="hljs-comment">// 両方消灯</span>
+  <span class="hljs-built_in">sendTo595</span>(STCP1, <span class="hljs-number">0x00</span>);
+  <span class="hljs-built_in">sendTo595</span>(STCP2, <span class="hljs-number">0x00</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Both OFF&quot;</span>);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">500</span>);
+}
+</code></pre>
+<p><strong>コード制御でしていること</strong></p>
+<p>このコードは、<strong>1本のSPIバスに2つのシフトレジスタ（74HC595）を接続し、それぞれのLEDを独立に制御</strong>です。</p>
+<p><strong>3つの役割分担</strong></p>
+<table>
+<thead>
+<tr>
+<th>ピン</th>
+<th>役割</th>
+<th>接続</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHCP（GP18）</td>
+<td>クロック</td>
+<td>両方の74HC595で共通</td>
+</tr>
+<tr>
+<td>DS（GP19）</td>
+<td>データ</td>
+<td>両方の74HC595で共通</td>
+</tr>
+<tr>
+<td>STCP1（GP17）</td>
+<td>ラッチ</td>
+<td>74HC595-1（赤LED）のみ</td>
+</tr>
+<tr>
+<td>STCP2（GP20）</td>
+<td>ラッチ</td>
+<td>74HC595-2（緑LED）のみ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>処理の流れ</strong></p>
+<p><strong>1. <code>softSpiTransfer(data)</code></strong>
+8ビットのデータを<strong>1ビットずつ</strong>クロックに同期して送出します。SPIの基本動作です。</p>
+<p><strong>2. <code>sendTo595(stcpPin, data)</code></strong>
+指定したラッチピン（STCP）だけをLowにしてデータを送り、Highに戻すことで<strong>そのデバイスだけにデータを反映</strong>します。これが「チップセレクト」の役割です。</p>
+<p><strong>3. <code>loop()</code></strong></p>
+<ul>
+<li>赤LED（デバイス1）を左から順に点灯</li>
+<li>緑LED（デバイス2）を右から順に点灯</li>
+<li>両方同時に全点灯 → 全消灯を繰り返す</li>
+</ul>
+<h3 id="動作">動作</h3>
+<p>こんな感じの動作になります。</p>
+<img src="file:///d:\PycharmProjects\hard-related\hard-ware\sensing\spi\double_spi\result.gif" >
+<h2 id="3つの重要なポイント">3つの重要なポイント</h2>
+<h3 id="1-spi-バスは電車のレールのようなもの">1. SPI バスは「電車のレール」のようなもの</h3>
+<p><strong>SCK（クロック）</strong> と <strong>DS（データ）</strong> は、2つのデバイスで<strong>完全に共通</strong>です。これは「電車が走るレール」に相当し、すべてのデバイスが同じ通信線を見ています。</p>
+<h3 id="2-csラッチピンがどのデバイスに話しかけるかを決める">2. CS（ラッチ）ピンが「どのデバイスに話しかけるか」を決める</h3>
+<p><strong>STCP1（GP17）</strong> と <strong>STCP2（GP20）</strong> は別々のピンです。</p>
+<ul>
+<li><code>STCP1</code> を Low → High にすると、<strong>sr1（赤LED側）</strong> だけがデータを受け取る</li>
+<li><code>STCP2</code> を Low → High にすると、<strong>sr2（緑LED側）</strong> だけがデータを受け取る</li>
+</ul>
+<p>これが SPI の <strong>「チップセレクト（CS）」</strong> の役割です。</p>
+<h3 id="3-コードで実際に起きていること">3. コードで実際に起きていること</h3>
+<pre><code class="language-cpp"><span class="hljs-built_in">sendTo595</span>(STCP1, <span class="hljs-number">0x01</span>);  <span class="hljs-comment">// 赤LED1だけ点灯（sr1だけ反応）</span>
+<span class="hljs-built_in">sendTo595</span>(STCP2, <span class="hljs-number">0x08</span>);  <span class="hljs-comment">// 緑LED4だけ点灯（sr2だけ反応）</span>
+</code></pre>
+<p>同じ SPI バスに <code>0x01</code> と <code>0x08</code> を送っていますが、<strong>ラッチピンを分けて叩く</strong>ことで、赤LEDと緑LEDを完全に独立に制御しています。</p>
+<h2 id="総括">総括</h2>
+<p>SPI で複数センサーを使うときの肝は、<strong>「通信線は全デバイスで共有し、CS（チップセレクト）ピンだけを独立に制御する」</strong> ことです。</p>
+<ul>
+<li><strong>SCK・MOSI・MISO</strong> はすべてのセンサーで共通配線</li>
+<li><strong>CS ピン</strong>はセンサーごとに別々の GPIO を割り当てる</li>
+<li>CS を Low にしたセンサーだけが、その瞬間のデータを受け取る</li>
+</ul>
+<p>つまり、<strong>「同じ配線で順番に話しかける」</strong> ことで、配線を増やさずに複数のセンサーを独立に制御できます。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/VsPHqMmmUBg?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
