@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x5236;&#x5fa1;&#x306e;&#x57fa;&#x790e;&#x7406;&#x8ad6;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>先日扱った<a href="https://yoshishinnze.hatenablog.com/entry/2026/11/09/043000">ロボットの制御</a>に関して<a href="https://yoshishinnze.hatenablog.com/entry/2026/11/13/043000">センシング</a>とは別に大きなテーマとして制御があります。
+そして制御の最大の命題は動力制御、多くの場合はモータの制御を行うことにあります。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<p>本日はそんな制御理論に関して説明していきます。</p>
+<h2 id="制御の基礎理論">制御の基礎理論</h2>
+<p>ロボット制御におけるモータ制御の基礎理論は、大きく分けて「古典制御」と「現代制御」の2つに分類できます。以下、代表的な理論を基礎から順にご説明します。</p>
+<h3 id="1-古典制御フィードバック制御">1. 古典制御（フィードバック制御）</h3>
+<p><strong>PID制御</strong></p>
+<p>最も広く使われる制御手法です。目標値と現在値の偏差（エラー）に対して、比例・積分・微分の3つの操作を組み合わせて制御入力を決定します。</p>
+<ul>
+<li><strong>P（比例）</strong>: 現在のエラーに比例した操作量を出力。大きいほど応答が速くなるが、振動しやすくなる。</li>
+<li><strong>I（積分）</strong>: 過去のエラーの累積に比例した操作量を出力。定常偏差（オフセット）を解消する。</li>
+<li><strong>D（微分）</strong>: エラーの変化率に比例した操作量を出力。将来のエラーを予測し、振動を抑制する。</li>
+</ul>
+<p>ロボットの関節角度制御や車輪の速度制御など、多くの現場で標準的に採用されています。</p>
+<p><strong>Bang-Bang制御（ON/OFF制御）</strong></p>
+<p>最も単純な制御で、目標値に達するまでモータをフル出力で駆動し、達したら停止するという方式です。ヒーターや簡易的な位置決めなどに使われますが、ロボットの精密制御にはあまり適しません。</p>
+<h3 id="2-フィードフォワード制御">2. フィードフォワード制御</h3>
+<p>PIDは「エラーが発生してから」修正するフィードバック制御ですが、フィードフォワード制御は「事前にわかっている情報」を使って、エラーが起きる前に必要な操作量を出します。</p>
+<p><strong>DCモータのフィードフォワード</strong></p>
+<p>DCモータの物理モデルに基づき、以下の要素を事前に補償します。</p>
+<ul>
+<li><strong>速度項（Kv）</strong>: 目標速度に比例した電圧</li>
+<li><strong>加速度項（Ka）</strong>: 目標加速度に比例した電圧</li>
+<li><strong>摩擦・重力補償</strong>: ロボットアームなどでは重力や摩擦を事前に打ち消す</li>
+</ul>
+<p>実際には「フィードフォワード + PIDフィードバック」を組み合わせることで、高速かつ正確な追従制御が実現されます。</p>
+<h3 id="3-現代制御状態空間アプローチ">3. 現代制御（状態空間アプローチ）</h3>
+<p><strong>LQR（Linear Quadratic Regulator）</strong></p>
+<p>状態空間モデルに基づく最適制御の一種です。ロボットの「位置・速度」などの状態変数を使い、ある評価関数（コスト関数）を最小化するような制御入力を解析的に求めます。</p>
+<ul>
+<li>複数の入力・複数の出力を同時に扱える</li>
+<li>最適なゲインが自動的に計算される</li>
+<li>倒立振子や二足歩行ロボットの安定化に広く使われる</li>
+</ul>
+<p><strong>MPC（Model Predictive Control）</strong></p>
+<p>モデル予測制御です。ロボットの動力学モデルを使い、未来の数ステップ先までの動きを予測しながら、最適な制御入力を逐次計算します。</p>
+<ul>
+<li>拘束条件（関節角の可動範囲・トルク制限など）を明示的に考慮できる</li>
+<li>人型ロボットや自律走行車など、複雑なシステムで近年注目されている</li>
+</ul>
+<h3 id="4-力インピーダンス制御">4. 力・インピーダンス制御</h3>
+<p>位置や速度だけでなく、環境との接触力を制御する理論です。</p>
+<p><strong>力制御（Force Control）</strong></p>
+<p>ロボットが環境に押し付ける力を直接制御します。研磨・組み立て作業などに重要です。</p>
+<p><strong>インピーダンス制御（Impedance Control）</strong></p>
+<p>位置と力の関係（バネ・ダンパー的な特性）を制御します。環境との接触が予期せぬ場合でも、柔軟に対応できるため、安全な協働ロボットに広く使われています。</p>
+<p><strong>ハイブリッド位置・力制御</strong></p>
+<p>一部の自由度では位置を、残りの自由度では力を同時に制御する方式です。例えば、壁に沿って運動させる場合、壁面方向には力を、進行方向には位置を制御します。</p>
+<h2 id="現代制御の優位性">現代制御の優位性</h2>
+<p>現代制御が古典制御に対する優位性は2点あります。</p>
+<ol>
+<li>多変数を扱えること</li>
+<li>システムの内部状態を直接扱う状態空間表現</li>
+</ol>
+<p>以下、順を追って説明します。</p>
+<h3 id="1-多変数制御は結果であり手段ではない">1. 多変数制御は「結果」であり「手段」ではない</h3>
+<p>古典制御は伝達関数（入出力の関係）を扱います。これは本質的に<strong>1入力1出力（SISO）</strong> の記述です。複数の入出力がある場合、伝達関数行列を使うことはできますが、各入出力間の結合（干渉）を設計に組み込むのが困難です。</p>
+<p>現代制御では状態空間表現を使うため、状態変数の数、入力の数、出力の数が独立に定義できます。これにより複数のアクチュエータと複数のセンサを持つシステムを自然に記述できます。</p>
+<p>ただし、多変数を扱えるのは<strong>状態空間表現を使うから</strong>であり、多変数そのものが目的ではありません。</p>
+<h3 id="2-現代制御の真の優位性内部状態の可視化と操作">2. 現代制御の真の優位性：内部状態の可視化と操作</h3>
+<p><strong>古典制御の限界</strong></p>
+<p>伝達関数では「入力に対して出力がどうなるか」しか表現できません。例えばロボットアームの場合、「関節角度」と「関節角速度」は密接に関連していますが、伝達関数では角速度が内部的にどう変化しているかを直接扱えません。</p>
+<p><strong>現代制御のアプローチ</strong></p>
+<p>状態空間表現では、位置・速度・加速度などの<strong>内部状態をベクトルとして直接扱えます</strong>。これにより以下が可能になります。</p>
+<ul>
+<li><strong>オブザーバ（状態推定器）</strong>: センサで測れない状態（例：速度を直接測らずに位置から推定）を推定して制御に使える</li>
+<li><strong>ポール配置</strong>: システムの応答特性（収束の速さ・振動の減衰）を意図的に設計できる</li>
+<li><strong>不安定系の安定化</strong>: 倒立振子など、開ループで不安定なシステムを状態フィードバックで安定化できる</li>
+</ul>
+<h3 id="3-最適化の枠組み">3. 最適化の枠組み</h3>
+<p>現代制御の大きな特徴は、<strong>「最適な制御則を自動的に導出できる」</strong> 点です。</p>
+<p><strong>LQRの例</strong></p>
+<p>状態と入力の二乗和を最小化するコスト関数を定義すれば、Riccati方程式を解くことで最適ゲインが解析的に求まります。PIDではゲイン調整が試行錯誤的ですが、LQRでは「何を最適化したいか」を定式化すれば、最適な制御則が機械的に導出されます。</p>
+<p>これは多変数制御とは別の、<strong>設計方法論としての優位性</strong>です。</p>
+<h3 id="4-制約条件の明示的な扱いmpc">4. 制約条件の明示的な扱い（MPC）</h3>
+<p>現実のロボットには物理的な制約が存在します。</p>
+<ul>
+<li>モータの最大トルク</li>
+<li>関節の可動範囲</li>
+<li>障害物との距離</li>
+</ul>
+<p>古典制御ではこれらの制約を制御則に組み込むのが極めて困難です。MPC（モデル予測制御）は、未来の状態を予測しながら<strong>制約付き最適化問題</strong>を逐次解くことで、これらを自然に扱えます。これも状態空間表現が基盤にあるから実現できることです。</p>
+<h3 id="補足古典制御が依然として有効な理由">補足：古典制御が依然として有効な理由</h3>
+<p>現代制御が万能ではありません。モデルが正確でない場合、状態空間表現に基づく設計は誤ったモデルに依存してしまいます。PIDのような古典制御は「モデルが不要」という強みを持ち、現場での調整ノウハウも豊富です。</p>
+<p>したがって、現代制御の優位性は「多変数だから」というより、<strong>「状態空間表現というより豊かな記述能力を持つから」</strong> であり、多変数制御はその能力の一つの表れと言えます。</p>
+<h2 id="使い分け">使い分け</h2>
+<p>古典制御と現代制御の使い分けは、制御対象の複雑さ、性能要求、設計・調整の容易さのバランスで決まります。以下に両者の違いと具体的な使い分けの指針をまとめます。</p>
+<h3 id="1-古典制御が適している場面">1. 古典制御が適している場面</h3>
+<p><strong>特徴</strong></p>
+<p>古典制御（PID、周波数応答法、ルート軌跡法）は、入出力の関係（伝達関数）に基づくアプローチです。直感的で実装が容易であり、1入力1出力（SISO）のシステムに特に強みを発揮します。</p>
+<p><strong>適用例</strong></p>
+<ul>
+<li><strong>単軸のモータ位置・速度制御</strong>: エンコーダフィードバックによる関節制御など、入出力が明確なシステム</li>
+<li><strong>既存システムの微調整</strong>: 経験則（Ziegler-Nichols法など）でゲインを調整し、迅速に運用開始</li>
+<li><strong>モデルが不明確な場合</strong>: 厳密な物理モデルが不要で、実験的にゲインを決定可能</li>
+<li><strong>計算リソースが限られた環境</strong>: 組み込みマイコンやFPGAでの軽量実装</li>
+</ul>
+<p>WPILibの文書でも、PIDは「現在・過去・未来のエラーに対するパラメータ調整」に集中する実用的な手法として位置づけられています。</p>
+<h3 id="2-現代制御が適している場面">2. 現代制御が適している場面</h3>
+<p><strong>特徴</strong></p>
+<p>現代制御（状態空間法、LQR、MPC）は、システムの<strong>内部状態（位置・速度・加速度など）</strong> を直接扱います。多入力多出力（MIMO）システムや、複雑な拘束条件を持つ問題で優位性があります。</p>
+<p><strong>現代制御が特に有効な場面</strong></p>
+<p><strong>(1) 複数の状態を同時に制御する必要がある場合</strong></p>
+<p>ロボットアームの各関節は、位置・速度・加速度が互いに影響し合います。状態空間表現ではこれらをベクトルとして一括処理でき、LQRで最適な制御入力を一括計算できます。</p>
+<p><strong>(2) 拘束条件を明示的に扱う必要がある場合</strong></p>
+<p>関節角の可動範囲、トルク制限、障害物回避などの制約を満たしながら最適な動作を生成する必要がある場合、MPCは「未来を予測しながら制約付き最適化」を行うため、古典制御では不可能な制御が実現できます。</p>
+<p><strong>(3) 不安定なシステムの安定化</strong></p>
+<p>倒立振子や二足歩行ロボットなど、自然状態では倒れてしまう不安定系に対して、状態フィードバック（LQR）やオブザーバによる状態推定が有効です。PIDだけでは位相余裕が不足し、安定化が困難な場合があります。</p>
+<p><strong>(4) 性能の最適化が重要な場合</strong></p>
+<p>エネルギー消費の最小化、到達時間の最短化、振動の抑制など、明確な評価指標（コスト関数）に対して最適な制御則を解析的に求めたい場合、LQRや最適制御が適しています。</p>
+<p><strong>(5) 外部擾乱やモデル誤差への対応が重要な場合</strong></p>
+<p>オブザーバ（状態推定器）を組み合わせることで、測定できない状態を推定し、擾動に対してロバストな制御が可能になります。これは古典制御の範囲を超える機能です。</p>
+<h3 id="3-ロボット制御における具体的な使い分け">3. ロボット制御における具体的な使い分け</h3>
+<table>
+<thead>
+<tr>
+<th>制御対象</th>
+<th>推奨方式</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>車輪の速度制御</td>
+<td>PID</td>
+<td>単純なSISO系で十分</td>
+</tr>
+<tr>
+<td>関節の位置決め</td>
+<td>PID + フィードフォワード</td>
+<td>実装が容易で十分な性能</td>
+</tr>
+<tr>
+<td>倒立振子の安定化</td>
+<td>LQR + オブザーバ</td>
+<td>不安定系の安定化に最適</td>
+</tr>
+<tr>
+<td>二足歩行の全身制御</td>
+<td>MPC / Whole-body QP</td>
+<td>複数の拘束条件を同時に考慮</td>
+</tr>
+<tr>
+<td>ドローンの姿勢制御</td>
+<td>LQR or PID + ゲインスケジューリング</td>
+<td>非線形性とMIMO特性の両立</td>
+</tr>
+<tr>
+<td>協働ロボットの力制御</td>
+<td>インピーダンス制御 / MPC</td>
+<td>環境との接触力を制御</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-実用上の指針">4. 実用上の指針</h3>
+<p><strong>まず古典制御から始める</strong></p>
+<p>多くのロボット制御では、まずPIDで要件を満たせるか確認します。実装が容易で、現場での調整ノウハウも豊富です。</p>
+<p><strong>以下の場合に現代制御を検討する</strong></p>
+<ul>
+<li>PIDだけでは振動が抑制できない</li>
+<li>複数の関節や自由度が強く結合している</li>
+<li>可動範囲やトルク制限などの拘束条件が厳しい</li>
+<li>エネルギー効率や追従精度の最適化が重要</li>
+<li>システムが本質的に不安定</li>
+</ul>
+<p><strong>ハイブリッドアプローチが現実的</strong></p>
+<p>実際のロボット開発では、古典制御と現代制御を組み合わせることが一般的です。例えば、関節単位ではPIDを使いつつ、全体の動作計画にはMPCを使う、あるいはLQRで設計したゲインをPIDの近似として実装するなど、段階的な移行も有効です。</p>
+<h2 id="仮想環境">仮想環境</h2>
+<p>制御（状態空間、LQR、MPCなど）を体験できる環境は、ブラウザで即座に試せるものから、Pythonで本格的に実装できるものまで複数あります。以下に代表的なものを紹介します。</p>
+<h3 id="1-ブラウザで即座に体験できるオンラインシミュレータ">1. ブラウザで即座に体験できるオンラインシミュレータ</h3>
+<p><strong>Neutron STEM Lab Control System Simulator</strong></p>
+<p>PIDだけでなく、状態空間モデル、ステップ応答、ボード線図までブラウザ上でシミュレーション可能です。アカウント不要で、ブロック図を組みながら制御系の動作を直感的に理解できます。<a href="https://neutronstemlab.com/tools/controls/control-system-simulator/">Neutron STEM Lab</a></p>
+<p><strong>SysDynLab</strong></p>
+<p>より高度なブロック図シミュレータで、積分器、微分器、伝達関数、PID、状態機械、行列演算などをサポートしています。状態空間系をブロック図で組んでシミュレーションできます。<a href="https://sim.sysdynlab.com/">SysDynLab</a></p>
+<p><strong>PhysSandbox Cart-Pole Simulator</strong></p>
+<p>倒立振子（カートポール）に対して、PID・LQR・MPCの3つを同じ条件下で比較シミュレーションできる優れた教育ツールです。LQRとMPCの違いを視覚的に体験できます。<a href="https://physandbox.com/engineering/cart-pole-lqr">PhysSandbox</a></p>
+<h3 id="2-pythonで手軽に本格的な現代制御を体験">2. Pythonで手軽に本格的な現代制御を体験</h3>
+<p><strong>Python Control Systems Library (python-control)</strong></p>
+<p>MATLABのControl System Toolboxに相当するPythonライブラリです。状態空間モデルの作成、LQRゲインの計算（<code>control.lqr()</code>）、ステップ応答、オブザーバ設計まで一貫して行えます。Jupyter Notebookで対話的に学習できるチュートリアルも充実しています。<a href="https://python-control.readthedocs.io/en/latest/statesp.html">Python Control Systems Library</a></p>
+<p>LQRの計算は以下のように簡潔に書けます。</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> control <span class="hljs-keyword">as</span> ct
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-comment"># 状態空間モデル (例: 倒立振子)</span>
+A = np.array([[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>]])  <span class="hljs-comment"># 簡易モデル</span>
+B = np.array([[<span class="hljs-number">0</span>], [<span class="hljs-number">1</span>]])
+
+<span class="hljs-comment"># LQRコスト重み</span>
+Q = np.diag([<span class="hljs-number">10</span>, <span class="hljs-number">1</span>])  <span class="hljs-comment"># 状態の重み</span>
+R = np.array([[<span class="hljs-number">1</span>]])    <span class="hljs-comment"># 入力の重み</span>
+
+K, S, E = ct.lqr(A, B, Q, R)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;LQRゲイン K =&quot;</span>, K)
+</code></pre>
+<p>垂直離着陸機（VTOL）のLQR設計例も公開されており、実用的なモデルで現代制御を学べます。<a href="https://python-control.readthedocs.io/en/latest/examples/pvtol-lqr.html">VTOL LQR Example</a></p>
+<h3 id="3-ロボットシミュレータでmpclqrを体験">3. ロボットシミュレータでMPC・LQRを体験</h3>
+<p><strong>MuJoCo MPC (DeepMind)</strong></p>
+<p>Google DeepMindが公開した、MuJoCo物理シミュレータ上でMPCをリアルタイム実行するフレームワークです。人型ロボットや四足歩行ロボットの動作をMPCで制御するデモが含まれており、現代制御の最先端を体験できます。<a href="https://github.com/google-deepmind/mujoco_mpc">MuJoCo MPC GitHub</a></p>
+<p><strong>Quadruped-PyMPC</strong></p>
+<p>四足歩行ロボット向けのPython製MPCフレームワークです。単一剛体モデルに基づき、勾配ベース（acados）またはサンプリングベース（JAX）のMPCをMuJoCo上で実行できます。<a href="https://github.com/iit-DLSLab/Quadruped-PyMPC">Quadruped-PyMPC</a></p>
+<p><strong>balance_robot_algorithm</strong></p>
+<p>ROS/Gazebo上で動作する自平衡ロボットシミュレータで、LQRとMPCの両方を比較実装しています。ROS環境があれば、実際のロボットに近い形で現代制御を体験できます。<a href="https://github.com/66Lau/balance_robot_algorithm">balance_robot_algorithm</a></p>
+<h3 id="4-教育用リポジトリjupyter-notebook">4. 教育用リポジトリ・Jupyter Notebook</h3>
+<p><strong>control-playground (二重倒立振子)</strong></p>
+<p>PID、極配置、LQR、iLQR、線形MPC、非線形MPCを二重倒立振子で比較するJupyter Notebookです。各制御理論の違いを同じ問題設定で体験できる貴重な教材です。<a href="https://github.com/kosuke55/control-playground">control-playground</a></p>
+<p><strong>Controllers from PID to QP-MPC</strong></p>
+<p>PIDからQP-MPCまでの制御器を対話的に可視化するPythonデモとHTMLエクスプローラが含まれています。ゼロ点が2次系のステップ応答に与える影響などをインタラクティブに学べます。<a href="https://github.com/TonyInvent/Controllers-from-PID-to-QP_MPC">Controllers-from-PID-to-QP_MPC</a></p>
+<h3 id="おすすめの学習パス">おすすめの学習パス</h3>
+<table>
+<thead>
+<tr>
+<th>段階</th>
+<th>環境</th>
+<th>学べる内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://physandbox.com/engineering/cart-pole-lqr">PhysSandbox</a></td>
+<td>LQRとMPCの違いを視覚的に理解</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://python-control.readthedocs.io/en/latest/statesp.html">python-control</a> + Jupyter</td>
+<td>状態空間モデル、LQR計算、ステップ応答</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://github.com/kosuke55/control-playground">control-playground</a></td>
+<td>複数の現代制御手法を比較</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://github.com/google-deepmind/mujoco_mpc">MuJoCo MPC</a></td>
+<td>実ロボット級のMPCを体験</td>
+</tr>
+</tbody>
+</table>
+<p>まずはブラウザシミュレータで直感的な理解を深め、その後Pythonで数式とコードを対応させながら学ぶと、現代制御の本質が掴みやすいと思います。</p>
+<h2 id="総括">総括</h2>
+<p>制御とは、<strong>「不確実な現実を、望ましい目標に近づけ続ける技術」</strong> です。</p>
+<p>センサで測った「今の状態」と「目標の状態」の差を見て、アクチュエータに適切な力を与える。この一見単純なループの中に、古典制御と現代制御の2つの思想があります。</p>
+<p><strong>古典制御（PIDなど）</strong> は、入出力の関係から経験的にシステムを整える手法です。実装が容易で現場の調整ノウハウも豊富なため、単軸のモータ制御など多くの場面で今も第一選択です。</p>
+<p><strong>現代制御（LQR・MPCなど）</strong> は、システムの内部状態（位置・速度など）を直接扱う状態空間表現に基づきます。複数の状態を同時に最適化したり、物理的な制約を明示的に考慮したりできるため、倒立振子や二足歩行ロボットといった複雑なシステムで真価を発揮します。</p>
+<p>要するに、制御とは**「モデルと現実の差を埋めながら、目的を達成し続ける営み」**です。古典制御も現代制御も、その目的は同じです。違うのは、対象の複雑さに対してどのような言語で記述し、どのように最適な操作量を導出するかという点だけです。</p>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/N5NE7KZUldg?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
